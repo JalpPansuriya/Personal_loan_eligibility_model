@@ -110,6 +110,7 @@ tr.clickable:hover { background: var(--panel2); }
 
 .st { padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; white-space: nowrap; }
 .st.eligible { background: var(--ok-bg); color: var(--ok); }
+.st.alt { background: #eef3fe; color: var(--accent); }
 .st.approve { background: var(--ok-bg); color: var(--ok); }
 .st.reduced { background: var(--reduced-bg); color: var(--reduced); }
 .st.review { background: #eef3fe; color: var(--accent); }
@@ -129,6 +130,8 @@ td.lender .prod { font-size: 11px; color: var(--muted); font-weight: 400; margin
 .tag.pub { background: var(--ok-bg); color: var(--ok); }
 .tag.est { background: var(--reduced-bg); color: var(--reduced); }
 .tag.oth { background: #eceff5; color: var(--muted); }
+.tag.conflict { background: #fde7cf; color: #8a5a00; }
+.warn-box { background: #fff6e6; border: 1px solid #f0d089; color: #7a5600; padding: 8px 12px; border-radius: 8px; margin-top: 10px; font-size: 13px; }
 
 tr.detail td { background: var(--panel2); }
 tr.detail ul { margin: 6px 0 10px; padding-left: 18px; }

@@ -20,6 +20,7 @@ export interface ReasonCode {
   required_value: string | null;
   rule_status: string;
   confidence: string | null;
+  confidence_label: string;
   source_url: string;
   next_action: string;
 }
@@ -44,6 +45,8 @@ export interface CapBreakdown {
   product: number | null;
   calculator: number | null;
   binding_cap: string;
+  selective_exception_possible: boolean;
+  selective_exception_note: string;
 }
 
 export interface PricingBreakdown {
@@ -67,7 +70,8 @@ export interface PricingBreakdown {
 }
 
 export type Status =
-  | "ELIGIBLE_TO_QUERY_LENDERS"
+  | "ELIGIBLE_FOR_REQUESTED_TERMS"
+  | "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
   | "PRELIMINARILY_ELIGIBLE"
   | "NOT_ELIGIBLE"
   | "ADDITIONAL_INFORMATION_REQUIRED"
@@ -83,14 +87,18 @@ export interface LenderOffer {
   status: Status;
   requested: AmountQuote;
   max_eligible: AmountQuote;
+  alternative: AmountQuote;
   requested_supported: boolean;
+  requested_tenure_supported: boolean;
   caps: CapBreakdown;
   pricing: PricingBreakdown;
   strength_score: number | null;
+  strength_band: string;
   reasons: ReasonCode[];
   fixes: Fix[];
   rationale: string;
   lowest_confidence: string | null;
+  apr_reliable: boolean;
 }
 
 export interface Decision {
@@ -98,6 +106,9 @@ export interface Decision {
   offers: LenderOffer[];
   best_offer: LenderOffer | null;
   best_rationale: string;
+  ranked_lender_ids: string[];
+  indicative_lender_ids: string[];
+  score_method: string;
   top_blocking_reasons: ReasonCode[];
   applicant_age: number;
   disclaimer: string;
@@ -114,22 +125,29 @@ export interface ModelSummary {
   note: string;
 }
 
-// The applicant form payload. Optional fields are omitted when empty.
+// The applicant form payload. Uses plan2 canonical field names; optional fields are
+// omitted (never zero-filled) when the user leaves them blank.
 export interface ApplicantInput {
   employment_type: string;
   net_monthly_income: number;
-  existing_emi_monthly?: number;
-  credit_card_outstanding?: number;
+  existing_monthly_emi?: number;
+  card_outstanding?: number;
+  has_credit_score?: boolean;
   bureau_score?: number | null;
+  max_dpd_days_last_12_months?: number | null;
+  enquiries_last_6_months?: number;
+  has_settled_loan?: boolean;
+  settled_loan_months_ago?: number | null;
+  write_off_flag?: boolean;
   total_experience_months?: number;
   current_job_tenure_months?: number;
   business_vintage_months?: number | null;
-  itr_years_filed?: number;
+  itr_years_available?: number | null;
   itr_income_y1?: number | null;
   employer_category?: string;
   profession?: string;
   city?: string;
-  salary_account_with_lender?: string | null;
+  salary_account_with?: string | null;
   gender?: string | null;
   requested_amount?: number | null;
   requested_tenure_months?: number | null;

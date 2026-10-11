@@ -3,7 +3,8 @@ import { Decision, LenderOffer } from "../api";
 import { pct, rupees } from "../format";
 
 const STATUS_LABEL: Record<string, string> = {
-  ELIGIBLE_TO_QUERY_LENDERS: "Eligible",
+  ELIGIBLE_FOR_REQUESTED_TERMS: "Eligible for requested terms",
+  ELIGIBLE_FOR_ALTERNATIVE_TERMS: "Eligible for alternative terms",
   PRELIMINARILY_ELIGIBLE: "Preliminarily eligible",
   NOT_ELIGIBLE: "Not eligible under rules",
   ADDITIONAL_INFORMATION_REQUIRED: "More information needed",
@@ -12,77 +13,108 @@ const STATUS_LABEL: Record<string, string> = {
   RULES_UNAVAILABLE: "Eligibility could not be established",
 };
 
+const OFFER_STATUSES = new Set([
+  "ELIGIBLE_FOR_REQUESTED_TERMS", "ELIGIBLE_FOR_ALTERNATIVE_TERMS", "PRELIMINARILY_ELIGIBLE",
+]);
+
 function statusClass(s: string): string {
-  if (s === "ELIGIBLE_TO_QUERY_LENDERS") return "st eligible";
+  if (s === "ELIGIBLE_FOR_REQUESTED_TERMS") return "st eligible";
+  if (s === "ELIGIBLE_FOR_ALTERNATIVE_TERMS") return "st alt";
   if (s === "PRELIMINARILY_ELIGIBLE") return "st reduced";
   if (s === "ADDITIONAL_INFORMATION_REQUIRED" || s === "MANUAL_REVIEW") return "st review";
   return "st reject";
 }
 
-function isOffer(s: string): boolean {
-  return s === "ELIGIBLE_TO_QUERY_LENDERS" || s === "PRELIMINARILY_ELIGIBLE";
+const isOffer = (s: string) => OFFER_STATUSES.has(s);
+
+function RuleTag({ label }: { label: string }) {
+  const l = label.toUpperCase();
+  const cls = l === "VERIFIED_PUBLISHED" || l === "PUBLISHED" ? "tag pub"
+    : l === "ESTIMATED" || l === "INFERRED" ? "tag est"
+    : l === "CONFLICT_REQUIRES_REVIEW" ? "tag conflict" : "tag oth";
+  return <span className={cls}>{label.toLowerCase()}</span>;
 }
 
-function RuleTag({ status }: { status: string }) {
-  const cls = status === "PUBLISHED" ? "tag pub" : status === "ESTIMATED" ? "tag est" : "tag oth";
-  return <span className={cls}>{status.toLowerCase()}</span>;
+// an EMI is only ever shown next to the principal + tenure + rate it was computed on
+function EmiLine({ label, amount, tenure, emi, rate }:
+  { label: string; amount: number | null; tenure: number | null; emi: number | null; rate: number | null }) {
+  if (amount == null) return <div className="muted">{label}: not applicable</div>;
+  return (
+    <div>
+      <b>{label}</b>: {rupees(amount)} over {tenure} months @ {pct(rate)} &rarr; EMI {rupees(emi)}/mo
+    </div>
+  );
 }
 
 function OfferRow({ offer }: { offer: LenderOffer }) {
   const [open, setOpen] = useState(false);
   const o = offer;
-  const detail = o.reasons.length > 0 || o.fixes.length > 0 || isOffer(o.status);
   const p = o.pricing;
+  const detail = o.reasons.length > 0 || o.fixes.length > 0 || isOffer(o.status);
+  const rateCell = p.rate_is_range && p.rate_min_pa != null
+    ? `${p.rate_min_pa}-${p.rate_max_pa}%` : pct(p.nominal_rate_pa);
+  const reqEmi = o.requested.amount ? rupees(o.requested.emi) : "-";
   return (
     <>
       <tr className={detail ? "clickable" : ""} onClick={() => detail && setOpen(!open)}>
-        <td className="lender">
-          {o.lender_id.toUpperCase()}
-          <div className="prod">{o.product_label}</div>
-        </td>
+        <td className="lender">{o.lender_id.toUpperCase()}<div className="prod">{o.product_label}</div></td>
         <td><span className={statusClass(o.status)}>{STATUS_LABEL[o.status] ?? o.status}</span></td>
+        <td className="num">{o.requested.amount ? rupees(o.requested.amount) : "-"}</td>
+        <td className="num">{reqEmi}</td>
         <td className="num">{rupees(o.max_eligible.amount)}</td>
-        <td className="num">{o.requested.amount ? rupees(o.requested.emi) : "-"}</td>
-        <td className="num">{p.rate_is_range && p.rate_min_pa != null
-          ? `${p.rate_min_pa}-${p.rate_max_pa}%` : pct(p.nominal_rate_pa)}</td>
-        <td className="num">{pct(p.apr_pa)}</td>
+        <td className="num">{rateCell}</td>
+        <td className="num">{pct(p.apr_pa)}{!o.apr_reliable && <span className="muted">*</span>}</td>
         <td className="num">{o.strength_score ?? "-"}</td>
       </tr>
       {open && (
         <tr className="detail">
-          <td colSpan={7}>
+          <td colSpan={8}>
             {isOffer(o.status) && (
               <div className="detail-grid">
                 <div>
                   <b>Requested loan</b>
-                  <div>{o.requested.amount
-                    ? `${rupees(o.requested.amount)} over ${o.requested.tenure_months} months`
-                    : "no amount requested"}</div>
-                  <div>{o.requested.amount ? `EMI ${rupees(o.requested.emi)}/mo` : ""}</div>
+                  <EmiLine label="Requested" amount={o.requested.amount}
+                    tenure={o.requested.tenure_months} emi={o.requested.emi} rate={p.nominal_rate_pa} />
                   <div className={o.requested_supported ? "ok-txt" : "warn-txt"}>
                     {o.requested.amount
-                      ? (o.requested_supported ? "requested amount is covered" : "requested amount exceeds the eligible maximum")
-                      : ""}
+                      ? (o.requested_supported ? "requested amount is covered"
+                         : "requested amount exceeds the eligible maximum")
+                      : "no amount requested"}
                   </div>
+                  {!o.requested_tenure_supported && (
+                    <div className="warn-txt">requested tenure outside the permitted range</div>
+                  )}
                 </div>
+                {o.alternative.amount != null && (
+                  <div>
+                    <b>Alternative (not a sanction)</b>
+                    <EmiLine label="Alternative" amount={o.alternative.amount}
+                      tenure={o.alternative.tenure_months} emi={o.alternative.emi} rate={p.nominal_rate_pa} />
+                  </div>
+                )}
                 <div>
                   <b>Maximum eligible</b>
-                  <div>{rupees(o.max_eligible.amount)} over {o.max_eligible.tenure_months} months</div>
-                  <div>EMI {rupees(o.max_eligible.emi)}/mo (at the max-eligibility tenure)</div>
+                  <EmiLine label="Max" amount={o.max_eligible.amount}
+                    tenure={o.max_eligible.tenure_months} emi={o.max_eligible.emi} rate={p.nominal_rate_pa} />
                   <div className="muted">limited by: {o.caps.binding_cap}</div>
+                  {o.caps.selective_exception_possible && (
+                    <div className="muted">{o.caps.selective_exception_note}</div>
+                  )}
                 </div>
                 <div>
                   <b>Rate &amp; charges</b>
-                  <div>Interest rate: {p.rate_is_range && p.rate_min_pa != null
-                    ? `${p.rate_min_pa}-${p.rate_max_pa}% (range)` : pct(p.nominal_rate_pa)}</div>
+                  <div>Interest rate: {rateCell}{p.rate_is_range ? " (band)" : ""}</div>
                   <div>Processing fee: {rupees(p.processing_fee)} + GST {rupees(p.gst_on_fee)}</div>
                   <div>Net disbursement: {rupees(p.net_disbursement)}</div>
                   <div>Total repayment: {rupees(p.total_repayment)}</div>
-                  <div>APR: {pct(p.apr_pa)} {p.apr_note && <span className="muted">({p.apr_note})</span>}</div>
+                  <div>Total cost of credit: {rupees(p.total_cost_of_credit)}</div>
+                  <div>APR (est.): {pct(p.apr_pa)}{!o.apr_reliable && " — indicative"}</div>
+                  {p.apr_note && <div className="muted">{p.apr_note}</div>}
                   {p.rate_source_url && (
                     <div className="muted">
                       rate source: <a href={p.rate_source_url} target="_blank" rel="noreferrer">link</a>
-                      {p.rate_accessed_date ? ` (${p.rate_accessed_date})` : ""} <RuleTag status={(p.rate_confidence || "unknown").toUpperCase()} />
+                      {p.rate_accessed_date ? ` (${p.rate_accessed_date})` : ""}{" "}
+                      <RuleTag label={(p.rate_confidence || "unknown")} />
                     </div>
                   )}
                 </div>
@@ -94,13 +126,11 @@ function OfferRow({ offer }: { offer: LenderOffer }) {
                 <ul>
                   {o.reasons.map((r, i) => (
                     <li key={i}>
-                      <code>{r.code}</code> {r.message} <RuleTag status={r.rule_status} />
+                      <code>{r.code}</code> {r.message} <RuleTag label={r.confidence_label || r.rule_status} />
                       {r.applicant_value && (
                         <span className="muted"> (you: {r.applicant_value}, needs: {r.required_value})</span>
                       )}
-                      {r.source_url && (
-                        <> {" "}<a href={r.source_url} target="_blank" rel="noreferrer">source</a></>
-                      )}
+                      {r.source_url && (<> {" "}<a href={r.source_url} target="_blank" rel="noreferrer">source</a></>)}
                       {r.next_action && <div className="next">&rarr; {r.next_action}</div>}
                     </li>
                   ))}
@@ -121,12 +151,16 @@ function OfferRow({ offer }: { offer: LenderOffer }) {
 }
 
 export default function Results({ decision }: { decision: Decision }) {
+  const order = ["ELIGIBLE_FOR_REQUESTED_TERMS", "ELIGIBLE_FOR_ALTERNATIVE_TERMS",
+    "PRELIMINARILY_ELIGIBLE", "ADDITIONAL_INFORMATION_REQUIRED", "MANUAL_REVIEW",
+    "NOT_ELIGIBLE", "RULES_UNAVAILABLE"];
   const offers = [...decision.offers].sort((a, b) => {
-    const rank = (s: string) => (isOffer(s) ? 0 : 1);
-    if (rank(a.status) !== rank(b.status)) return rank(a.status) - rank(b.status);
+    const ra = order.indexOf(a.status), rb = order.indexOf(b.status);
+    if (ra !== rb) return ra - rb;
     return (a.pricing.apr_pa ?? 1e9) - (b.pricing.apr_pa ?? 1e9);
   });
   const nOffers = offers.filter((o) => isOffer(o.status)).length;
+  const nCovering = offers.filter((o) => o.status === "ELIGIBLE_FOR_REQUESTED_TERMS").length;
   const best = decision.best_offer;
 
   return (
@@ -135,21 +169,29 @@ export default function Results({ decision }: { decision: Decision }) {
         <div className={"badge " + (decision.eligible ? "ok" : "no")}>
           {decision.eligible ? "PRELIMINARY MATCHES FOUND" : "NO PRELIMINARY MATCH"}
         </div>
-        <div className="metric"><span>{nOffers}/20</span> products matched</div>
+        <div className="metric"><span>{nOffers}/20</span> products pass screening</div>
+        <div className="metric"><span>{nCovering}</span> cover the exact request</div>
         <div className="metric"><span>{decision.applicant_age}</span> years</div>
         {best && <div className="metric"><span>{pct(best.pricing.apr_pa)}</span> best APR</div>}
       </div>
 
       {best && (
         <div className="best">
-          <b>Best: {best.lender_id.toUpperCase()}</b> &mdash; {best.product_label}.{" "}
-          Max eligible {rupees(best.max_eligible.amount)} over {best.max_eligible.tenure_months} months
-          (EMI {rupees(best.max_eligible.emi)}/mo).{" "}
-          {best.requested.amount &&
-            <>Requested {rupees(best.requested.amount)} over {best.requested.tenure_months} months
-              = EMI {rupees(best.requested.emi)}/mo. </>}
-          Rate {pct(best.pricing.nominal_rate_pa)}, APR {pct(best.pricing.apr_pa)}, strength {best.strength_score}/100.
+          <b>Best: {best.lender_id.toUpperCase()}</b> &mdash; {best.product_label}{" "}
+          (<span className={statusClass(best.status)}>{STATUS_LABEL[best.status]}</span>).{" "}
+          {best.requested.amount
+            ? <>Requested {rupees(best.requested.amount)} over {best.requested.tenure_months} months
+                = EMI {rupees(best.requested.emi)}/mo @ {pct(best.pricing.nominal_rate_pa)}. </>
+            : <>Max eligible {rupees(best.max_eligible.amount)} over {best.max_eligible.tenure_months} months
+                (EMI {rupees(best.max_eligible.emi)}/mo). </>}
+          APR {pct(best.pricing.apr_pa)}{!best.apr_reliable && " (indicative)"}.
           {best.rationale && <div className="muted" style={{ marginTop: 6 }}>{best.rationale}</div>}
+        </div>
+      )}
+
+      {decision.indicative_lender_ids.length > 0 && (
+        <div className="blocking">
+          Indicative only (APR rests on an estimated rate): {decision.indicative_lender_ids.map((l) => l.toUpperCase()).join(", ")}
         </div>
       )}
 
@@ -162,13 +204,14 @@ export default function Results({ decision }: { decision: Decision }) {
       <table className="offers">
         <thead>
           <tr>
-            <th>Lender / product</th><th>Status</th><th>Max eligible</th>
-            <th>EMI (requested)</th><th>Rate</th><th>APR</th><th>Strength</th>
+            <th>Lender / product</th><th>Status</th><th>Requested</th><th>EMI (requested)</th>
+            <th>Max eligible</th><th>Rate</th><th>APR</th><th>Fit</th>
           </tr>
         </thead>
         <tbody>{offers.map((o) => <OfferRow key={o.lender_id + o.product} offer={o} />)}</tbody>
       </table>
-      <p className="rowhint">Click any row to see requested vs maximum amounts, the rate/fee/GST/APR breakdown, sources, and advice.</p>
+      <p className="rowhint">Click any row for requested / alternative / maximum amounts, each EMI with its principal, rate and tenure, the fee/GST/APR breakdown, sources, and advice. * = APR is indicative (rate estimated).</p>
+      <p className="rowhint">{decision.score_method}</p>
       <p className="rowhint">{decision.disclaimer}</p>
     </div>
   );

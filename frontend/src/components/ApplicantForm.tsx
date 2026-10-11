@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, getProfiles } from "../api";
-import { FormState } from "../App";
+import { FormState } from "../mapping";
 
 interface Props {
   meta: Meta;
@@ -13,7 +13,8 @@ interface Props {
 
 export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, onFillJson }: Props) {
   const up = (patch: Partial<FormState>) => setForm({ ...form, ...patch });
-  const num = (v: string) => (v === "" ? 0 : Number(v));
+  // blank input -> null (preserve "unknown"); a typed number -> that number
+  const onum = (v: string): number | null => (v === "" ? null : Number(v));
   const isSE = form.employment_type !== "salaried";
 
   const [jsonText, setJsonText] = useState("");
@@ -41,16 +42,11 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
     }
   }
 
+  const numVal = (v: number | null) => (v === null ? "" : String(v));
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <div className="form-head">
-        <h2>Applicant</h2>
-      </div>
+    <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }}>
+      <div className="form-head"><h2>Applicant</h2></div>
 
       <details className="json-box" onToggle={(e) => (e.target as HTMLDetailsElement).open && loadProfiles()}>
         <summary>Paste JSON / load a sample profile (auto-fills the form)</summary>
@@ -59,10 +55,7 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
             defaultValue=""
             onChange={(e) => {
               const p = profiles.find((x) => x.profile_id === e.target.value);
-              if (p) {
-                setJsonText(JSON.stringify(p, null, 2));
-                onFillJson(p);
-              }
+              if (p) { setJsonText(JSON.stringify(p, null, 2)); onFillJson(p); }
             }}
           >
             <option value="">— pick a sample profile —</option>
@@ -75,15 +68,13 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
         </div>
         <textarea
           rows={6}
-          placeholder='{"employment_type":"salaried","net_monthly_income":90000,"bureau_score":770,"date_of_birth":"1994-01-01"}'
+          placeholder='{"employment_type":"salaried","net_monthly_income":90000,"bureau_score":770,"date_of_birth":"1994-01-01","application_date":"2026-10-11"}'
           value={jsonText}
           onChange={(e) => setJsonText(e.target.value)}
         />
         <div className="json-actions">
-          <button type="button" className="secondary" onClick={applyJson}>
-            Fill form from JSON
-          </button>
-          <span className="json-note">Unknown keys are ignored; date_of_birth becomes an age.</span>
+          <button type="button" className="secondary" onClick={applyJson}>Fill form from JSON</button>
+          <span className="json-note">Unsupported keys are reported, not dropped. Dates are preserved exactly.</span>
         </div>
         {jsonErr && <div className="json-err">{jsonErr}</div>}
       </details>
@@ -100,85 +91,106 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
           </select>
         </label>
 
-        <label>
-          Net monthly income (&#8377;)
+        <label>Date of birth
+          <input type="date" value={form.date_of_birth}
+            onChange={(e) => up({ date_of_birth: e.target.value })} />
+        </label>
+
+        <label>Application date
+          <input type="date" value={form.application_date}
+            onChange={(e) => up({ application_date: e.target.value })} />
+        </label>
+
+        <label>Net monthly income (&#8377;)
           <input type="number" min={5000} step={5000} value={form.net_monthly_income}
-            onChange={(e) => up({ net_monthly_income: num(e.target.value) })} />
+            onChange={(e) => up({ net_monthly_income: Number(e.target.value) || 0 })} />
         </label>
 
-        <label>
-          Existing EMIs (&#8377;/mo)
-          <input type="number" min={0} step={1000} value={form.existing_emi_monthly}
-            onChange={(e) => up({ existing_emi_monthly: num(e.target.value) })} />
+        <label>Existing EMIs (&#8377;/mo)
+          <input type="number" min={0} value={numVal(form.existing_monthly_emi)}
+            placeholder="unknown" onChange={(e) => up({ existing_monthly_emi: onum(e.target.value) })} />
         </label>
 
-        <label>
-          Card outstanding (&#8377;)
-          <input type="number" min={0} step={5000} value={form.credit_card_outstanding}
-            onChange={(e) => up({ credit_card_outstanding: num(e.target.value) })} />
-        </label>
-
-        <label>
-          Age: <b>{form.age}</b>
-          <input type="range" min={18} max={75} value={form.age}
-            onChange={(e) => up({ age: num(e.target.value) })} />
+        <label>Card outstanding (&#8377;)
+          <input type="number" min={0} value={numVal(form.card_outstanding)}
+            placeholder="unknown" onChange={(e) => up({ card_outstanding: onum(e.target.value) })} />
         </label>
 
         <label className="checkbox">
-          <input type="checkbox" checked={form.has_score}
-            onChange={(e) => up({ has_score: e.target.checked })} />
+          <input type="checkbox" checked={form.has_credit_score === true}
+            onChange={(e) => up({ has_credit_score: e.target.checked })} />
           Has a credit score
         </label>
 
-        {form.has_score && (
-          <label>
-            Bureau score: <b>{form.bureau_score}</b>
-            <input type="range" min={300} max={900} value={form.bureau_score}
-              onChange={(e) => up({ bureau_score: num(e.target.value) })} />
+        {form.has_credit_score && (
+          <label>Bureau score: <b>{form.bureau_score ?? "-"}</b>
+            <input type="range" min={300} max={900} value={form.bureau_score ?? 750}
+              onChange={(e) => up({ bureau_score: Number(e.target.value) })} />
           </label>
         )}
 
-        <label>
-          Total experience (mo)
-          <input type="number" min={0} step={6} value={form.total_experience_months}
-            onChange={(e) => up({ total_experience_months: num(e.target.value) })} />
+        <label>Max DPD, last 12m (days)
+          <input type="number" min={0} value={numVal(form.max_dpd_days_last_12_months)}
+            placeholder="unknown" onChange={(e) => up({ max_dpd_days_last_12_months: onum(e.target.value) })} />
         </label>
 
-        <label>
-          Current job (mo)
-          <input type="number" min={0} step={6} value={form.current_job_tenure_months}
-            onChange={(e) => up({ current_job_tenure_months: num(e.target.value) })} />
+        <label>Enquiries, last 6m
+          <input type="number" min={0} value={numVal(form.enquiries_last_6_months)}
+            placeholder="unknown" onChange={(e) => up({ enquiries_last_6_months: onum(e.target.value) })} />
         </label>
 
-        <label>
-          Employer category
+        <label className="checkbox">
+          <input type="checkbox" checked={form.has_settled_loan}
+            onChange={(e) => up({ has_settled_loan: e.target.checked })} />
+          Has a settled loan
+        </label>
+
+        {form.has_settled_loan && (
+          <label>Settled (months ago)
+            <input type="number" min={0} value={numVal(form.settled_loan_months_ago)}
+              placeholder="unknown" onChange={(e) => up({ settled_loan_months_ago: onum(e.target.value) })} />
+          </label>
+        )}
+
+        <label className="checkbox">
+          <input type="checkbox" checked={form.write_off_flag}
+            onChange={(e) => up({ write_off_flag: e.target.checked })} />
+          Write-off on record
+        </label>
+
+        <label>Total experience (mo)
+          <input type="number" min={0} value={numVal(form.total_experience_months)}
+            placeholder="unknown" onChange={(e) => up({ total_experience_months: onum(e.target.value) })} />
+        </label>
+
+        <label>Current job (mo)
+          <input type="number" min={0} value={numVal(form.current_job_tenure_months)}
+            placeholder="unknown" onChange={(e) => up({ current_job_tenure_months: onum(e.target.value) })} />
+        </label>
+
+        <label>Employer category
           <select value={form.employer_category} onChange={(e) => up({ employer_category: e.target.value })}>
-            {meta.employer_categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+            <option value="">(not specified)</option>
+            {meta.employer_categories.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </label>
 
         {isSE && (
           <>
-            <label>
-              Business vintage (mo)
-              <input type="number" min={0} step={6} value={form.business_vintage_months}
-                onChange={(e) => up({ business_vintage_months: num(e.target.value) })} />
+            <label>Business vintage (mo)
+              <input type="number" min={0} value={numVal(form.business_vintage_months)}
+                placeholder="unknown" onChange={(e) => up({ business_vintage_months: onum(e.target.value) })} />
             </label>
-            <label>
-              ITR years filed
-              <input type="number" min={0} max={10} value={form.itr_years_filed}
-                onChange={(e) => up({ itr_years_filed: num(e.target.value) })} />
+            <label>ITR years available
+              <input type="number" min={0} max={10} value={numVal(form.itr_years_available)}
+                placeholder="unknown" onChange={(e) => up({ itr_years_available: onum(e.target.value) })} />
             </label>
-            <label>
-              Latest ITR income (&#8377;/yr)
-              <input type="number" min={0} step={100000} value={form.itr_income_y1}
-                onChange={(e) => up({ itr_income_y1: num(e.target.value) })} />
+            <label>Latest ITR income (&#8377;/yr)
+              <input type="number" min={0} step={100000} value={numVal(form.itr_income_y1)}
+                placeholder="unknown" onChange={(e) => up({ itr_income_y1: onum(e.target.value) })} />
             </label>
             {form.employment_type === "sep" && (
-              <label>
-                Profession
+              <label>Profession
                 <input type="text" placeholder="doctor / ca / cs" value={form.profession}
                   onChange={(e) => up({ profession: e.target.value })} />
               </label>
@@ -186,45 +198,34 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
           </>
         )}
 
-        <label>
-          City
+        <label>City
           <input type="text" value={form.city} onChange={(e) => up({ city: e.target.value })} />
         </label>
 
-        <label>
-          Salary account with
-          <select value={form.salary_account_with_lender}
-            onChange={(e) => up({ salary_account_with_lender: e.target.value })}>
-            {meta.salary_account_options.map((o) => (
-              <option key={o} value={o}>{o}</option>
-            ))}
+        <label>Salary account with
+          <select value={form.salary_account_with}
+            onChange={(e) => up({ salary_account_with: e.target.value })}>
+            {meta.salary_account_options.map((o) => <option key={o} value={o}>{o}</option>)}
           </select>
         </label>
 
-        <label>
-          Gender (rate concessions)
+        <label>Gender (rate concessions)
           <select value={form.gender} onChange={(e) => up({ gender: e.target.value })}>
             <option>(not specified)</option>
-            {meta.genders.map((g) => (
-              <option key={g} value={g}>{g}</option>
-            ))}
+            {meta.genders.map((g) => <option key={g} value={g}>{g}</option>)}
           </select>
         </label>
 
-        <label>
-          Requested amount (&#8377;)
-          <input type="number" min={0} step={50000} value={form.requested_amount}
-            onChange={(e) => up({ requested_amount: num(e.target.value) })} />
+        <label>Requested amount (&#8377;)
+          <input type="number" min={0} step={50000} value={numVal(form.requested_amount)}
+            placeholder="none" onChange={(e) => up({ requested_amount: onum(e.target.value) })} />
         </label>
 
-        <label>
-          Tenure (months)
-          <select value={form.requested_tenure_months}
-            onChange={(e) => up({ requested_tenure_months: num(e.target.value) })}>
+        <label>Tenure (months)
+          <select value={form.requested_tenure_months ?? 0}
+            onChange={(e) => up({ requested_tenure_months: Number(e.target.value) || null })}>
             <option value={0}>auto</option>
-            {meta.tenures.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
+            {meta.tenures.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </label>
       </div>
