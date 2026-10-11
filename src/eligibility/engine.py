@@ -29,7 +29,7 @@ from . import strength as st
 from .gates import GateResult, GateEvaluator
 from .rules import RuleStore, get_store
 from .schema import (AmountQuote, Applicant, CapBreakdown, Confidence, Decision,
-                     Gender, LenderOffer, ReasonCode, RuleStatus, Status)
+                     Gender, LenderOffer, RankingResult, ReasonCode, RuleStatus, Status)
 
 CONF_RANK = {Confidence.PUBLISHED: 0, Confidence.PUBLISHED_CONFLICT: 1, Confidence.DERIVED: 2,
              Confidence.ESTIMATED: 3, Confidence.ESTIMATED_SUPERSEDED: 4}
@@ -294,11 +294,14 @@ class Engine:
         indic_ranked = sorted(indicative, key=lambda o: (
             o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9, o.lender_id))
 
+        rankings = _build_rankings(eligible)
+
         decision = Decision(
             eligible=bool(eligible),
             offers=offers,
             best_offer=best,
             best_rationale=rationale,
+            rankings=rankings,
             ranked_lender_ids=[o.lender_id for o in reliable_ranked],
             indicative_lender_ids=[o.lender_id for o in indic_ranked],
             score_method=st.SCORE_METHOD,
@@ -349,6 +352,45 @@ def _best_offer(eligible: list[LenderOffer], app: Applicant) -> tuple[Optional[L
     rationale = (f"Lowest APR ({best.pricing.apr_pa}%){rel} among {len(rank_pool)} eligible products "
                  f"{note}; nominal rate {best.pricing.nominal_rate_pa}%.")
     return best, rationale
+
+
+def _build_rankings(eligible: list[LenderOffer]) -> RankingResult:
+    """plan3 §6: compute the four separate ranking outcomes. Each is independent so a low
+    advertised rate never masquerades as the best match for the requested loan."""
+    if not eligible:
+        return RankingResult(insufficient_evidence=True, basis="no eligible products")
+
+    def by_apr(pool):
+        rel = [o for o in pool if o.apr_reliable and o.pricing.apr_pa is not None]
+        return sorted(rel, key=lambda o: (o.pricing.apr_pa, o.lender_id))
+
+    covering = [o for o in eligible if o.status.covers_request]
+    alternatives = [o for o in eligible if o.status == Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS]
+
+    best_req = by_apr(covering)
+    best_alt = by_apr(alternatives) or sorted(
+        alternatives, key=lambda o: (o.pricing.apr_pa or 1e9, o.lender_id))
+    with_rate = [o for o in eligible if o.pricing.nominal_rate_pa is not None]
+    lowest_rate = sorted(with_rate, key=lambda o: (o.pricing.nominal_rate_pa, o.lender_id))
+    lowest_apr = by_apr(eligible)
+
+    if best_req:
+        basis = "lowest reliably-calculated APR among products covering the exact requested terms"
+        insufficient = False
+    elif lowest_apr:
+        basis = "no product covers the exact request on published pricing; showing best alternative"
+        insufficient = False
+    else:
+        basis = "no product has a reliable (published-rate) APR; only indicative options exist"
+        insufficient = True
+
+    return RankingResult(
+        best_for_requested_terms=best_req[0].lender_id if best_req else None,
+        best_supported_alternative=best_alt[0].lender_id if best_alt else None,
+        lowest_estimated_rate=lowest_rate[0].lender_id if lowest_rate else None,
+        lowest_reliable_apr=lowest_apr[0].lender_id if lowest_apr else None,
+        basis=basis, insufficient_evidence=insufficient,
+    )
 
 
 def _top_reasons(offers: list[LenderOffer]) -> list[ReasonCode]:

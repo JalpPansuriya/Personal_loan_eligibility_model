@@ -58,6 +58,7 @@ export interface PricingBreakdown {
   rate_confidence: string | null;
   rate_source_url: string;
   rate_accessed_date: string;
+  rate_capped_at_ceiling: boolean;
   processing_fee: number | null;
   gst_on_fee: number | null;
   other_charges: number | null;
@@ -79,6 +80,17 @@ export type Status =
   | "INVALID_INPUT"
   | "RULES_UNAVAILABLE";
 
+export interface RuleCheck {
+  rule: string;
+  status: "PASS" | "FAIL" | "UNKNOWN" | "NOT_APPLICABLE";
+  actual_value: string | null;
+  required_value: string | null;
+  rule_id: string;
+  source_status: string;
+  source_url: string;
+  retrieved_at: string;
+}
+
 export interface LenderOffer {
   lender_id: string;
   product: string;
@@ -95,6 +107,7 @@ export interface LenderOffer {
   strength_score: number | null;
   strength_band: string;
   reasons: ReasonCode[];
+  checks: RuleCheck[];
   fixes: Fix[];
   rationale: string;
   lowest_confidence: string | null;
@@ -106,12 +119,23 @@ export interface Decision {
   offers: LenderOffer[];
   best_offer: LenderOffer | null;
   best_rationale: string;
+  rankings: RankingResult;
   ranked_lender_ids: string[];
   indicative_lender_ids: string[];
   score_method: string;
+  rule_set_version: string;
   top_blocking_reasons: ReasonCode[];
   applicant_age: number;
   disclaimer: string;
+}
+
+export interface RankingResult {
+  best_for_requested_terms: string | null;
+  best_supported_alternative: string | null;
+  lowest_estimated_rate: string | null;
+  lowest_reliable_apr: string | null;
+  basis: string;
+  insufficient_evidence: boolean;
 }
 
 export interface ModelSummary {

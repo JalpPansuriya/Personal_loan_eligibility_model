@@ -462,12 +462,24 @@ class LenderOffer(BaseModel):
     apr_reliable: bool = True             # False -> ranked only in the indicative list
 
 
+class RankingResult(BaseModel):
+    """plan3 §6: four separate, clearly-labelled ranking outcomes, so a low advertised rate
+    can never masquerade as the best match for the requested loan."""
+    best_for_requested_terms: Optional[str] = None   # lender_id, lowest reliable APR covering the exact request
+    best_supported_alternative: Optional[str] = None # lender_id, best when the request isn't fully covered
+    lowest_estimated_rate: Optional[str] = None       # lender_id with the lowest nominal rate (may be a range floor)
+    lowest_reliable_apr: Optional[str] = None          # lender_id with the lowest published-rate APR
+    basis: str = ""                                    # how the headline best was chosen
+    insufficient_evidence: bool = False                # True when no reliable winner can be established
+
+
 class Decision(BaseModel):
     """The full engine result for one applicant across all lenders."""
     eligible: bool                       # at least one offer the applicant can take to a lender
     offers: list[LenderOffer] = Field(default_factory=list)
     best_offer: Optional[LenderOffer] = None
     best_rationale: str = ""
+    rankings: RankingResult = Field(default_factory=lambda: RankingResult())
     ranked_lender_ids: list[str] = Field(default_factory=list)   # covering offers, by APR (primary ranking)
     indicative_lender_ids: list[str] = Field(default_factory=list)  # offers with an unreliable/estimated APR
     score_method: str = ""               # how the rule-fit score is computed (not approval odds)
