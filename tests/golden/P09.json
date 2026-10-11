@@ -1,8 +1,8 @@
 {
   "best": {
-    "apr_pa": 14.7,
-    "lender_id": "union",
-    "max_eligible": 1400000.0,
+    "apr_pa": 25.29,
+    "lender_id": "poonawalla",
+    "max_eligible": 840000.0,
     "status": "PRELIMINARILY_ELIGIBLE"
   },
   "eligible": true,

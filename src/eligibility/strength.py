@@ -1,16 +1,24 @@
-"""Approval-strength score 0-100 (scorecard with published weights).
+"""Rule-fit score 0-100 (transparent, documented) — NOT an approval probability.
 
-Weights (from model_report.md section 8.8, fixed by underwriting judgement, NOT optimised):
-    score margin            30
-    FOIR headroom           25
-    stability / experience  15
-    bureau hygiene          15
-    relationship / employer 10
-    amount-vs-multiple slack 5
+plan2 §9 requires the old "strength" score to be either removed or redefined as a
+transparent, documented rule-match / data-completeness score, kept separate from
+affordability and ranking, and never presented as an approval likelihood.
 
-The score is informational: it NEVER turns a gate failure into an approval. The engine
-only computes it for offers that already passed the gates. Bands:
-    >=75 strong | 50-74 comfortable | 30-49 borderline | <30 weak-but-passing
+This score measures HOW WELL an applicant fits a product's published criteria and HOW
+COMPLETE the inputs are — a comfort/fit indicator for a passing applicant. It is computed
+only for offers that already passed every hard gate, so it can never turn a rejection into
+an offer, and it is NOT used to rank offers (ranking uses APR/EMI/cost — see engine._best_offer).
+
+Component weights (fixed by underwriting judgement, not optimised against any approval label,
+because no approval labels exist):
+    score margin            30   how far the bureau score sits above a 650 floor
+    FOIR headroom           25   how far current FOIR sits below the lender's limit
+    stability / experience  15   total work experience toward 60 months
+    bureau hygiene          15   clean history vs DPD/enquiries
+    relationship            10   existing salary-account relationship with the lender
+    amount slack             5   requested amount vs the max this product supports
+
+Bands: >=75 strong-fit | 50-74 comfortable-fit | 30-49 borderline-fit | <30 weak-but-passing.
 """
 from __future__ import annotations
 
@@ -25,6 +33,12 @@ WEIGHTS = {
     "relationship": 10,
     "amount_slack": 5,
 }
+
+SCORE_METHOD = (
+    "Rule-fit score (0-100): a weighted measure of how well the applicant fits this "
+    "product's published criteria and how complete the inputs are. It is NOT an approval "
+    "probability and does not affect offer ranking."
+)
 
 
 def _clamp01(x: float) -> float:
@@ -70,9 +84,9 @@ def strength(app: Applicant, d: DerivedView, lender_id: str, foir_limit: float |
 
 def band(score: int) -> str:
     if score >= 75:
-        return "strong"
+        return "strong-fit"
     if score >= 50:
-        return "comfortable"
+        return "comfortable-fit"
     if score >= 30:
-        return "borderline"
+        return "borderline-fit"
     return "weak-but-passing"

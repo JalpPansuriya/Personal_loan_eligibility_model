@@ -191,7 +191,9 @@ class Engine:
 
         fl = af.foir_limit(self.store, lender, product, segment)
         offer.strength_score = st.strength(app, d, lender, fl, max_loan)
+        offer.strength_band = st.band(offer.strength_score)
         offer.lowest_confidence = pricing.rate_confidence or Confidence.PUBLISHED
+        offer.apr_reliable = pricing.rate_confidence in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
 
         # status routing (plan2 §4):
         #   PRELIMINARILY_ELIGIBLE          - repriced on bureau signals, estimated rate, or
@@ -261,11 +263,27 @@ class Engine:
 
         eligible = [o for o in offers if o.status.is_offer]
         best, rationale = _best_offer(eligible, app)
+
+        # transparent ranking: covering offers with a RELIABLE APR form the primary ranking;
+        # offers whose APR rests on an estimated rate are listed separately as indicative.
+        covering = [o for o in eligible if o.status.covers_request]
+        pool = covering or eligible
+        reliable = [o for o in pool if o.apr_reliable]
+        indicative = [o for o in pool if not o.apr_reliable]
+        reliable_ranked = sorted(reliable, key=lambda o: (
+            o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9,
+            o.requested.emi if o.requested.emi is not None else 1e18, o.lender_id))
+        indic_ranked = sorted(indicative, key=lambda o: (
+            o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9, o.lender_id))
+
         decision = Decision(
             eligible=bool(eligible),
             offers=offers,
             best_offer=best,
             best_rationale=rationale,
+            ranked_lender_ids=[o.lender_id for o in reliable_ranked],
+            indicative_lender_ids=[o.lender_id for o in indic_ranked],
+            score_method=st.SCORE_METHOD,
             applicant_age=round(app.age_at_application, 1),
         )
         if best:
@@ -291,22 +309,25 @@ def _prefer(a: Optional[LenderOffer], b: LenderOffer) -> LenderOffer:
 
 
 def _best_offer(eligible: list[LenderOffer], app: Applicant) -> tuple[Optional[LenderOffer], str]:
-    """Rank eligible options. The best match for the requested loan must actually cover the
-    requested amount+tenure (defect H). Only when nothing covers it do we fall back to the
-    best alternative, and the rationale says so explicitly."""
+    """Rank eligible options. The best match must cover the exact requested amount+tenure
+    (defect H) and should have a reliable (published) APR; only when nothing qualifies do we
+    fall back, and the rationale says so."""
     if not eligible:
         return None, ""
     covering = [o for o in eligible if o.status.covers_request]
     pool = covering or eligible
-    ranked = sorted(pool, key=lambda o: (o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9,
-                                         (o.requested.emi if o.requested.emi is not None else 1e18),
-                                         o.lender_id))
+    reliable = [o for o in pool if o.apr_reliable]
+    rank_pool = reliable or pool
+    ranked = sorted(rank_pool, key=lambda o: (o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9,
+                                              (o.requested.emi if o.requested.emi is not None else 1e18),
+                                              o.lender_id))
     best = ranked[0]
-    if covering:
+    if covering and best in covering:
         note = "covering the exact requested amount and tenure"
     else:
         note = "offering the closest affordable alternative (the request is not fully covered)"
-    rationale = (f"Lowest APR ({best.pricing.apr_pa}%) among {len(pool)} eligible products "
+    rel = "" if best.apr_reliable else " (APR indicative — rate estimated)"
+    rationale = (f"Lowest APR ({best.pricing.apr_pa}%){rel} among {len(rank_pool)} eligible products "
                  f"{note}; nominal rate {best.pricing.nominal_rate_pa}%.")
     return best, rationale
 

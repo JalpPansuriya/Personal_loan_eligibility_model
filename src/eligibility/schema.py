@@ -415,10 +415,12 @@ class LenderOffer(BaseModel):
     pricing: PricingBreakdown = Field(default_factory=PricingBreakdown)
 
     strength_score: Optional[int] = None
+    strength_band: str = ""
     reasons: list[ReasonCode] = Field(default_factory=list)
     fixes: list[Fix] = Field(default_factory=list)
     rationale: str = ""
     lowest_confidence: Optional[Confidence] = None
+    apr_reliable: bool = True             # False -> ranked only in the indicative list
 
 
 class Decision(BaseModel):
@@ -427,6 +429,9 @@ class Decision(BaseModel):
     offers: list[LenderOffer] = Field(default_factory=list)
     best_offer: Optional[LenderOffer] = None
     best_rationale: str = ""
+    ranked_lender_ids: list[str] = Field(default_factory=list)   # covering offers, by APR (primary ranking)
+    indicative_lender_ids: list[str] = Field(default_factory=list)  # offers with an unreliable/estimated APR
+    score_method: str = ""               # how the rule-fit score is computed (not approval odds)
     top_blocking_reasons: list[ReasonCode] = Field(default_factory=list)
     applicant_age: float = 0.0
     disclaimer: str = ("Preliminary screening against published lender criteria. "
