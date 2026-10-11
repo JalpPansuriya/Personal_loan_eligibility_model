@@ -1,9 +1,9 @@
 {
   "best": {
-    "apr_pa": 10.06,
-    "lender_id": "union",
+    "apr_pa": 12.34,
+    "lender_id": "icici",
     "max_eligible": 4000000.0,
-    "status": "PRELIMINARILY_ELIGIBLE"
+    "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
   "offer_count": 11,
@@ -41,17 +41,17 @@
     "icici": {
       "apr_pa": 12.34,
       "max_eligible": 4000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "idfc": {
       "apr_pa": 12.79,
       "max_eligible": 4000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "indusind": {
       "apr_pa": 15.09,
       "max_eligible": 4000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "kotak": {
       "apr_pa": null,
@@ -59,24 +59,24 @@
       "status": "NOT_ELIGIBLE"
     },
     "kreditbee": {
-      "apr_pa": 16.01,
+      "apr_pa": 15.71,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
     },
     "lnt": {
       "apr_pa": 14.56,
       "max_eligible": 1500000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "moneyview": {
       "apr_pa": 19.53,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
     },
     "navi": {
       "apr_pa": 14.18,
       "max_eligible": 2000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "pnb": {
       "apr_pa": null,
@@ -86,7 +86,7 @@
     "poonawalla": {
       "apr_pa": 19.29,
       "max_eligible": 2400000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "sbi": {
       "apr_pa": null,

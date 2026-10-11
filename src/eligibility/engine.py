@@ -7,8 +7,9 @@ For each lender -> each product offering the applicant's segment:
        NOT_ELIGIBLE                     a documented mandatory rule is violated
        ADDITIONAL_INFORMATION_REQUIRED  a needed value is missing (e.g. SE vintage)
        MANUAL_REVIEW                    an ambiguous/unverified condition (e.g. check-off)
-       ELIGIBLE_TO_QUERY_LENDERS        passes all rules + fully priced on published data
-       PRELIMINARILY_ELIGIBLE           passes rules but some terms estimated/reduced
+       ELIGIBLE_FOR_REQUESTED_TERMS     passes all rules + covers the exact requested amount/tenure
+       ELIGIBLE_FOR_ALTERNATIVE_TERMS   passes rules but only a smaller amount / shorter tenure fits
+       PRELIMINARILY_ELIGIBLE           passes rules but some terms estimated/repriced/undetermined
   4. for eligible routes: size the max loan (cap breakdown), compute the EMI for the
      REQUESTED amount and separately the EMI for the MAX ELIGIBLE amount, and price both
      with fees/GST/APR kept separate.
@@ -35,12 +36,13 @@ CONF_RANK = {Confidence.PUBLISHED: 0, Confidence.PUBLISHED_CONFLICT: 1, Confiden
 
 # status preference when choosing between products of one lender / ranking
 STATUS_RANK = {
-    Status.ELIGIBLE_TO_QUERY_LENDERS: 0,
+    Status.ELIGIBLE_FOR_REQUESTED_TERMS: 0,
     Status.PRELIMINARILY_ELIGIBLE: 1,
-    Status.MANUAL_REVIEW: 2,
-    Status.ADDITIONAL_INFORMATION_REQUIRED: 3,
-    Status.NOT_ELIGIBLE: 4,
-    Status.RULES_UNAVAILABLE: 5,
+    Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS: 2,
+    Status.MANUAL_REVIEW: 3,
+    Status.ADDITIONAL_INFORMATION_REQUIRED: 4,
+    Status.NOT_ELIGIBLE: 5,
+    Status.RULES_UNAVAILABLE: 6,
 }
 
 
@@ -54,20 +56,27 @@ class Engine:
         self.gates = GateEvaluator(self.store)
 
     # ------------------------------------------------------------------ tenure
-    def _tenure(self, app: Applicant, product: str, segment: str, lender: str,
-                d: pp.DerivedView, *, for_max: bool = False) -> int:
+    def _tenure_bounds(self, product: str, segment: str, lender: str,
+                       d: pp.DerivedView) -> tuple[int, int]:
+        """(min, max) permitted tenure in months, max clipped by the age-at-maturity cap."""
         pmin = af._resolve_value(self.store, lender, product, segment, "tenure_min_months", pick_min=False) or 12
         pmax = af._resolve_value(self.store, lender, product, segment, "tenure_max_months", pick_min=True) or 60
         mat = af._resolve_value(self.store, lender, product, segment, "age_max_at_maturity", pick_min=True)
         cap = int(pmax)
         if mat is not None:
             cap = pp.max_tenure_by_age(d.age_at_application, mat, int(pmax))
-        if app.requested_tenure_months and not for_max:
+        return int(pmin), max(0, cap)
+
+    def _permitted_requested_tenure(self, app: Applicant, product: str, segment: str,
+                                    lender: str, d: pp.DerivedView) -> tuple[int, bool]:
+        """The tenure actually usable for the REQUESTED loan, and whether the exact
+        requested tenure is supported (never silently rewritten; see defect F)."""
+        pmin, cap = self._tenure_bounds(product, segment, lender, d)
+        if app.requested_tenure_months:
             want = app.requested_tenure_months
-        else:
-            # max-eligibility uses the longest permitted tenure (most affordability room)
-            want = cap
-        return max(int(pmin), min(want, cap))
+            permitted = max(pmin, min(want, cap))
+            return permitted, (permitted == want)
+        return max(pmin, cap), True
 
     # ------------------------------------------------------------------ per lender/product
     def evaluate_product(self, app: Applicant, lender: str, product: str, segment: str) -> LenderOffer:
@@ -94,9 +103,10 @@ class Engine:
             return offer
 
         # 4. eligible: compute tenures (requested vs max), size, price both
-        req_tenure = self._tenure(app, product, segment, lender, d, for_max=False)
-        max_tenure = self._tenure(app, product, segment, lender, d, for_max=True)
-        if req_tenure < 1 or max_tenure < 1:
+        pmin_t, max_tenure = self._tenure_bounds(product, segment, lender, d)
+        permitted_req_tenure, req_tenure_supported = self._permitted_requested_tenure(
+            app, product, segment, lender, d)
+        if max_tenure < 1 or permitted_req_tenure < 1:
             offer.status = Status.NOT_ELIGIBLE
             offer.reasons = [ReasonCode(code="AGE_AT_MATURITY", variable="age_max_at_maturity",
                                         message="no tenure fits the maturity cap",
@@ -133,44 +143,65 @@ class Engine:
             calculator=sizing.caps.get("calculator"), binding_cap=sizing.binding_cap,
         )
 
-        # requested amount quote (clamped to max): EMI for the REQUESTED principal/tenure
+        # does the max cover the requested AMOUNT?
         requested_amount = app.requested_amount
-        requested_supported = requested_amount is None or max_loan >= requested_amount - 1
-        offered_requested = min(requested_amount, max_loan) if requested_amount else None
+        amount_supported = requested_amount is None or max_loan >= requested_amount - 1
 
-        # pricing on the requested amount (or on max if none requested) at the REQUESTED tenure
-        price_amount = offered_requested if offered_requested else max_loan
-        price_tenure = req_tenure
-        pricing, req_emi = pr.price_full(self.store, lender, product, segment, band,
-                                         price_amount, price_tenure, is_female=is_female,
-                                         bureau_soft_flags=gate.bureau_soft_flags)
+        from .finance import emi as _emi
+
+        # REQUESTED quote: always the applicant's EXACT requested principal + requested tenure
+        # (defect F/G: never rewrite the request). Only populated when a request was made.
+        if requested_amount is not None:
+            # price at the requested amount if supported, else at the requested amount anyway
+            # for the illustrative EMI/rate (the status flags it as not covered).
+            price_req_amount = requested_amount if amount_supported else requested_amount
+            pricing, req_emi = pr.price_full(
+                self.store, lender, product, segment, band,
+                price_req_amount, permitted_req_tenure, is_female=is_female,
+                bureau_soft_flags=gate.bureau_soft_flags)
+            offer.requested = AmountQuote(amount=requested_amount,
+                                          tenure_months=app.requested_tenure_months or permitted_req_tenure,
+                                          emi=round(_emi(requested_amount, pricing.nominal_rate_pa,
+                                                         app.requested_tenure_months or permitted_req_tenure), 2))
+        else:
+            # no explicit request: price on the max amount at the max tenure
+            pricing, _ = pr.price_full(self.store, lender, product, segment, band,
+                                       max_loan, max_tenure, is_female=is_female,
+                                       bureau_soft_flags=gate.bureau_soft_flags)
         offer.pricing = pricing
 
-        # separate EMI for the MAX eligible amount at the MAX tenure
-        from .finance import emi as _emi
+        # MAX eligible quote at the MAX permitted tenure
         max_emi = round(_emi(max_loan, pricing.nominal_rate_pa, max_tenure), 2)
-
-        offer.requested = AmountQuote(
-            amount=offered_requested if requested_amount else None,
-            tenure_months=req_tenure if requested_amount else None,
-            emi=req_emi if requested_amount else None,
-        )
         offer.max_eligible = AmountQuote(amount=max_loan, tenure_months=max_tenure, emi=max_emi)
-        offer.requested_supported = bool(requested_supported)
+
+        # ALTERNATIVE quote: shown only when the request is not fully supported.
+        # amount = min(requested, max_loan); tenure = permitted requested tenure.
+        if requested_amount is not None and (not amount_supported or not req_tenure_supported):
+            alt_amount = min(requested_amount, max_loan)
+            offer.alternative = AmountQuote(
+                amount=alt_amount, tenure_months=permitted_req_tenure,
+                emi=round(_emi(alt_amount, pricing.nominal_rate_pa, permitted_req_tenure), 2))
+
+        offer.requested_supported = bool(amount_supported)
+        offer.requested_tenure_supported = bool(req_tenure_supported)
 
         fl = af.foir_limit(self.store, lender, product, segment)
         offer.strength_score = st.strength(app, d, lender, fl, max_loan)
         offer.lowest_confidence = pricing.rate_confidence or Confidence.PUBLISHED
 
-        # status: passes all mandatory rules on published pricing and covers the requested
-        # amount -> ELIGIBLE. A published rate *band* (min..max) still counts as eligible; it
-        # is only "preliminary" when the rate is estimated, the amount was reduced/repriced,
-        # or the requested amount is not covered.
+        # status routing (plan2 §4):
+        #   PRELIMINARILY_ELIGIBLE          - repriced on bureau signals, estimated rate, or
+        #                                     card-outstanding affordability is undetermined
+        #   ELIGIBLE_FOR_ALTERNATIVE_TERMS  - passes rules but the exact amount/tenure is not met
+        #   ELIGIBLE_FOR_REQUESTED_TERMS    - passes rules and covers the exact request on published pricing
         rate_pub = pricing.rate_confidence in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
-        if gate.bureau_soft_flags or not requested_supported or not rate_pub:
+        fully_supported = amount_supported and req_tenure_supported
+        if gate.bureau_soft_flags or not rate_pub or not app.card_obligation_known:
             offer.status = Status.PRELIMINARILY_ELIGIBLE
+        elif not fully_supported:
+            offer.status = Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS
         else:
-            offer.status = Status.ELIGIBLE_TO_QUERY_LENDERS
+            offer.status = Status.ELIGIBLE_FOR_REQUESTED_TERMS
 
         if gate.bureau_soft_flags:
             offer.reasons.append(ReasonCode(
@@ -178,6 +209,27 @@ class Engine:
                 message="terms repriced and amount reduced due to bureau signals",
                 rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
                 next_action="Improve the bureau profile for standard pricing."))
+        if not app.card_obligation_known:
+            offer.reasons.append(ReasonCode(
+                code="CARD_OUTSTANDING_UNKNOWN", variable="card_outstanding",
+                message="affordability not fully determined: no published rule for card-outstanding treatment",
+                rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
+                next_action="Provide the monthly repayment obligation on the card balance."))
+        if not amount_supported:
+            offer.reasons.append(ReasonCode(
+                code="AMOUNT_NOT_COVERED", variable="loan_max",
+                message="requested amount exceeds the maximum this product supports",
+                applicant_value=str(requested_amount), required_value=f"<= {max_loan}",
+                rule_status=RuleStatus.DERIVED,
+                next_action="Request up to the maximum, or choose a higher-cap lender."))
+        if not req_tenure_supported:
+            offer.reasons.append(ReasonCode(
+                code="TENURE_NOT_SUPPORTED", variable="tenure_max_months",
+                message="requested tenure is outside the lender's permitted range",
+                applicant_value=str(app.requested_tenure_months),
+                required_value=f"{pmin_t}-{max_tenure}",
+                rule_status=RuleStatus.PUBLISHED,
+                next_action="Choose a tenure within the permitted range."))
         return offer
 
     def _lowest_conf(self, reasons: list[ReasonCode]) -> Optional[Confidence]:
@@ -228,20 +280,23 @@ def _prefer(a: Optional[LenderOffer], b: LenderOffer) -> LenderOffer:
 
 
 def _best_offer(eligible: list[LenderOffer], app: Applicant) -> tuple[Optional[LenderOffer], str]:
-    """Rank eligible options on the requested terms. Returns (best, rationale)."""
+    """Rank eligible options. The best match for the requested loan must actually cover the
+    requested amount+tenure (defect H). Only when nothing covers it do we fall back to the
+    best alternative, and the rationale says so explicitly."""
     if not eligible:
         return None, ""
-    # prefer options that actually cover the requested amount
-    covering = [o for o in eligible if o.requested_supported]
+    covering = [o for o in eligible if o.status.covers_request]
     pool = covering or eligible
     ranked = sorted(pool, key=lambda o: (o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9,
-                                         -(o.strength_score or 0), o.lender_id))
+                                         (o.requested.emi if o.requested.emi is not None else 1e18),
+                                         o.lender_id))
     best = ranked[0]
-    note = "covering the requested amount" if (covering and best in covering) else \
-           "offering the largest affordable amount"
+    if covering:
+        note = "covering the exact requested amount and tenure"
+    else:
+        note = "offering the closest affordable alternative (the request is not fully covered)"
     rationale = (f"Lowest APR ({best.pricing.apr_pa}%) among {len(pool)} eligible products "
-                 f"{note}; nominal rate {best.pricing.nominal_rate_pa}%, "
-                 f"strength {best.strength_score}/100.")
+                 f"{note}; nominal rate {best.pricing.nominal_rate_pa}%.")
     return best, rationale
 
 

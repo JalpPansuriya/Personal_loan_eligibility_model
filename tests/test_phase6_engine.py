@@ -33,8 +33,9 @@ def test_run_returns_offer_per_lender(engine):
 
 def test_best_offer_has_lowest_apr_among_covering(engine):
     d = engine.run(mk(requested_amount=500_000))
-    covering = [o for o in d.offers if o.status.is_offer and (o.max_eligible.amount or 0) >= 499_000]
+    covering = [o for o in d.offers if o.status.covers_request]
     assert d.best_offer is not None
+    assert d.best_offer.status.covers_request
     assert d.best_offer.pricing.apr_pa == min(o.pricing.apr_pa for o in covering)
 
 

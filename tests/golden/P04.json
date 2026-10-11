@@ -3,7 +3,7 @@
     "apr_pa": 12.79,
     "lender_id": "idfc",
     "max_eligible": 1000000.0,
-    "status": "ELIGIBLE_TO_QUERY_LENDERS"
+    "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
   "offer_count": 10,
@@ -16,12 +16,12 @@
     "axis": {
       "apr_pa": 13.18,
       "max_eligible": 1800000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "bajaj": {
       "apr_pa": 17.66,
       "max_eligible": 1620000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "bob": {
       "apr_pa": null,
@@ -41,12 +41,12 @@
     "icici": {
       "apr_pa": 12.95,
       "max_eligible": 2930000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "idfc": {
       "apr_pa": 12.79,
       "max_eligible": 1000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "indusind": {
       "apr_pa": null,
@@ -56,12 +56,12 @@
     "kotak": {
       "apr_pa": 17.91,
       "max_eligible": 1800000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "kreditbee": {
       "apr_pa": 17.99,
       "max_eligible": 1000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "lnt": {
       "apr_pa": null,
@@ -71,12 +71,12 @@
     "moneyview": {
       "apr_pa": 20.13,
       "max_eligible": 1000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "navi": {
       "apr_pa": 15.17,
       "max_eligible": 1080000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "pnb": {
       "apr_pa": null,
@@ -86,7 +86,7 @@
     "poonawalla": {
       "apr_pa": 18.65,
       "max_eligible": 1080000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "sbi": {
       "apr_pa": null,
@@ -106,7 +106,7 @@
     "yes": {
       "apr_pa": 14.99,
       "max_eligible": 1800000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     }
   }
 }

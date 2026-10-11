@@ -1,6 +1,6 @@
 {
   "best": {
-    "apr_pa": 35.9,
+    "apr_pa": 35.08,
     "lender_id": "kreditbee",
     "max_eligible": 384000.0,
     "status": "PRELIMINARILY_ELIGIBLE"
@@ -59,7 +59,7 @@
       "status": "NOT_ELIGIBLE"
     },
     "kreditbee": {
-      "apr_pa": 35.9,
+      "apr_pa": 35.08,
       "max_eligible": 384000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },

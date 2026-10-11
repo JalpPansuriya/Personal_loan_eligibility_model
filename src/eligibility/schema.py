@@ -80,8 +80,9 @@ class Confidence(str, Enum):
 class Status(str, Enum):
     """Screening statuses. The engine evaluates published lender criteria; it does NOT
     issue bank approvals, so no status implies a guaranteed sanction."""
-    ELIGIBLE_TO_QUERY_LENDERS = "ELIGIBLE_TO_QUERY_LENDERS"   # passes all mandatory rules + fully priced
-    PRELIMINARILY_ELIGIBLE = "PRELIMINARILY_ELIGIBLE"         # passes rules; some terms estimated/reduced
+    ELIGIBLE_FOR_REQUESTED_TERMS = "ELIGIBLE_FOR_REQUESTED_TERMS"   # passes rules; covers the exact request
+    ELIGIBLE_FOR_ALTERNATIVE_TERMS = "ELIGIBLE_FOR_ALTERNATIVE_TERMS"  # passes rules; only a smaller amount/shorter tenure
+    PRELIMINARILY_ELIGIBLE = "PRELIMINARILY_ELIGIBLE"         # passes rules; some terms estimated/repriced
     NOT_ELIGIBLE = "NOT_ELIGIBLE"                             # a documented mandatory rule is violated
     ADDITIONAL_INFORMATION_REQUIRED = "ADDITIONAL_INFORMATION_REQUIRED"  # a needed value is missing
     MANUAL_REVIEW = "MANUAL_REVIEW"                           # ambiguous/unverified condition
@@ -90,7 +91,14 @@ class Status(str, Enum):
 
     @property
     def is_offer(self) -> bool:
-        return self in (Status.ELIGIBLE_TO_QUERY_LENDERS, Status.PRELIMINARILY_ELIGIBLE)
+        return self in (Status.ELIGIBLE_FOR_REQUESTED_TERMS,
+                        Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS,
+                        Status.PRELIMINARILY_ELIGIBLE)
+
+    @property
+    def covers_request(self) -> bool:
+        """True only when the applicant's exact requested amount+tenure are supported."""
+        return self == Status.ELIGIBLE_FOR_REQUESTED_TERMS
 
 
 LENDERS: tuple[str, ...] = (
@@ -381,7 +389,9 @@ class LenderOffer(BaseModel):
 
     requested: AmountQuote = Field(default_factory=AmountQuote)      # requested amount/tenure/EMI
     max_eligible: AmountQuote = Field(default_factory=AmountQuote)   # max amount, its tenure, its EMI
+    alternative: AmountQuote = Field(default_factory=AmountQuote)    # offered alt amount/tenure when request unsupported
     requested_supported: bool = False     # does the max cover the requested amount?
+    requested_tenure_supported: bool = True  # is the requested tenure within the lender's permitted range?
 
     caps: CapBreakdown = Field(default_factory=CapBreakdown)
     pricing: PricingBreakdown = Field(default_factory=PricingBreakdown)

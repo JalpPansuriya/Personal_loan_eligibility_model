@@ -59,7 +59,7 @@
       "status": "NOT_ELIGIBLE"
     },
     "kreditbee": {
-      "apr_pa": 27.01,
+      "apr_pa": 25.69,
       "max_eligible": 400000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },
@@ -74,7 +74,7 @@
       "status": "PRELIMINARILY_ELIGIBLE"
     },
     "navi": {
-      "apr_pa": 24.93,
+      "apr_pa": 24.68,
       "max_eligible": 528000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },

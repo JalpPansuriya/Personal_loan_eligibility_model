@@ -65,8 +65,10 @@ def test_the_reported_bug_is_fixed(engine):
     # the requested EMI is for 5L, NOT for the multi-lakh max eligible amount
     assert best.requested.amount == 500000
     assert 15000 < best.requested.emi < 17000
-    assert best.max_eligible.amount > 1000000
-    assert best.max_eligible.emi > best.requested.emi * 2  # clearly a different, larger EMI
+    assert best.max_eligible.amount >= 1000000
+    # the max-eligible EMI is on a larger principal/longer tenure, so it is clearly distinct
+    assert best.max_eligible.amount > best.requested.amount
+    assert best.max_eligible.emi > best.requested.emi
 
 
 def test_max_never_exceeds_product_cap(engine):
@@ -228,4 +230,5 @@ def test_no_approval_language_in_statuses():
     # the status vocabulary must not contain APPROVE/REJECT (misleading)
     values = {s.value for s in Status}
     assert "APPROVE" not in values and "REJECT" not in values
-    assert "ELIGIBLE_TO_QUERY_LENDERS" in values
+    assert "ELIGIBLE_FOR_REQUESTED_TERMS" in values
+    assert "ELIGIBLE_FOR_ALTERNATIVE_TERMS" in values

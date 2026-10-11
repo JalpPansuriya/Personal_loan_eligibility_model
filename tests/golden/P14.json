@@ -1,9 +1,9 @@
 {
   "best": {
-    "apr_pa": 9.83,
-    "lender_id": "union",
-    "max_eligible": 1700000.0,
-    "status": "PRELIMINARILY_ELIGIBLE"
+    "apr_pa": 10.91,
+    "lender_id": "canara",
+    "max_eligible": 5010000.0,
+    "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
   "offer_count": 17,
@@ -11,12 +11,12 @@
     "abcl": {
       "apr_pa": 16.59,
       "max_eligible": 1530000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "axis": {
       "apr_pa": 12.57,
       "max_eligible": 1700000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "bajaj": {
       "apr_pa": null,
@@ -26,32 +26,32 @@
     "bob": {
       "apr_pa": 11.72,
       "max_eligible": 2000000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "canara": {
       "apr_pa": 10.91,
       "max_eligible": 5010000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "hdfc": {
       "apr_pa": 13.07,
       "max_eligible": 1700000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "icici": {
       "apr_pa": 12.34,
       "max_eligible": 2760000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "idfc": {
       "apr_pa": 12.79,
       "max_eligible": 1700000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "indusind": {
       "apr_pa": 15.09,
       "max_eligible": 1700000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "kotak": {
       "apr_pa": null,
@@ -59,24 +59,24 @@
       "status": "NOT_ELIGIBLE"
     },
     "kreditbee": {
-      "apr_pa": 16.01,
+      "apr_pa": 15.86,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
     },
     "lnt": {
       "apr_pa": 15.38,
       "max_eligible": 1530000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "moneyview": {
       "apr_pa": 19.53,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
     },
     "navi": {
-      "apr_pa": 14.3,
+      "apr_pa": 14.24,
       "max_eligible": 1020000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
     },
     "pnb": {
       "apr_pa": null,
@@ -84,19 +84,19 @@
       "status": "NOT_ELIGIBLE"
     },
     "poonawalla": {
-      "apr_pa": 17.41,
-      "max_eligible": 1020000.0,
+      "apr_pa": 24.5,
+      "max_eligible": 500000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },
     "sbi": {
       "apr_pa": 11.65,
       "max_eligible": 2550000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "tata": {
       "apr_pa": 18.19,
       "max_eligible": 1530000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "union": {
       "apr_pa": 9.83,
@@ -106,7 +106,7 @@
     "yes": {
       "apr_pa": 14.22,
       "max_eligible": 1700000.0,
-      "status": "ELIGIBLE_TO_QUERY_LENDERS"
+      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     }
   }
 }
