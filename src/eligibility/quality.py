@@ -111,6 +111,13 @@ def model_summary(store: RuleStore | None = None) -> dict:
     completeness = product_completeness(store)
     comp_counts = Counter(c["rating"] for c in completeness)
 
+    # material-rule provenance counts (plan3 §9E): verified / estimated / inferred / conflict
+    MATERIAL = KEY_GATE_VARS | KEY_SIZE_VARS | KEY_PRICE_VARS | KEY_FEE_VARS
+    material_counts: Counter = Counter()
+    for ir in rows:
+        if ir.variable in MATERIAL:
+            material_counts[label_for(ir.rule.confidence.value)] += 1
+
     return {
         "lenders_configured": len(store.lenders()),
         "products_configured": len(products),
@@ -120,6 +127,10 @@ def model_summary(store: RuleStore | None = None) -> dict:
         "products_complete": comp_counts.get("complete", 0),
         "products_partial": comp_counts.get("partial", 0),
         "products_insufficient": comp_counts.get("insufficient", 0),
+        "material_rules_verified": material_counts.get("VERIFIED_PUBLISHED", 0),
+        "material_rules_estimated": material_counts.get("ESTIMATED", 0),
+        "material_rules_inferred": material_counts.get("INFERRED", 0),
+        "material_rules_conflict": material_counts.get("CONFLICT_REQUIRES_REVIEW", 0),
         "rules_total": len(rows),
         "rules_by_confidence": dict(by_conf),
         "rules_by_label": dict(by_label),
