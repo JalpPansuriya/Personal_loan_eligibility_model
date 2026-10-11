@@ -81,7 +81,18 @@ class GateResult:
     missing_info: list[ReasonCode] = field(default_factory=list)  # needed value absent
     review: list[ReasonCode] = field(default_factory=list)        # ambiguous/unverified
     bureau_soft_flags: list[str] = field(default_factory=list)    # for pricing (NBFC/fintech reprice)
+    checks: list = field(default_factory=list)                    # full per-rule trace (RuleCheck)
     notes: list[str] = field(default_factory=list)
+
+
+# CSV confidence -> plan3 source-status label
+SOURCE_STATUS = {
+    "published": "VERIFIED_PUBLISHED",
+    "published_conflict": "CONFLICT_REQUIRES_REVIEW",
+    "derived": "DERIVED_FROM_PUBLIC_CALCULATOR",
+    "estimated": "ESTIMATED",
+    "estimated_superseded": "ESTIMATED",
+}
 
 
 def _num(v: str) -> Optional[float]:
@@ -167,6 +178,7 @@ class GateEvaluator:
         for variable, cands in by_var.items():
             chosen = _resolve(cands, variable)
             reason = self._check(variable, chosen, app, d, segment, lender_id, ctx)
+            self._record_check(res, variable, chosen, reason)
             if reason is not None:
                 if reason.code in MISSING_INFO_CODES:
                     res.missing_info.append(reason)
@@ -207,6 +219,25 @@ class GateEvaluator:
                         confidence=ir.rule.confidence, source_url=ir.rule.source_url,
                         next_action=NEXT_ACTION.get(code, f"Provide the applicant's {var}.")))
         res.missing_info.extend(needed.values())
+
+    def _record_check(self, res: "GateResult", variable: str, ir: "IndexedRule",
+                      reason: Optional[ReasonCode]) -> None:
+        """Append a per-rule trace entry (plan3 §4). PASS when no reason; UNKNOWN when the
+        reason is a missing-info/review code; FAIL otherwise. An UNKNOWN never counts as pass."""
+        from .schema import RuleCheck, RuleCheckStatus
+        if reason is None:
+            status = RuleCheckStatus.PASS
+            actual = required = None
+        elif reason.code in MISSING_INFO_CODES or reason.code in MANUAL_REVIEW_CODES:
+            status = RuleCheckStatus.UNKNOWN
+            actual, required = reason.applicant_value, reason.required_value
+        else:
+            status = RuleCheckStatus.FAIL
+            actual, required = reason.applicant_value, reason.required_value
+        res.checks.append(RuleCheck(
+            rule=variable, status=status, actual_value=actual, required_value=required,
+            rule_id=ir.rule_id, source_status=SOURCE_STATUS.get(ir.rule.confidence.value, "UNKNOWN"),
+            source_url=ir.rule.source_url, retrieved_at=ir.rule.accessed_date))
 
     # ------------------------------------------------------------------ per-variable checks
     def _check(self, variable: str, ir: IndexedRule, app: Applicant, d: DerivedView,

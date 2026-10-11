@@ -336,6 +336,26 @@ def rule_status_of(conf: Optional["Confidence"]) -> "RuleStatus":
     }.get(conf, RuleStatus.UNKNOWN)
 
 
+class RuleCheckStatus(str, Enum):
+    PASS = "PASS"
+    FAIL = "FAIL"
+    UNKNOWN = "UNKNOWN"          # required value absent -> cannot be judged (never a silent pass)
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+
+
+class RuleCheck(BaseModel):
+    """One evaluated rule in the decision trace (plan3 §4): what was checked, the outcome,
+    the applicant vs required value, and the backing rule's provenance/confidence."""
+    rule: str                                  # variable / rule name
+    status: RuleCheckStatus
+    actual_value: Optional[str] = None
+    required_value: Optional[str] = None
+    rule_id: str = ""
+    source_status: str = "UNKNOWN"             # VERIFIED_PUBLISHED / ESTIMATED / ...
+    source_url: str = ""
+    retrieved_at: str = ""
+
+
 class ReasonCode(BaseModel):
     """One line in a lender decision's explanation chain (machine code + human text)."""
     code: str
@@ -434,6 +454,7 @@ class LenderOffer(BaseModel):
     strength_score: Optional[int] = None
     strength_band: str = ""
     reasons: list[ReasonCode] = Field(default_factory=list)
+    checks: list[RuleCheck] = Field(default_factory=list)   # full per-rule decision trace (§4)
     fixes: list[Fix] = Field(default_factory=list)
     rationale: str = ""
     lowest_confidence: Optional[Confidence] = None
@@ -449,6 +470,7 @@ class Decision(BaseModel):
     ranked_lender_ids: list[str] = Field(default_factory=list)   # covering offers, by APR (primary ranking)
     indicative_lender_ids: list[str] = Field(default_factory=list)  # offers with an unreliable/estimated APR
     score_method: str = ""               # how the rule-fit score is computed (not approval odds)
+    rule_set_version: str = ""            # hash of the rule table used (reproducibility, §9C)
     top_blocking_reasons: list[ReasonCode] = Field(default_factory=list)
     applicant_age: float = 0.0
     disclaimer: str = ("Preliminary screening against published lender criteria. "

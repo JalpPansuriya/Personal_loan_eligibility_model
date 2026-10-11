@@ -63,7 +63,16 @@ class RuleStore:
     def load(cls, path=None) -> "RuleStore":
         path = path or paths.RULES_LONG
         with path.open(encoding="utf-8-sig", newline="") as fh:
-            return cls(list(csv.DictReader(fh)))
+            text = fh.read()
+        import hashlib
+        store = cls(list(csv.DictReader(text.splitlines())))
+        store._version = "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+        return store
+
+    @property
+    def version(self) -> str:
+        """Short content hash of the rule table, recorded on each decision for reproducibility."""
+        return getattr(self, "_version", "unversioned")
 
     # ---------------------------------------------------------------- queries
     def all(self) -> list[IndexedRule]:

@@ -84,6 +84,7 @@ class Engine:
         gate = self.gates.evaluate(app, product, segment, lender, d)
         offer = LenderOffer(lender_id=lender, product=product, product_label=_product_label(product),
                             segment=segment, status=Status.NOT_ELIGIBLE)
+        offer.checks = gate.checks   # full per-rule decision trace (plan3 §4), all branches
 
         # 1. confirmed mandatory violation -> NOT_ELIGIBLE
         if gate.reasons:
@@ -285,6 +286,7 @@ class Engine:
             ranked_lender_ids=[o.lender_id for o in reliable_ranked],
             indicative_lender_ids=[o.lender_id for o in indic_ranked],
             score_method=st.SCORE_METHOD,
+            rule_set_version=self.store.version,
             applicant_age=round(app.age_at_application, 1),
         )
         if best:
