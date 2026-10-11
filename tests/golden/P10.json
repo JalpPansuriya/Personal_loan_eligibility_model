@@ -16,42 +16,42 @@
     "axis": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "bajaj": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "bob": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "canara": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "hdfc": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "icici": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "idfc": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "indusind": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "kotak": {
       "apr_pa": null,
@@ -66,7 +66,7 @@
     "lnt": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "moneyview": {
       "apr_pa": 30.37,
@@ -86,7 +86,7 @@
     "poonawalla": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "sbi": {
       "apr_pa": null,
@@ -96,17 +96,17 @@
     "tata": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "union": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "yes": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     }
   }
 }

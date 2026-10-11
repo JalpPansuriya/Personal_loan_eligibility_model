@@ -62,6 +62,7 @@ NEXT_ACTION = {
     "RECENT_DPD_GTE30": "Clear overdues and maintain clean payments for several months.",
     "RECENT_DPD_GTE60": "Clear overdues and rebuild payment history.",
     "EXCESS_ENQUIRIES": "Pause new credit applications for a few months.",
+    "PRIOR_SETTLEMENT": "A past settlement needs manual review against the lender's actual policy.",
     "PRIOR_WRITEOFF_SETTLEMENT": "Resolve the settlement/write-off and rebuild history.",
     "AMOUNT_BELOW_MIN": "Request an amount at or above the product minimum.",
     "RELATIONSHIP_REQUIRED": "Provide proof of the required relationship/check-off, or seek manual review.",
@@ -71,7 +72,8 @@ NEXT_ACTION = {
 MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED", "ITR_YEARS_LT_MIN_MISSING",
                       "SCORE_UNAVAILABLE", "GENDER_REQUIRED", "PROFESSION_REQUIRED",
                       "CHECK_OFF_REQUIRED"}
-MANUAL_REVIEW_CODES = {"RELATIONSHIP_UNVERIFIED", "CHECKOFF_UNVERIFIED"}
+MANUAL_REVIEW_CODES = {"RELATIONSHIP_UNVERIFIED", "CHECKOFF_UNVERIFIED",
+                       "PRIOR_SETTLEMENT", "RECENT_DPD_GTE30", "RECENT_DPD_GTE60", "EXCESS_ENQUIRIES"}
 
 
 @dataclass
@@ -418,16 +420,18 @@ class GateEvaluator:
 
     # ------------------------------------------------------------------ bureau hygiene
     def _bureau(self, app: Applicant, lender_id: str, res: GateResult) -> None:
+        """Tiered bureau hygiene. All thresholds here are ESTIMATED (no lender publishes a
+        numeric DPD/enquiry/settlement rule), so per plan3 Case E they route to MANUAL_REVIEW
+        rather than a fabricated NOT_ELIGIBLE. A WRITE-OFF is a documented adverse marker and
+        remains a hard reject at banks and strict NBFCs/fintechs."""
         lt = self.store.lender_type(lender_id)
         dpd = app.max_dpd_last_12m
         enq = app.enquiries_last_6m
         writeoff = app.write_off_flag
-        # settlement split by recency: <=24m is a serious recent event; older is a soft signal
         settled_recent = app.has_settled_loan and (
             app.settled_loan_months_ago is None or app.settled_loan_months_ago <= 24)
         settled_old = app.has_settled_loan and (
             app.settled_loan_months_ago is not None and app.settled_loan_months_ago > 24)
-        hard_derog = writeoff or settled_recent  # a hard negative for banks/strict NBFCs
 
         def reject(code: str, msg: str, actual, req):
             res.reasons.append(ReasonCode(code=code, variable="bureau_reject_signal",
@@ -437,30 +441,42 @@ class GateEvaluator:
                                           confidence=Confidence.ESTIMATED,
                                           next_action=NEXT_ACTION.get(code, "")))
 
+        def review(code: str, msg: str, actual, req):
+            res.review.append(ReasonCode(code=code, variable="bureau_review_signal",
+                                         message=msg + " (estimated policy; needs manual review, not an auto-reject)",
+                                         rule_id=f"{lender_id}-bureau-policy",
+                                         applicant_value=str(actual), required_value=str(req),
+                                         rule_status=rule_status_of(Confidence.ESTIMATED),
+                                         confidence=Confidence.ESTIMATED,
+                                         next_action=NEXT_ACTION.get(code, "")))
+
         if lt == "bank":
-            if hard_derog:
-                reject("PRIOR_WRITEOFF_SETTLEMENT",
-                       "write-off or settlement within the last 24 months",
-                       "write-off" if writeoff else "settled<=24m", "none")
+            if writeoff:
+                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off on record (documented adverse marker)",
+                       "write-off", "none")
+            elif settled_recent:
+                review("PRIOR_SETTLEMENT", "settlement within the last 24 months", "settled<=24m", "none")
             elif settled_old:
                 res.bureau_soft_flags.append("reprice_nbfc")  # older settlement: cautious reprice
             if dpd is not None and dpd >= 30:
-                reject("RECENT_DPD_GTE30", "30+ DPD in last 12m", dpd, "<30")
+                review("RECENT_DPD_GTE30", "30+ DPD in last 12m", dpd, "<30")
             if enq >= 6:
-                reject("EXCESS_ENQUIRIES", "6+ hard enquiries in 6m", enq, "<6")
+                review("EXCESS_ENQUIRIES", "6+ hard enquiries in 6m", enq, "<6")
         elif lt == "nbfc":
-            if hard_derog:
-                reject("PRIOR_WRITEOFF_SETTLEMENT",
-                       "write-off or settlement within the last 24 months",
-                       "write-off" if writeoff else "settled<=24m", "none")
+            if writeoff:
+                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off on record (documented adverse marker)",
+                       "write-off", "none")
+            elif settled_recent:
+                review("PRIOR_SETTLEMENT", "settlement within the last 24 months", "settled<=24m", "none")
             if dpd is not None and dpd >= 60:
-                reject("RECENT_DPD_GTE60", "60+ DPD in last 12m", dpd, "<60")
+                review("RECENT_DPD_GTE60", "60+ DPD in last 12m", dpd, "<60")
             elif (dpd is not None and dpd >= 30) or enq >= 6 or settled_old:
                 res.bureau_soft_flags.append("reprice_nbfc")  # +3pp / 50% haircut later
         else:  # fintech
-            if hard_derog and lender_id in ("navi", "moneyview"):
-                reject("PRIOR_WRITEOFF_SETTLEMENT",
-                       "write-off or settlement within the last 24 months",
-                       "write-off" if writeoff else "settled<=24m", "none")
-            elif (dpd is not None and dpd >= 30) or enq >= 6 or hard_derog or settled_old:
+            if writeoff and lender_id in ("navi", "moneyview"):
+                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off on record (documented adverse marker)",
+                       "write-off", "none")
+            elif settled_recent and lender_id in ("navi", "moneyview"):
+                review("PRIOR_SETTLEMENT", "settlement within the last 24 months", "settled<=24m", "none")
+            elif (dpd is not None and dpd >= 30) or enq >= 6 or writeoff or settled_recent or settled_old:
                 res.bureau_soft_flags.append("reprice_fintech")  # +5pp / 60% haircut later

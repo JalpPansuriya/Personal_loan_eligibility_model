@@ -31,11 +31,13 @@ def mk(**over) -> Applicant:
     return Applicant(**kw)
 
 
-def test_recent_settlement_hard_rejects_bank(engine):
+def test_recent_settlement_routes_to_review_bank(engine):
+    # plan3 Case E: an estimated settlement rule routes to MANUAL_REVIEW, not a fabricated reject
     d = engine.run(mk(has_settled_loan=True, settled_loan_months_ago=18))
     hdfc = next(o for o in d.offers if o.lender_id == "hdfc")
-    assert hdfc.status == Status.NOT_ELIGIBLE
-    assert any(r.code == "PRIOR_WRITEOFF_SETTLEMENT" for r in hdfc.reasons)
+    assert hdfc.status == Status.MANUAL_REVIEW
+    assert any(r.code == "PRIOR_SETTLEMENT" for r in hdfc.reasons)
+    assert not any(r.code == "PRIOR_WRITEOFF_SETTLEMENT" for r in hdfc.reasons)
 
 
 def test_old_settlement_not_hard_reject_bank(engine):

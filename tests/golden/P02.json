@@ -101,7 +101,7 @@
     "union": {
       "apr_pa": null,
       "max_eligible": null,
-      "status": "NOT_ELIGIBLE"
+      "status": "MANUAL_REVIEW"
     },
     "yes": {
       "apr_pa": null,
