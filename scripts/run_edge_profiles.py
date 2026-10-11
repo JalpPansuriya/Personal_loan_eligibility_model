@@ -53,10 +53,10 @@ def main():
     lines = []
     w = lines.append
     today = dt.date.today().isoformat()
-    w("# plan2 EDGE profiles — engine results\n")
+    w("# plan3 EDGE profiles — engine results\n")
     w(f"Generated {today} by `scripts/run_edge_profiles.py` over the real engine "
-      f"(`eligibility.engine.Engine`). Inputs are the 10 EDGE profiles from "
-      f"`prompts/plan2_inputs.md` (stored in `tests/edge_profiles/`).\n")
+      f"(`eligibility.engine.Engine`), after the plan3 reliability overhaul. Inputs are the "
+      f"10 EDGE profiles from `prompts/plan2_inputs.md` (stored in `tests/edge_profiles/`).\n")
     w("All figures are screening estimates against published lender criteria — not loan offers. "
       "APR is an IRR on net-of-fee cash flows; `*` marks an indicative APR (rate estimated).\n")
 
