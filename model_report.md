@@ -43,6 +43,30 @@ and takes precedence where they differ:
   consistency checks with independent reference values, dated-waiver and completeness checks; plus 10
   frontend vitest input-mapping tests. Rule table is now 1,260 rows (added YES's published ₹50L cap).
 
+## Addendum 2 — reliability overhaul (plan3, 2026-10-11)
+
+A second audit (`prompts/plan3.md`) hardened correctness over match count:
+
+- **Input contract** gained `card_monthly_payment`, `gross_monthly_income` (used), `verified_annual_income`,
+  `employer_check_off_available`; missing material values stay unknown, never 0.
+- **Product-specific info is never inferred**: gender/profession-specific products return
+  ADDITIONAL_INFORMATION_REQUIRED (GENDER_REQUIRED / PROFESSION_REQUIRED) unless declared.
+- **Affordability**: BoB/PNB/Canara use supplied gross income else a flagged net÷0.75 estimate, with
+  FOIR/take-home/multiple on net so the max isn't inflated (Canara high-EMI 25.05L → 11.78L). Card
+  obligation uses the supplied payment; an unknown payment is not imputed (CARD_PAYMENT_UNKNOWN).
+- **Pricing**: bureau repricing is clamped to the published maximum (RATE_AT_RANGE_CEILING); no rate
+  above the advertised band without a supporting rule.
+- **Bureau policy**: estimated DPD/enquiry/settlement signals route to MANUAL_REVIEW; only a write-off
+  or a published score floor hard-rejects.
+- **Decision trace**: every offer carries a per-rule checks[] (PASS/FAIL/UNKNOWN + source status/URL/date);
+  an UNKNOWN never counts as a pass. Each decision records a rule_set_version content hash.
+- **Ranking**: four separate categories (best-for-requested / best-alternative / lowest-rate /
+  lowest-reliable-APR) + insufficient-evidence.
+- **Provenance/change-detection**: scripts/audit_generic_defaults.py (187 non-published material rules
+  flagged) and scripts/check_source_drift.py (snapshot manifest + review queue, never auto-accept).
+- **Tests**: 357 backend + 14 frontend; one regression per plan3 case A–F, boundary tests, and a
+  frontend/backend API-consistency check across all 10 EDGE profiles.
+
 ---
 
 ## Table of contents

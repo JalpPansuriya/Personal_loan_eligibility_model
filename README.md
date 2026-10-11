@@ -99,6 +99,35 @@ best. `GET /api/summary` (and `python -m eligibility summary`) reports rule-base
 a per-product completeness count (complete / partial / insufficient); `GET /api/completeness` returns
 the per-product breakdown. These are coverage figures, not approval rates.
 
+### Reliability hardening (plan3)
+
+A second audit pass tightened correctness over the number of matches:
+
+- **Product-specific info is never inferred.** Gender- or profession-specific products (e.g.
+  Union Women Professional, professional-loan schemes) return `ADDITIONAL_INFORMATION_REQUIRED`
+  (`GENDER_REQUIRED` / `PROFESSION_REQUIRED`) unless the applicant declares the attribute — it is
+  never read from a free-text description.
+- **Card obligation.** A new `card_monthly_payment` field is used when supplied; when the balance
+  is positive but the payment is unknown, nothing is imputed (`CARD_PAYMENT_UNKNOWN`) and the
+  affordability-based max is marked indicative.
+- **Gross income.** BoB/PNB/Canara read gross income: the supplied `gross_monthly_income` is used,
+  else a net÷0.75 estimate is used, flagged `GROSS_INCOME_ESTIMATED`, with FOIR/take-home/multiple
+  computed on **net** so the max is not inflated (the ₹25.05L high-EMI Canara figure is now ₹11.78L).
+- **Rate never above the published range.** Bureau repricing is clamped to the lender's published
+  maximum (`RATE_AT_RANGE_CEILING`); it never silently exceeds the advertised band.
+- **Estimated bureau signals review, not reject.** Recent DPD, 6+ enquiries and settlements (all
+  estimated, unpublished thresholds) route to `MANUAL_REVIEW`; only a write-off or a published score
+  floor hard-rejects.
+- **Decision trace + reproducibility.** Every offer carries a per-rule `checks[]` trace
+  (PASS/FAIL/UNKNOWN with source status, URL and retrieval date); an UNKNOWN never counts as a pass.
+  Each `Decision` records a `rule_set_version` (content hash of the rule table).
+- **Four ranking categories** (`rankings`): best-for-requested-terms, best-supported-alternative,
+  lowest-estimated-rate, lowest-reliable-APR, plus an insufficient-evidence flag.
+- **Change detection.** `scripts/check_source_drift.py` hashes every source snapshot into a manifest
+  and writes a review queue on drift; a changed page is never auto-accepted as a verified rule.
+  `scripts/audit_generic_defaults.py` lists every non-published material rule (currently 187),
+  so no lender is presented as fully verified when its material rules are assumptions.
+
 ### Canonical input contract
 
 The Pydantic `Applicant` model is the single source of truth for input. It uses plan2's canonical
@@ -283,13 +312,13 @@ can serve against the same API.
 
 ## Testing
 
-`pytest` runs the backend suite (296 tests): data contracts, the condition parser over all real
+`pytest` runs the backend suite (357 tests): data contracts, the condition parser over all real
 conditions, boundary tests per gate, Hypothesis property tests, the **calibration replay**
 (every ICICI/Kotak probe reproduced within tolerance), the 16 golden profiles, the ten supplied
 EDGE regression profiles (one per observed defect), the 25 required consistency verifications with
 **independently computed** EMI/APR/age reference values, the dated fee-waiver checks, the
 rule-confidence/completeness checks, CLI smoke tests, and the FastAPI endpoints. `cd frontend &&
-npm test` runs the vitest input-mapping suite (10 tests) that proves every sample-profile field
+npm test` runs the vitest input-mapping suite (14 tests) that proves every sample-profile field
 survives the JSON → form → backend-payload path unchanged, with no zero-filling.
 
 The ten observed defects (A–J) are each reproduced and fixed with a dedicated regression test

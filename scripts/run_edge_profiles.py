@@ -8,7 +8,7 @@ from eligibility.schema import Applicant, Status
 
 ROOT = Path(__file__).resolve().parents[1]
 EDGE = ROOT / "tests" / "edge_profiles"
-OUT = ROOT / "plan2_results.md"
+OUT = ROOT / "plan3_results.md"
 
 STATUS_LABEL = {
     Status.ELIGIBLE_FOR_REQUESTED_TERMS: "Eligible (requested terms)",
