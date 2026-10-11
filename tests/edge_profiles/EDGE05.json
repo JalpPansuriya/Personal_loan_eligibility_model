@@ -1,0 +1,19 @@
+{
+  "profile_id": "EDGE05",
+  "description": "Young applicant, eight months of experience, and no established credit history",
+  "date_of_birth": "2005-07-15",
+  "application_date": "2026-10-11",
+  "employment_type": "salaried",
+  "net_monthly_income": 30000,
+  "existing_monthly_emi": 0,
+  "card_outstanding": 0,
+  "has_credit_score": false,
+  "bureau_score": null,
+  "total_experience_months": 8,
+  "current_job_tenure_months": 8,
+  "employer_category": "private_ltd",
+  "city": "Surat",
+  "salary_account_with": "none",
+  "requested_amount": 100000,
+  "requested_tenure_months": 24
+}

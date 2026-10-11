@@ -1,0 +1,19 @@
+{
+  "profile_id": "EDGE03",
+  "description": "Existing EMI obligations already exceed a 50% FOIR threshold",
+  "date_of_birth": "1994-08-02",
+  "application_date": "2026-10-11",
+  "employment_type": "salaried",
+  "net_monthly_income": 100000,
+  "existing_monthly_emi": 55000,
+  "card_outstanding": 50000,
+  "has_credit_score": true,
+  "bureau_score": 780,
+  "total_experience_months": 96,
+  "current_job_tenure_months": 48,
+  "employer_category": "private_ltd",
+  "city": "Ahmedabad",
+  "salary_account_with": "icici",
+  "requested_amount": 300000,
+  "requested_tenure_months": 36
+}

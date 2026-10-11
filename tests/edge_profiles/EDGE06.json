@@ -1,0 +1,19 @@
+{
+  "profile_id": "EDGE06",
+  "description": "Age 57 with a requested tenure of 60 months",
+  "date_of_birth": "1969-01-10",
+  "application_date": "2026-10-11",
+  "employment_type": "salaried",
+  "net_monthly_income": 150000,
+  "existing_monthly_emi": 10000,
+  "card_outstanding": 0,
+  "has_credit_score": true,
+  "bureau_score": 790,
+  "total_experience_months": 300,
+  "current_job_tenure_months": 120,
+  "employer_category": "private_ltd",
+  "city": "Mumbai",
+  "salary_account_with": "hdfc",
+  "requested_amount": 600000,
+  "requested_tenure_months": 60
+}

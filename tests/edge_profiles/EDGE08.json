@@ -1,0 +1,21 @@
+{
+  "profile_id": "EDGE08",
+  "description": "Self-employed business owner with two-year business vintage and one ITR",
+  "date_of_birth": "1989-02-14",
+  "application_date": "2026-10-11",
+  "employment_type": "self_employed_business",
+  "net_monthly_income": 180000,
+  "existing_monthly_emi": 20000,
+  "card_outstanding": 100000,
+  "has_credit_score": true,
+  "bureau_score": 750,
+  "total_experience_months": 60,
+  "current_job_tenure_months": 24,
+  "business_vintage_months": 24,
+  "itr_years_available": 1,
+  "employer_category": null,
+  "city": "Surat",
+  "salary_account_with": "none",
+  "requested_amount": 1500000,
+  "requested_tenure_months": 48
+}

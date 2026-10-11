@@ -1,0 +1,22 @@
+{
+  "profile_id": "EDGE10",
+  "description": "Good credit score but a loan settlement occurred 18 months ago",
+  "date_of_birth": "1988-08-20",
+  "application_date": "2026-10-11",
+  "employment_type": "salaried",
+  "net_monthly_income": 120000,
+  "existing_monthly_emi": 10000,
+  "card_outstanding": 0,
+  "has_credit_score": true,
+  "bureau_score": 720,
+  "has_settled_loan": true,
+  "settled_loan_months_ago": 18,
+  "write_off_flag": false,
+  "total_experience_months": 120,
+  "current_job_tenure_months": 60,
+  "employer_category": "private_ltd",
+  "city": "Pune",
+  "salary_account_with": "none",
+  "requested_amount": 500000,
+  "requested_tenure_months": 36
+}

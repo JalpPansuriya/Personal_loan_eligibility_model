@@ -1,0 +1,21 @@
+{
+  "profile_id": "EDGE07",
+  "description": "Established self-employed doctor with high income and strong credit",
+  "date_of_birth": "1985-09-17",
+  "application_date": "2026-10-11",
+  "employment_type": "self_employed_professional",
+  "net_monthly_income": 250000,
+  "existing_monthly_emi": 5000,
+  "card_outstanding": 0,
+  "has_credit_score": true,
+  "bureau_score": 810,
+  "total_experience_months": 180,
+  "current_job_tenure_months": 120,
+  "business_vintage_months": 120,
+  "itr_years_available": 3,
+  "employer_category": null,
+  "city": "Ahmedabad",
+  "salary_account_with": "none",
+  "requested_amount": 2000000,
+  "requested_tenure_months": 60
+}
