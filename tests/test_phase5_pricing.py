@@ -110,3 +110,35 @@ def test_pricing_deterministic(store):
     r1 = pr.price(store, "sbi", "sbi_personal_loan_salary_package", "salaried", "750-799", 800_000, 60)
     r2 = pr.price(store, "sbi", "sbi_personal_loan_salary_package", "salaried", "750-799", 800_000, 60)
     assert r1 == r2
+
+
+# --------------------------------------------------------------------------- effective-dated fee waiver (§7)
+import datetime as _dt
+
+
+def test_canara_waiver_applied_in_window(store):
+    # canara-023: 50% processing-fee waiver for applications between 2026-10-01 and 2026-12-31
+    inside = _dt.date(2026, 11, 15)
+    frac, note = pr.fee_waiver(store, "canara", "canara_budget", "salaried", inside)
+    assert frac == pytest.approx(0.5)
+    assert note
+
+
+def test_canara_waiver_not_applied_after_expiry(store):
+    after = _dt.date(2027, 1, 15)
+    frac, _ = pr.fee_waiver(store, "canara", "canara_budget", "salaried", after)
+    assert frac == 0.0
+
+
+def test_canara_waiver_not_applied_before_effective(store):
+    before = _dt.date(2026, 9, 1)
+    frac, _ = pr.fee_waiver(store, "canara", "canara_budget", "salaried", before)
+    assert frac == 0.0
+
+
+def test_waiver_reduces_fee_in_window(store):
+    base, _ = pr.price_full(store, "canara", "canara_budget", "salaried", "750-799",
+                            500_000, 60, application_date=_dt.date(2027, 6, 1))
+    waived, _ = pr.price_full(store, "canara", "canara_budget", "salaried", "750-799",
+                              500_000, 60, application_date=_dt.date(2026, 11, 15))
+    assert waived.processing_fee < base.processing_fee

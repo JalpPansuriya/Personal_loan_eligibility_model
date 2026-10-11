@@ -34,7 +34,7 @@
       "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
     },
     "hdfc": {
-      "apr_pa": 10.06,
+      "apr_pa": 9.99,
       "max_eligible": 6000000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },

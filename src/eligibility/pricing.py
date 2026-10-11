@@ -14,6 +14,8 @@ Rate selection (transparent, defensible):
 """
 from __future__ import annotations
 
+import datetime as _dt
+import re
 from dataclasses import dataclass
 from typing import Optional
 
@@ -26,6 +28,50 @@ GST = 0.18
 
 # score band -> position in [0,1] from best (0=rate_min) to worst (1=rate_max)
 BAND_POSITION = {">=800": 0.0, "750-799": 0.2, "700-749": 0.45, "650-699": 0.7, "<650": 1.0, "NTC": 0.45}
+
+_DATE_RANGE = re.compile(r"between\s+(\d{4}-\d{2}-\d{2})\s+and\s+(\d{4}-\d{2}-\d{2})")
+_VALID_TILL = re.compile(r"valid till\s+(\d{4}-\d{2}-\d{2})")
+
+
+def _parse_window(text: str) -> tuple[Optional[_dt.date], Optional[_dt.date]]:
+    """Extract an (effective, expiry) window from a fee-waiver condition string, if any."""
+    t = (text or "").lower()
+    m = _DATE_RANGE.search(t)
+    if m:
+        return _dt.date.fromisoformat(m.group(1)), _dt.date.fromisoformat(m.group(2))
+    m = _VALID_TILL.search(t)
+    if m:
+        return None, _dt.date.fromisoformat(m.group(1))
+    return None, None
+
+
+def fee_waiver(store: RuleStore, lender: str, product: str, segment: str,
+               application_date: Optional[_dt.date]) -> tuple[float, str]:
+    """Return (waiver_fraction 0..1, note) for an UNCONDITIONAL, time-bound fee waiver that
+    is in force on the application date. Conditional waivers (employer/BT eligibility) are
+    NOT auto-applied; expired/future promotions are NOT applied (plan2 §7 effective dates)."""
+    for ir in store.rules_for_variable(lender, product, segment, "processing_fee_waiver"):
+        cond = ir.rule.condition or ""
+        eff, exp = _parse_window(cond)
+        if eff is None and exp is None:
+            continue  # no dated window -> not a time-bound promo we can safely apply
+        # only apply pure date-window waivers (no other applicant predicate we can't verify)
+        if ir.cond.predicates:
+            continue
+        if application_date is None:
+            continue
+        if eff is not None and application_date < eff:
+            continue  # future promo, not yet effective
+        if exp is not None and application_date > exp:
+            continue  # expired
+        val = _num(ir.rule.value)
+        frac = (val / 100.0) if val is not None else (1.0 if str(ir.rule.value).strip().lower() == "true" else 0.0)
+        frac = max(0.0, min(1.0, frac))
+        if frac > 0:
+            win = f"{eff or '...'}..{exp or '...'}"
+            return frac, f"time-bound processing-fee waiver applied ({win})"
+    return 0.0, ""
+
 
 
 def _num(v: str) -> Optional[float]:
@@ -171,11 +217,12 @@ def price(store: RuleStore, lender: str, product: str, segment: str, score_band:
 
 def price_full(store: RuleStore, lender: str, product: str, segment: str, score_band: str,
                amount: float, months: int, *, is_female: bool = False,
-               bureau_soft_flags: Optional[list[str]] = None):
+               bureau_soft_flags: Optional[list[str]] = None,
+               application_date: Optional[_dt.date] = None):
     """Full pricing breakdown (§4): rate, fee ex-GST, GST, net disbursement, totals, APR,
     with the rate's provenance and a range flag when the applicant rate is uncertain.
     Returns a PricingBreakdown plus the EMI for THIS amount/tenure."""
-    from .schema import PricingBreakdown  # local import to avoid cycle at module load
+    from .schema import Confidence, PricingBreakdown  # local import to avoid cycle at module load
 
     rate, src = nominal_rate(store, lender, product, segment, score_band, is_female=is_female)
     flags = bureau_soft_flags or []
@@ -191,12 +238,25 @@ def price_full(store: RuleStore, lender: str, product: str, segment: str, score_
     conf, url, date = rate_provenance(store, lender, product, segment)
 
     fee = fee_ex_gst(store, lender, product, segment, amount)
+    waiver_frac, waiver_note = fee_waiver(store, lender, product, segment, application_date)
+    if waiver_frac > 0:
+        fee = round(fee * (1 - waiver_frac), 2)
     gst = round(fee * GST, 2)
     e = round(emi(amount, rate, months), 2)
     total_repay = round(e * months, 2)
     net = round(amount - fee - gst, 2)
     total_cost = round(total_repay + fee + gst - amount, 2)
     a = apr(amount, rate, months, fee + gst)
+
+    rate_estimated = conf not in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
+    notes = []
+    if (hi - lo) > 0.01:
+        notes.append("Rate placed within the lender's published band by score; the applicant's "
+                     "actual rate may differ.")
+    if rate_estimated:
+        notes.append("Rate is estimated (not published); treat the APR as indicative.")
+    if waiver_note:
+        notes.append(waiver_note)
 
     return PricingBreakdown(
         nominal_rate_pa=rate,
@@ -206,6 +266,5 @@ def price_full(store: RuleStore, lender: str, product: str, segment: str, score_
         processing_fee=fee, gst_on_fee=gst, other_charges=0.0,
         net_disbursement=net, total_repayment=total_repay, total_cost_of_credit=total_cost,
         apr_pa=a, apr_available=True,
-        apr_note=("Rate placed within the lender's published band by score; the applicant's "
-                  "actual rate may differ." if (hi - lo) > 0.01 else ""),
+        apr_note=" ".join(notes),
     ), e

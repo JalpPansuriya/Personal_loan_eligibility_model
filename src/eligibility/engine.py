@@ -160,7 +160,8 @@ class Engine:
             pricing, req_emi = pr.price_full(
                 self.store, lender, product, segment, band,
                 price_req_amount, permitted_req_tenure, is_female=is_female,
-                bureau_soft_flags=gate.bureau_soft_flags)
+                bureau_soft_flags=gate.bureau_soft_flags,
+                application_date=app.application_date)
             offer.requested = AmountQuote(amount=requested_amount,
                                           tenure_months=app.requested_tenure_months or permitted_req_tenure,
                                           emi=round(_emi(requested_amount, pricing.nominal_rate_pa,
@@ -169,7 +170,8 @@ class Engine:
             # no explicit request: price on the max amount at the max tenure
             pricing, _ = pr.price_full(self.store, lender, product, segment, band,
                                        max_loan, max_tenure, is_female=is_female,
-                                       bureau_soft_flags=gate.bureau_soft_flags)
+                                       bureau_soft_flags=gate.bureau_soft_flags,
+                                       application_date=app.application_date)
         offer.pricing = pricing
 
         # MAX eligible quote at the MAX permitted tenure
