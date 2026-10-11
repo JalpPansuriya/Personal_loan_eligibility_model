@@ -3,7 +3,7 @@
     "apr_pa": 16.29,
     "lender_id": "idfc",
     "max_eligible": 500000.0,
-    "status": "PRELIMINARILY_ELIGIBLE"
+    "status": "ELIGIBLE_TO_QUERY_LENDERS"
   },
   "eligible": true,
   "offer_count": 1,
@@ -46,7 +46,7 @@
     "idfc": {
       "apr_pa": 16.29,
       "max_eligible": 500000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "indusind": {
       "apr_pa": null,

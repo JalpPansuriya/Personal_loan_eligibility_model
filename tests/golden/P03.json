@@ -3,7 +3,7 @@
     "apr_pa": 10.96,
     "lender_id": "canara",
     "max_eligible": 2652000.0,
-    "status": "PRELIMINARILY_ELIGIBLE"
+    "status": "ELIGIBLE_TO_QUERY_LENDERS"
   },
   "eligible": true,
   "offer_count": 13,
@@ -26,12 +26,12 @@
     "bob": {
       "apr_pa": 11.72,
       "max_eligible": 2000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "canara": {
       "apr_pa": 10.96,
       "max_eligible": 2652000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "hdfc": {
       "apr_pa": 14.38,
@@ -41,7 +41,7 @@
     "icici": {
       "apr_pa": 12.34,
       "max_eligible": 690000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "idfc": {
       "apr_pa": 12.79,
@@ -56,7 +56,7 @@
     "kotak": {
       "apr_pa": 16.35,
       "max_eligible": 900000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "kreditbee": {
       "apr_pa": 17.72,

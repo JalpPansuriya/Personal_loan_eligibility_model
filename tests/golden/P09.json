@@ -3,7 +3,7 @@
     "apr_pa": 25.29,
     "lender_id": "poonawalla",
     "max_eligible": 840000.0,
-    "status": "PRELIMINARILY_ELIGIBLE"
+    "status": "ELIGIBLE_TO_QUERY_LENDERS"
   },
   "eligible": true,
   "offer_count": 1,
@@ -86,7 +86,7 @@
     "poonawalla": {
       "apr_pa": 25.29,
       "max_eligible": 840000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "sbi": {
       "apr_pa": null,

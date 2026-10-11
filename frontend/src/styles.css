@@ -109,6 +109,7 @@ tr.clickable { cursor: pointer; }
 tr.clickable:hover { background: var(--panel2); }
 
 .st { padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.st.eligible { background: var(--ok-bg); color: var(--ok); }
 .st.approve { background: var(--ok-bg); color: var(--ok); }
 .st.reduced { background: var(--reduced-bg); color: var(--reduced); }
 .st.review { background: #eef3fe; color: var(--accent); }

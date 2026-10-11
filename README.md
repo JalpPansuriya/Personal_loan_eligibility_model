@@ -84,6 +84,119 @@ A `GET /api/summary` endpoint (and `python -m eligibility summary`) reports rule
 (lenders, products with published vs estimated rules, APR-reliable products) — these are coverage
 figures, not approval rates.
 
+## How the 20 lenders were chosen
+
+The goal was the 20 that matter most to a real Indian borrower, under a defensible,
+reproducible method (full detail in `model_report.md` §3):
+
+1. **Start from system size.** PL market totals and origination mix from CRIF "How India
+   Lends" and Experian (banks vs NBFCs vs digital lenders by value and volume).
+2. **Rank lenders by personal-loan book / AUM** from company presentations and reputable
+   secondary sources, filling gaps with retail-book scale and origination presence.
+3. **Require three things of every lender:** a genuine unsecured personal-loan product,
+   public eligibility information, and a national or large-regional footprint.
+4. **Enforce a market-representative mix** so the tool isn't all private banks:
+   ≥5 PSU banks, ≥5 private banks, ≥4 NBFCs, and 2–3 fintechs (the brief explicitly allows
+   fintechs, which dominate origination *volume*). Near-misses are documented.
+
+The final set: **SBI, PNB, BoB, Canara, Union** (PSU); **HDFC, ICICI, Axis, Kotak, IndusInd,
+IDFC First, Yes** (private); **Bajaj, Tata Capital, Aditya Birla, L&T, Poonawalla** (NBFC);
+**Navi, KreditBee, Moneyview** (fintech). "Top 20 by scale," not "the 20 largest banks" —
+the distinction is stated so the claim is honest.
+
+## Approach
+
+- **Rules as data, engine as code.** Every lender rule lives in `data/rules/{lender}.csv`
+  as an atomic row (variable, operator, value, condition, source URL, date, confidence,
+  verbatim quote). The engine is a generic evaluator over that table — adding or correcting
+  a lender is a data edit, not a code change.
+- **Provenance on every rule.** Each row is tagged `published`, `derived`, or `estimated`,
+  and published rows carry a quote that must be an exact substring of a saved, dated page
+  snapshot (`data/sources/`). A test (`verify_rules.py`) enforces this, so the engine cannot
+  silently drift from the sources.
+- **Pipeline per lender/product:** derive features → hard gates (incl. a tiered bureau
+  policy) → size the maximum loan (min of FOIR, take-home-floor, income-multiple and product
+  caps) → price (rate, fee, 18% GST, APR by IRR) → screening status + explanation + advice.
+- **Conflict policy:** where a lender's own pages disagree, the engine uses the **stricter**
+  value and keeps the alternative in `data/conflicts.csv` for sensitivity analysis.
+- **No ML, by design.** There are no approval labels to learn from and real bureau/outcome
+  data is private; synthetic labels would only echo our own assumptions back. The honest
+  accuracy number is calibration error against real lender calculators (below).
+
+## Assumptions, and how unlisted rules were found
+
+**Finding rules that lenders don't publish.** Two lenders (ICICI, Kotak) expose public
+eligibility *calculators* that output a maximum loan for a given income and obligations.
+I probed each on a grid of inputs, held out ~20% of points, and least-squares-fitted the
+hidden sizing formula:
+
+- **Kotak:** `max_loan ≈ 20 × (net income − existing EMI)`, tenure-independent.
+- **ICICI:** FOIR ≈ 70%, capitalised by an annuity factor ≈ 46.57, capped at ₹50L.
+
+Both reproduce the held-out calculator outputs at **< 0.5% mean error**
+(`tests/test_phase4_affordability.py` replays every probe). These are marked `derived`, not
+published.
+
+**Where a value genuinely isn't knowable from public sources, it is an explicit assumption**
+(tagged `estimated`, never `published`), the main ones being:
+
+- **Bureau hygiene** (DPD / enquiries / write-offs) — a tiered policy: banks reject on
+  DPD ≥ 30, ≥ 6 enquiries, or a 24-month write-off/settlement; NBFCs reject on a write-off or
+  DPD ≥ 60 and otherwise reprice (+3pp, 50% haircut); fintechs reprice (+5pp, 60% haircut),
+  with KreditBee lenient. Swept in the sensitivity analysis.
+- **FOIR / income-multiple** for lenders that publish neither (default FOIR 60%, multiple
+  ≤ 20×), used only when no published or calibrated value exists.
+- **Income reading:** gross-FOIR banks (BoB/PNB/Canara) read gross income; net is converted
+  with `gross ≈ net / 0.75`. Credit-card load assumed at 5% of outstanding.
+- **Rate within a published band** is placed by score band; when the applicant's exact rate
+  is unknown the band is returned as a range, and the offer is `PRELIMINARILY_ELIGIBLE`.
+
+## Insights
+
+From a seeded synthetic population of 3,000 applicants (`eligibility.simulate`, reproducible
+with `seed=42`) run through the real engine — 60,000 lender/applicant evaluations:
+
+- **The credit score is the single biggest gate.** Of all `NOT_ELIGIBLE` outcomes, the
+  primary reason is `SCORE_BELOW_MIN` **19%** of the time, ahead of
+  `SEGMENT_NOT_OFFERED` (16%, i.e. salaried-only lenders turning away the self-employed),
+  `NTC_NOT_ALLOWED` (13%), and `EMPLOYER_NOT_ALLOWED` (12%).
+- **Unlisted bureau rules decide a lot of real cases.** `RECENT_DPD_GTE30` and
+  `PRIOR_WRITEOFF_SETTLEMENT` together drive ~11% of rejections even though almost no lender
+  publishes a numeric threshold — exactly the "rules that aren't listed" the brief asks about.
+- **Lenders differ enormously in reach.** Fintechs approve the widest slice — KreditBee
+  ~85%, Navi ~68%, Moneyview ~67% of the population at least preliminarily — while the
+  strictest, PNB (check-off / listed-profession product), reaches ~1%, and Kotak ~11%.
+  A typical applicant matches **~7 of 20** lenders.
+- **What binds the loan size changes with the borrower.** For thin-income applicants FOIR or
+  the take-home-floor binds; for high earners the product cap binds (multiples stop mattering).
+  The engine records `caps.binding_cap` on every offer so this is visible, not guessed.
+- **Shopping around is worth real money.** On the same prime profile the APR spread across
+  eligible lenders is several percentage points, and the lowest headline *rate* is often not
+  the lowest *APR* once the processing fee + GST are included — which is why ranking is by APR.
+
+## Limits, and what I would add next
+
+**Limits**
+
+- Internal scorecards, employer allow-lists, and document checks are invisible to any
+  outside model; the engine screens *published* criteria and never asserts a bank sanction.
+- Bureau-hygiene thresholds and some FOIR/multiple values are estimated (flagged as such).
+- Fintech pricing is personalised, so those APRs are wide, low-confidence ranges.
+- A few self-employed rules (e.g. parts of Union's schemes) aren't on the live pages and
+  stay `estimated`.
+- The synthetic population uses assumed marginals; its shares are illustrative, not official.
+- Rules change constantly — every value is dated, and the snapshots will go stale.
+
+**What I would add next**
+
+1. A scheduled re-crawl that re-verifies quotes against fresh snapshots and flags drift.
+2. Probe more calculators (several banks have OTP-gated ones) to convert `estimated`
+   FOIR/multiples into `derived`.
+3. Real-rate personalisation once a bureau feed is available, replacing band placement.
+4. A richer best-option view (total-cost-of-credit and net-disbursement ranking, not APR
+   alone) and savings-vs-runner-up messaging.
+5. CI that runs `verify_rules.py` + `pytest` on every data edit, so a bad rule can't merge.
+
 ## Repository layout
 
 ```
@@ -131,18 +244,11 @@ can serve against the same API.
 
 ## Testing
 
-`pytest` runs everything (169 tests): data contracts, the condition parser over all real
+`pytest` runs everything (193 tests): data contracts, the condition parser over all real
 conditions, boundary tests per gate, Hypothesis property tests, the **calibration replay**
-(every ICICI/Kotak probe reproduced within tolerance), the 16 golden profiles, CLI smoke
-tests, and the FastAPI endpoints.
-
-## Honest limitations
-
-- Internal scorecards, employer allow-lists and document checks are invisible to any outside model.
-- Bureau-hygiene thresholds (DPD, enquiries, write-offs) are an **estimated** tiered policy, flagged
-  as such and swept in the sensitivity analysis.
-- Fintech pricing is personalised, so those ranges are wide and low-confidence.
-- Rules change; every value is dated. This tool is **not** a loan offer.
+(every ICICI/Kotak probe reproduced within tolerance), the 16 golden profiles, the audit
+regression/consistency invariants, CLI smoke tests, and the FastAPI endpoints.
 
 See `model_report.md` for the full design, the feature catalogue, the calibration method, and the
-P01–P16 worked examples.
+P01–P16 worked examples. The limitations above are enforced in data and surfaced in the UI — every
+estimated value is flagged, and no result is a loan offer.

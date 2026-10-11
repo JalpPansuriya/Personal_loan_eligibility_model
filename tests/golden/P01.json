@@ -11,72 +11,72 @@
     "abcl": {
       "apr_pa": 13.59,
       "max_eligible": 2160000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "axis": {
       "apr_pa": 10.16,
       "max_eligible": 2057000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "bajaj": {
       "apr_pa": 12.67,
       "max_eligible": 2160000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "bob": {
       "apr_pa": 10.15,
       "max_eligible": 2000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "canara": {
       "apr_pa": 10.01,
       "max_eligible": 6384000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "hdfc": {
       "apr_pa": 10.5,
       "max_eligible": 2400000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "icici": {
       "apr_pa": 11.26,
       "max_eligible": 3210000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "idfc": {
       "apr_pa": 9.99,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "indusind": {
       "apr_pa": 12.75,
       "max_eligible": 2400000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "kotak": {
       "apr_pa": 14.27,
       "max_eligible": 2100000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "kreditbee": {
       "apr_pa": 13.35,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "lnt": {
       "apr_pa": 13.09,
       "max_eligible": 2160000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "moneyview": {
       "apr_pa": 15.31,
       "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "navi": {
       "apr_pa": 10.49,
       "max_eligible": 1440000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "pnb": {
       "apr_pa": null,
@@ -86,7 +86,7 @@
     "poonawalla": {
       "apr_pa": 12.57,
       "max_eligible": 1440000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "sbi": {
       "apr_pa": null,
@@ -96,7 +96,7 @@
     "tata": {
       "apr_pa": 14.27,
       "max_eligible": 2160000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "union": {
       "apr_pa": 9.25,
@@ -106,7 +106,7 @@
     "yes": {
       "apr_pa": 12.45,
       "max_eligible": 2400000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     }
   }
 }

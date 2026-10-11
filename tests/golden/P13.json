@@ -11,17 +11,17 @@
     "abcl": {
       "apr_pa": 13.12,
       "max_eligible": 5000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "axis": {
       "apr_pa": 9.93,
       "max_eligible": 5000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "bajaj": {
       "apr_pa": 12.18,
       "max_eligible": 5400000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "bob": {
       "apr_pa": 10.15,
@@ -31,7 +31,7 @@
     "canara": {
       "apr_pa": 9.75,
       "max_eligible": 18240000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "hdfc": {
       "apr_pa": 10.07,
@@ -41,22 +41,22 @@
     "icici": {
       "apr_pa": 11.03,
       "max_eligible": 5000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "idfc": {
       "apr_pa": 9.99,
-      "max_eligible": 1000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "max_eligible": 6000000.0,
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "indusind": {
       "apr_pa": 12.34,
       "max_eligible": 6000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "kotak": {
       "apr_pa": 13.68,
       "max_eligible": 6000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     },
     "kreditbee": {
       "apr_pa": 12.89,
@@ -106,7 +106,7 @@
     "yes": {
       "apr_pa": 12.16,
       "max_eligible": 6000000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "status": "ELIGIBLE_TO_QUERY_LENDERS"
     }
   }
 }

@@ -3,7 +3,7 @@ import { Decision, LenderOffer } from "../api";
 import { pct, rupees } from "../format";
 
 const STATUS_LABEL: Record<string, string> = {
-  ELIGIBLE_TO_QUERY_LENDERS: "Eligible to query lender",
+  ELIGIBLE_TO_QUERY_LENDERS: "Eligible",
   PRELIMINARILY_ELIGIBLE: "Preliminarily eligible",
   NOT_ELIGIBLE: "Not eligible under rules",
   ADDITIONAL_INFORMATION_REQUIRED: "More information needed",
@@ -13,7 +13,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 function statusClass(s: string): string {
-  if (s === "ELIGIBLE_TO_QUERY_LENDERS") return "st approve";
+  if (s === "ELIGIBLE_TO_QUERY_LENDERS") return "st eligible";
   if (s === "PRELIMINARILY_ELIGIBLE") return "st reduced";
   if (s === "ADDITIONAL_INFORMATION_REQUIRED" || s === "MANUAL_REVIEW") return "st review";
   return "st reject";

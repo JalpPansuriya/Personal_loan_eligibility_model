@@ -162,9 +162,12 @@ class Engine:
         offer.strength_score = st.strength(app, d, lender, fl, max_loan)
         offer.lowest_confidence = pricing.rate_confidence or Confidence.PUBLISHED
 
-        # status: fully published rate + requested covered -> query lenders; else preliminary
+        # status: passes all mandatory rules on published pricing and covers the requested
+        # amount -> ELIGIBLE. A published rate *band* (min..max) still counts as eligible; it
+        # is only "preliminary" when the rate is estimated, the amount was reduced/repriced,
+        # or the requested amount is not covered.
         rate_pub = pricing.rate_confidence in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
-        if gate.bureau_soft_flags or not requested_supported or not rate_pub or pricing.rate_is_range:
+        if gate.bureau_soft_flags or not requested_supported or not rate_pub:
             offer.status = Status.PRELIMINARILY_ELIGIBLE
         else:
             offer.status = Status.ELIGIBLE_TO_QUERY_LENDERS
