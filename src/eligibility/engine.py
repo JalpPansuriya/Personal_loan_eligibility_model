@@ -232,6 +232,14 @@ class Engine:
                         "so the affordability-based max is indicative",
                 rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
                 next_action="Provide gross_monthly_income for a firmer maximum."))
+        if pricing.rate_capped_at_ceiling:
+            offer.reasons.append(ReasonCode(
+                code="RATE_AT_RANGE_CEILING", variable="rate_max_pa",
+                message="bureau-adverse pricing was capped at the lender's published maximum rate; "
+                        "the true applicant rate is unknown",
+                applicant_value=str(pricing.nominal_rate_pa), required_value=f"<= {pricing.rate_max_pa}",
+                rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
+                next_action="Obtain the applicant-specific rate from the lender."))
         if not amount_supported:
             offer.reasons.append(ReasonCode(
                 code="AMOUNT_NOT_COVERED", variable="loan_max",

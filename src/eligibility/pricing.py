@@ -225,16 +225,23 @@ def price_full(store: RuleStore, lender: str, product: str, segment: str, score_
     from .schema import Confidence, PricingBreakdown  # local import to avoid cycle at module load
 
     rate, src = nominal_rate(store, lender, product, segment, score_band, is_female=is_female)
+    lo, hi = rate_bounds(store, lender, product, segment)
     flags = bureau_soft_flags or []
+    rate_capped = False
     if "reprice_nbfc" in flags:
         rate += 3.0
         src = "repriced"
     elif "reprice_fintech" in flags:
         rate += 5.0
         src = "repriced"
+    # Never price above the lender's PUBLISHED maximum without a rule that supports it
+    # (plan3 Case B). Clamp to the ceiling and flag it; the applicant's true rate is unknown.
+    if rate > hi + 0.01:
+        rate = hi
+        rate_capped = True
+        src = "repriced_capped"
     rate = round(rate, 2)
 
-    lo, hi = rate_bounds(store, lender, product, segment)
     conf, url, date = rate_provenance(store, lender, product, segment)
 
     fee = fee_ex_gst(store, lender, product, segment, amount)
@@ -257,12 +264,16 @@ def price_full(store: RuleStore, lender: str, product: str, segment: str, score_
         notes.append("Rate is estimated (not published); treat the APR as indicative.")
     if waiver_note:
         notes.append(waiver_note)
+    if rate_capped:
+        notes.append("Bureau-adverse pricing was capped at the lender's published maximum; "
+                     "the true applicant rate is unknown.")
 
     return PricingBreakdown(
         nominal_rate_pa=rate,
         rate_is_range=(hi - lo) > 0.01,
         rate_min_pa=round(lo, 2), rate_max_pa=round(hi, 2),
         rate_source=src, rate_confidence=conf, rate_source_url=url, rate_accessed_date=date,
+        rate_capped_at_ceiling=rate_capped,
         processing_fee=fee, gst_on_fee=gst, other_charges=0.0,
         net_disbursement=net, total_repayment=total_repay, total_cost_of_credit=total_cost,
         apr_pa=a, apr_available=True,

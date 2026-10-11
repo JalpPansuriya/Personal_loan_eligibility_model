@@ -420,6 +420,7 @@ class PricingBreakdown(BaseModel):
     rate_confidence: Optional[Confidence] = None
     rate_source_url: str = ""
     rate_accessed_date: str = ""
+    rate_capped_at_ceiling: bool = False        # True when bureau repricing was clamped to the published max
     processing_fee: Optional[float] = None      # fee ex-GST
     gst_on_fee: Optional[float] = None          # 18% of fee
     other_charges: Optional[float] = None
