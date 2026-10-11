@@ -60,8 +60,12 @@ class DerivedView:
 
 
 def obligations(app: Applicant) -> float:
-    """F27: existing EMI + 5% of card outstanding."""
-    return app.existing_emi_monthly + CARD_LOAD * app.credit_card_outstanding
+    """F27: existing EMI + the card's monthly obligation.
+
+    The card obligation is the supplied card_monthly_payment; when the balance is positive
+    but the payment is unknown it is NOT imputed (0 here) and the engine flags
+    CARD_PAYMENT_UNKNOWN so the max is marked indicative (plan3 Case D)."""
+    return app.existing_emi_monthly + app.card_obligation
 
 
 def assessed_income(app: Applicant, lender_id: str) -> tuple[float, str]:

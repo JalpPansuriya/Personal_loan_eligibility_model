@@ -116,6 +116,13 @@ export default function ApplicantForm({ meta, form, setForm, onSubmit, loading, 
             placeholder="unknown" onChange={(e) => up({ card_outstanding: onum(e.target.value) })} />
         </label>
 
+        {!!form.card_outstanding && (
+          <label>Card monthly payment (&#8377;/mo)
+            <input type="number" min={0} value={numVal(form.card_monthly_payment)}
+              placeholder="unknown" onChange={(e) => up({ card_monthly_payment: onum(e.target.value) })} />
+          </label>
+        )}
+
         <label className="checkbox">
           <input type="checkbox" checked={form.has_credit_score === true}
             onChange={(e) => up({ has_credit_score: e.target.checked })} />

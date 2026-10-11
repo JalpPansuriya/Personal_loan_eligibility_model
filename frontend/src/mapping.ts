@@ -14,8 +14,10 @@ export const APP_DATE_FALLBACK = "2026-10-11";
 export interface FormState {
   employment_type: string;
   net_monthly_income: number;
+  gross_monthly_income: number | null;
   existing_monthly_emi: number | null;
   card_outstanding: number | null;
+  card_monthly_payment: number | null;
   has_credit_score: boolean | null;
   bureau_score: number | null;
   max_dpd_days_last_12_months: number | null;
@@ -28,7 +30,9 @@ export interface FormState {
   business_vintage_months: number | null;
   itr_years_available: number | null;
   itr_income_y1: number | null;
+  verified_annual_income: number | null;
   employer_category: string;
+  employer_check_off_available: boolean | null;
   profession: string;
   city: string;
   salary_account_with: string;
@@ -42,8 +46,10 @@ export interface FormState {
 export const EMPTY_FORM: FormState = {
   employment_type: "salaried",
   net_monthly_income: 100000,
+  gross_monthly_income: null,
   existing_monthly_emi: null,
   card_outstanding: null,
+  card_monthly_payment: null,
   has_credit_score: true,
   bureau_score: 780,
   max_dpd_days_last_12_months: null,
@@ -56,7 +62,9 @@ export const EMPTY_FORM: FormState = {
   business_vintage_months: null,
   itr_years_available: null,
   itr_income_y1: null,
+  verified_annual_income: null,
   employer_category: "",
+  employer_check_off_available: null,
   profession: "",
   city: "",
   salary_account_with: "none",
@@ -79,12 +87,13 @@ const ALIASES: Record<string, string> = {
 };
 
 const KNOWN = new Set<string>([
-  "profile_id", "description", "employment_type", "net_monthly_income",
-  "existing_monthly_emi", "card_outstanding", "has_credit_score", "bureau_score",
+  "profile_id", "description", "employment_type", "net_monthly_income", "gross_monthly_income",
+  "existing_monthly_emi", "card_outstanding", "card_monthly_payment", "has_credit_score", "bureau_score",
   "max_dpd_days_last_12_months", "enquiries_last_6_months", "has_settled_loan",
   "settled_loan_months_ago", "write_off_flag", "total_experience_months",
   "current_job_tenure_months", "business_vintage_months", "itr_years_available",
-  "itr_income_y1", "employer_category", "profession", "city", "salary_account_with",
+  "itr_income_y1", "verified_annual_income", "employer_category", "employer_check_off_available",
+  "profession", "city", "salary_account_with",
   "gender", "requested_amount", "requested_tenure_months", "date_of_birth",
   "application_date", ...Object.keys(ALIASES),
 ]);
@@ -113,8 +122,10 @@ export function formFromJson(raw: Record<string, unknown>): FormState {
   return {
     employment_type: str(o.employment_type, EMPTY_FORM.employment_type),
     net_monthly_income: num(o.net_monthly_income) ?? EMPTY_FORM.net_monthly_income,
+    gross_monthly_income: num(o.gross_monthly_income),
     existing_monthly_emi: num(o.existing_monthly_emi),
     card_outstanding: num(o.card_outstanding),
+    card_monthly_payment: num(o.card_monthly_payment),
     has_credit_score:
       o.has_credit_score === undefined
         ? (o.bureau_score === null ? false : o.bureau_score !== undefined ? true : null)
@@ -130,7 +141,9 @@ export function formFromJson(raw: Record<string, unknown>): FormState {
     business_vintage_months: num(o.business_vintage_months),
     itr_years_available: num(o.itr_years_available),
     itr_income_y1: num(o.itr_income_y1),
+    verified_annual_income: num(o.verified_annual_income),
     employer_category: str(o.employer_category, ""),
+    employer_check_off_available: bool(o.employer_check_off_available, null),
     profession: str(o.profession, ""),
     city: str(o.city, ""),
     salary_account_with: str(o.salary_account_with, "none") || "none",
@@ -155,7 +168,9 @@ export function toInput(f: FormState): ApplicantInput {
     if (v !== null && v !== undefined && v !== "") (inp[k] as unknown) = v;
   };
   put("existing_monthly_emi", f.existing_monthly_emi);
+  put("gross_monthly_income", f.gross_monthly_income);
   put("card_outstanding", f.card_outstanding);
+  if (f.card_outstanding && f.card_monthly_payment !== null) put("card_monthly_payment", f.card_monthly_payment);
   if (f.has_credit_score === false) {
     inp.has_credit_score = false;
   } else if (f.has_credit_score === true) {
@@ -172,6 +187,7 @@ export function toInput(f: FormState): ApplicantInput {
   put("total_experience_months", f.total_experience_months);
   put("current_job_tenure_months", f.current_job_tenure_months);
   put("employer_category", f.employer_category || null);
+  if (f.employer_check_off_available !== null) inp.employer_check_off_available = f.employer_check_off_available;
   put("city", f.city || null);
   if (f.salary_account_with !== "none") inp.salary_account_with = f.salary_account_with;
   if (f.gender !== "(not specified)") inp.gender = f.gender;
@@ -182,6 +198,7 @@ export function toInput(f: FormState): ApplicantInput {
     put("business_vintage_months", f.business_vintage_months);
     put("itr_years_available", f.itr_years_available);
     put("itr_income_y1", f.itr_income_y1);
+    put("verified_annual_income", f.verified_annual_income);
   }
   return inp;
 }

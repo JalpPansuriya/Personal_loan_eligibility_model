@@ -94,4 +94,30 @@ describe("unknownKeys", () => {
   it("accepts all known + alias keys", () => {
     expect(unknownKeys(EDGE02)).toEqual([]);
   });
+  it("accepts the new plan3 fields", () => {
+    expect(unknownKeys({ card_monthly_payment: 2000, employer_check_off_available: true,
+      verified_annual_income: 1200000, gross_monthly_income: 150000 })).toEqual([]);
+  });
+});
+
+describe("plan3 fields (Case C/D)", () => {
+  it("sends card_monthly_payment only with a balance", () => {
+    const withPay = toInput(formFromJson({ ...EDGE02, card_monthly_payment: 2500 }));
+    expect(withPay.card_monthly_payment).toBe(2500);
+    const noBalance = toInput(formFromJson({ employment_type: "salaried", net_monthly_income: 50000,
+      card_outstanding: 0, card_monthly_payment: 2500, date_of_birth: "1995-01-01",
+      application_date: "2026-10-11" }));
+    expect("card_monthly_payment" in noBalance).toBe(false);
+  });
+  it("leaves card_monthly_payment null when balance present but payment absent", () => {
+    const f = formFromJson(EDGE02);  // card 300000, no payment
+    expect(f.card_monthly_payment).toBeNull();
+    expect("card_monthly_payment" in toInput(f)).toBe(false);
+  });
+  it("passes gross income and check-off through", () => {
+    const inp = toInput(formFromJson({ ...EDGE02, gross_monthly_income: 160000,
+      employer_check_off_available: true }));
+    expect(inp.gross_monthly_income).toBe(160000);
+    expect(inp.employer_check_off_available).toBe(true);
+  });
 });

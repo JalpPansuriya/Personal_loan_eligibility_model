@@ -130,8 +130,10 @@ export interface ModelSummary {
 export interface ApplicantInput {
   employment_type: string;
   net_monthly_income: number;
+  gross_monthly_income?: number | null;
   existing_monthly_emi?: number;
   card_outstanding?: number;
+  card_monthly_payment?: number | null;
   has_credit_score?: boolean;
   bureau_score?: number | null;
   max_dpd_days_last_12_months?: number | null;
@@ -144,7 +146,9 @@ export interface ApplicantInput {
   business_vintage_months?: number | null;
   itr_years_available?: number | null;
   itr_income_y1?: number | null;
+  verified_annual_income?: number | null;
   employer_category?: string;
+  employer_check_off_available?: boolean | null;
   profession?: string;
   city?: string;
   salary_account_with?: string | null;

@@ -159,7 +159,7 @@ def test_v21_status_agrees_with_reasons(engine):
     d = engine.run(a)
     for o in d.offers:
         if o.status == Status.NOT_ELIGIBLE:
-            assert any(r.code not in ("REPRICED", "CARD_OUTSTANDING_UNKNOWN") for r in o.reasons)
+            assert any(r.code not in ("REPRICED", "CARD_PAYMENT_UNKNOWN") for r in o.reasons)
 
 
 def test_v22_matched_count_consistent(engine):

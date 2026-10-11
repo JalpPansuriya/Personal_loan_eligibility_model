@@ -218,10 +218,11 @@ class Engine:
                 next_action="Improve the bureau profile for standard pricing."))
         if not app.card_obligation_known:
             offer.reasons.append(ReasonCode(
-                code="CARD_OUTSTANDING_UNKNOWN", variable="card_outstanding",
-                message="affordability not fully determined: no published rule for card-outstanding treatment",
+                code="CARD_PAYMENT_UNKNOWN", variable="card_monthly_payment",
+                message="card balance is known but its monthly repayment obligation is not; "
+                        "it is not imputed, so the affordability-based max is indicative",
                 rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
-                next_action="Provide the monthly repayment obligation on the card balance."))
+                next_action="Provide card_monthly_payment (the monthly obligation on the card balance)."))
         if not amount_supported:
             offer.reasons.append(ReasonCode(
                 code="AMOUNT_NOT_COVERED", variable="loan_max",

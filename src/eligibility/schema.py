@@ -147,6 +147,7 @@ class Applicant(BaseModel):
     # F07-F10 income
     net_monthly_income: float = Field(..., gt=0)
     gross_monthly_income: Optional[float] = Field(None, gt=0)
+    verified_annual_income: Optional[float] = Field(None, ge=0)   # SE: documented/verified annual income
     itr_income_y1: Optional[float] = Field(None, ge=0)
     itr_income_y2: Optional[float] = Field(None, ge=0)
     # None = unknown (never silently 0); accepts itr_years_available (plan2) or itr_years_filed
@@ -158,6 +159,8 @@ class Applicant(BaseModel):
         0, ge=0, validation_alias=AliasChoices("existing_emi_monthly", "existing_monthly_emi"))
     credit_card_outstanding: float = Field(
         0, ge=0, validation_alias=AliasChoices("credit_card_outstanding", "card_outstanding"))
+    # None = the monthly repayment obligation on the card balance is UNKNOWN (never imputed as 0)
+    card_monthly_payment: Optional[float] = Field(None, ge=0)
     has_credit_score: Optional[bool] = None          # explicit NTC flag when False
     bureau_score: Optional[int] = None               # None = NTC/unknown; else 300-900
     bureau_status: Optional[BureauState] = None       # explicit override: unavailable/failed/invalid
@@ -178,6 +181,8 @@ class Applicant(BaseModel):
     residence_stability_months: Optional[int] = Field(None, ge=0)
     salary_account_with_lender: Optional[str] = Field(
         None, validation_alias=AliasChoices("salary_account_with_lender", "salary_account_with"))
+    # None = unknown (a required check-off cannot be assumed present or absent)
+    employer_check_off_available: Optional[bool] = None
 
     # F22 optional request
     requested_tenure_months: Optional[int] = Field(None, ge=1)
@@ -230,6 +235,8 @@ class Applicant(BaseModel):
             raise ValueError("has_credit_score is true but no bureau_score was provided")
         if self.settled_loan_months_ago is not None and not self.has_settled_loan:
             raise ValueError("settled_loan_months_ago given but has_settled_loan is false")
+        if self.card_monthly_payment is not None and self.credit_card_outstanding <= 0:
+            raise ValueError("card_monthly_payment given but card_outstanding is 0/absent")
         return self
 
     @property
@@ -271,9 +278,19 @@ class Applicant(BaseModel):
 
     @property
     def card_obligation_known(self) -> bool:
-        """No lender in our sources publishes card-outstanding treatment, so any positive
-        balance means affordability cannot be fully determined (plan2 §3)."""
-        return self.credit_card_outstanding <= 0
+        """The card's monthly obligation is known iff there is no balance, or the applicant
+        supplied card_monthly_payment. A balance with no payment is UNKNOWN and is never
+        imputed as 0 in affordability (plan3 Case D)."""
+        return self.credit_card_outstanding <= 0 or self.card_monthly_payment is not None
+
+    @property
+    def card_obligation(self) -> float:
+        """Monthly obligation from the card: the supplied payment, or 0 when there is no
+        balance. When the balance is positive but the payment is unknown, returns 0 but
+        card_obligation_known is False, so the caller flags CARD_PAYMENT_UNKNOWN."""
+        if self.credit_card_outstanding <= 0:
+            return 0.0
+        return self.card_monthly_payment or 0.0
 
 
 # --------------------------------------------------------------------------- rule

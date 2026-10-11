@@ -70,9 +70,17 @@ def test_score_band(score, band):
 
 
 # --------------------------------------------------------------------------- obligations (F27)
-def test_obligations_emi_plus_card_load():
+def test_obligations_use_card_payment_when_given():
+    a = mk(existing_emi_monthly=20000, credit_card_outstanding=100000, card_monthly_payment=3000)
+    assert pp.obligations(a) == pytest.approx(20000 + 3000)
+
+
+def test_obligations_card_payment_unknown_not_imputed():
+    # balance present but payment unknown -> card obligation is NOT imputed (0 here); the
+    # engine flags CARD_PAYMENT_UNKNOWN and marks the max indicative
     a = mk(existing_emi_monthly=20000, credit_card_outstanding=100000)
-    assert pp.obligations(a) == pytest.approx(20000 + 5000)  # 5% of 1,00,000
+    assert pp.obligations(a) == pytest.approx(20000)
+    assert a.card_obligation_known is False
 
 
 def test_obligations_zero_when_no_debt():
