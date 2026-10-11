@@ -80,6 +80,13 @@ def summary() -> dict:
     return model_summary(engine().store)
 
 
+@app.get("/api/completeness")
+def completeness() -> list[dict]:
+    """Per-product rule completeness (complete / partial / insufficient) with group status."""
+    from .quality import product_completeness
+    return product_completeness(engine().store)
+
+
 def _decision_payload(app_model: Applicant) -> dict:
     eng = engine()
     d = eng.run(app_model)

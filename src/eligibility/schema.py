@@ -19,7 +19,7 @@ import datetime as _dt
 from enum import Enum
 from typing import Optional
 
-from pydantic import AliasChoices, BaseModel, Field, field_validator, model_validator
+from pydantic import AliasChoices, BaseModel, Field, computed_field, field_validator, model_validator
 
 
 # --------------------------------------------------------------------------- enums
@@ -331,6 +331,18 @@ class ReasonCode(BaseModel):
     confidence: Optional[Confidence] = None
     source_url: str = ""
     next_action: str = ""
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def confidence_label(self) -> str:
+        """plan2 §8 taxonomy label for the backing rule's confidence."""
+        return {
+            Confidence.PUBLISHED: "VERIFIED_PUBLISHED",
+            Confidence.PUBLISHED_CONFLICT: "CONFLICT_REQUIRES_REVIEW",
+            Confidence.DERIVED: "INFERRED",
+            Confidence.ESTIMATED: "ESTIMATED",
+            Confidence.ESTIMATED_SUPERSEDED: "ESTIMATED",
+        }.get(self.confidence, "UNKNOWN")
 
 
 class Fix(BaseModel):
