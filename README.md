@@ -1,9 +1,13 @@
-# Personal Loan Eligibility Model — Top 20 Indian Lenders
+# Personal Loan Eligibility Model — 20 Selected Indian Lenders
 
 A rule-based / scorecard engine (no machine learning) that takes one applicant and returns an
-eligibility decision, a maximum loan, a priced offer (APR including fee + 18% GST), an
-approval-strength score, and plain-English advice — for each of the 20 largest Indian personal-loan
-lenders.
+eligibility decision, a maximum loan, a priced offer (interest rate, fee, 18% GST and an **APR
+computed by IRR** on net-of-fee cash flows — never rate + fee%), a transparent rule-fit score,
+and plain-English advice — for each of 20 selected Indian personal-loan lenders.
+
+The engine distinguishes eligibility for a *product* from eligibility for the applicant's *exact
+requested amount and tenure*: the requested terms are never silently rewritten, and any reduced
+amount/tenure is shown as a separate, clearly labelled alternative — not a sanction.
 
 Why rule-based, not ML: there are no approval labels to learn from, and bureau/outcome data is
 private. Inventing synthetic labels would just feed our own assumptions back to us. Instead every
@@ -36,8 +40,9 @@ cd frontend
 npm install
 npm run dev            # opens http://localhost:5173 (or 5174 if taken)
 
-# the test suite (unit + property + calibration replay + golden + API)
+# the test suite (unit + property + calibration replay + golden + API + defect regressions)
 pytest
+cd frontend && npm test        # vitest input-mapping suite
 ```
 
 ## What the engine does
@@ -56,14 +61,22 @@ professional / self-employed business):
    income multiple, and the product cap — recording which cap bound (`caps.binding_cap`). ICICI and
    Kotak use their calibrated calculator formula.
 4. **Price** — the interest rate, processing fee, 18% GST on the fee, net disbursement, total
-   repayment and the **APR by IRR** are kept as separate fields (APR is never rate + fee%). When the
-   applicant's exact rate is unknown, the lender's published band is returned as a range.
-5. **Quote amounts separately** — the engine returns a `requested` quote (amount, tenure, and the
-   EMI for *that* principal/tenure) and a `max_eligible` quote (max amount, its tenure, and *its own*
-   EMI). The two EMIs are never mixed.
-6. **Explain & advise** — every decision carries its rule id, rule status (published/estimated),
-   source URL and a suggested next action; the approval-strength score (0–100) never changes a gate;
-   and a counterfactual search finds the smallest single change that would flip a rejection.
+   repayment and the **APR by IRR** are kept as separate fields (APR is never rate + fee%). The
+   IRR equates the net disbursal (principal − fee − GST) to the EMI stream, following the RBI Key
+   Facts Statement method. Time-bound fee waivers apply only when the application date is inside
+   their effective window (expired/future promotions are never applied). When the applicant's exact
+   rate is unknown, the lender's published band is returned as a range and the APR is marked
+   indicative.
+5. **Quote amounts separately** — the engine returns a `requested` quote (the exact requested
+   amount, tenure, and the EMI for *that* principal/tenure), a `max_eligible` quote (max amount,
+   its tenure, and *its own* EMI), and, when the request isn't fully covered, an `alternative`
+   quote. The three EMIs are never mixed, and every displayed EMI names its principal, rate and
+   tenure.
+6. **Explain & advise** — every decision carries its rule id, confidence label, source URL and a
+   suggested next action; the rule-fit score (0–100) is a documented measure of how well the
+   applicant fits the published criteria — **not** an approval probability — and never changes a
+   gate or the ranking; a counterfactual search finds the smallest single change that would flip a
+   rejection.
 
 ### Screening statuses (not bank approvals)
 
@@ -71,18 +84,33 @@ The engine screens published criteria; it does not issue sanctions, so no status
 
 | Status | Meaning |
 |---|---|
-| `ELIGIBLE_TO_QUERY_LENDERS` | passes all mandatory rules and is fully priced on published data |
-| `PRELIMINARILY_ELIGIBLE` | passes the rules, but some terms are estimated/reduced or the rate is a range |
+| `ELIGIBLE_FOR_REQUESTED_TERMS` | passes all mandatory rules and covers the applicant's exact requested amount **and** tenure on published pricing |
+| `ELIGIBLE_FOR_ALTERNATIVE_TERMS` | passes the rules, but only a smaller amount or shorter tenure fits; the alternative is shown separately |
+| `PRELIMINARILY_ELIGIBLE` | passes the rules, but some terms are estimated/repriced, the rate is a range, the max rests on an estimated sizing rule, or card-outstanding treatment is undetermined |
 | `NOT_ELIGIBLE` | a documented mandatory rule is definitively violated |
-| `ADDITIONAL_INFORMATION_REQUIRED` | a value needed to decide is missing |
+| `ADDITIONAL_INFORMATION_REQUIRED` | a value needed to decide is missing (e.g. SE vintage/ITR, an unavailable bureau score) |
 | `MANUAL_REVIEW` | an ambiguous/unverified condition needs human interpretation |
 | `INVALID_INPUT` | the applicant data failed validation |
 | `RULES_UNAVAILABLE` | insufficient rule data to make a defensible decision |
 
-The best option is the lowest-APR eligible product on the requested terms, with a stated rationale.
-A `GET /api/summary` endpoint (and `python -m eligibility summary`) reports rule-base coverage
-(lenders, products with published vs estimated rules, APR-reliable products) — these are coverage
-figures, not approval rates.
+The best option is the lowest-APR eligible product that **covers the exact request**; offers whose
+APR rests on an estimated rate are listed separately as *indicative*, never ranked as the headline
+best. `GET /api/summary` (and `python -m eligibility summary`) reports rule-base coverage, including
+a per-product completeness count (complete / partial / insufficient); `GET /api/completeness` returns
+the per-product breakdown. These are coverage figures, not approval rates.
+
+### Canonical input contract
+
+The Pydantic `Applicant` model is the single source of truth for input. It uses plan2's canonical
+field names (`existing_monthly_emi`, `card_outstanding`, `salary_account_with`,
+`max_dpd_days_last_12_months`, `enquiries_last_6_months`, `itr_years_available`, `has_settled_loan`,
+`settled_loan_months_ago`, `write_off_flag`) and accepts the earlier internal names as documented
+aliases. Any **other** unknown key is rejected (not silently dropped). Financially material values
+that are missing stay *unknown* (`None`) — never coerced to 0 — so "no data" is distinct from "zero".
+Age is computed in **completed calendar years** from `date_of_birth` and `application_date` (a person
+born 1999-01-02 applying 2026-10-11 is 27, not 28), and the supplied application date is preserved.
+Bureau state is explicit: valid score / new-to-credit / unavailable / failed / invalid are kept
+distinct, and a required score that is unavailable yields `ADDITIONAL_INFORMATION_REQUIRED`.
 
 ## How the 20 lenders were chosen
 
@@ -113,7 +141,8 @@ the distinction is stated so the claim is honest.
 - **Provenance on every rule.** Each row is tagged `published`, `derived`, or `estimated`,
   and published rows carry a quote that must be an exact substring of a saved, dated page
   snapshot (`data/sources/`). A test (`verify_rules.py`) enforces this, so the engine cannot
-  silently drift from the sources.
+  silently drift from the sources. The API surfaces plan2's confidence taxonomy
+  (`VERIFIED_PUBLISHED`, `CONFLICT_REQUIRES_REVIEW`, `INFERRED`, `ESTIMATED`, `UNKNOWN`) per rule.
 - **Pipeline per lender/product:** derive features → hard gates (incl. a tiered bureau
   policy) → size the maximum loan (min of FOIR, take-home-floor, income-multiple and product
   caps) → price (rate, fee, 18% GST, APR by IRR) → screening status + explanation + advice.
@@ -180,10 +209,19 @@ with `seed=42`) run through the real engine — 60,000 lender/applicant evaluati
 
 - Internal scorecards, employer allow-lists, and document checks are invisible to any
   outside model; the engine screens *published* criteria and never asserts a bank sanction.
-- Bureau-hygiene thresholds and some FOIR/multiple values are estimated (flagged as such).
+- Rule completeness varies by product: of 34 products, 21 are *complete* (published gate +
+  sizing + pricing + fee), 13 are *partial*, 0 *insufficient* — reported by `/api/completeness`.
+  No lender is presented as fully verified when a material rule is only estimated.
+- Bureau-hygiene thresholds and some FOIR/multiple values are estimated (flagged as such); where
+  a product's max rests on an estimated sizing rule (e.g. Union's pvt/professional schemes, whose
+  live pages render tab headings only), the offer is `PRELIMINARILY_ELIGIBLE` with the max marked
+  indicative rather than a fabricated precise figure.
 - Fintech pricing is personalised, so those APRs are wide, low-confidence ranges.
-- A few self-employed rules (e.g. parts of Union's schemes) aren't on the live pages and
-  stay `estimated`.
+- Regulatory scope: this is a non-transacting comparison/estimation tool, so it is not itself a
+  Regulated Entity/LSP under the RBI Digital Lending Directions, 2025. It nonetheless adopts the
+  Key Facts Statement design objectives (APR as an IRR on net cash flows, costs shown separately,
+  published vs estimated distinguished, no approval claims). This is a design conclusion, not legal
+  advice; see `data/sources/_phase8_verification__2026-10-11.md`.
 - The synthetic population uses assumed marginals; its shares are illustrative, not official.
 - Rules change constantly — every value is dated, and the snapshots will go stale.
 
@@ -201,9 +239,9 @@ with `seed=42`) run through the real engine — 60,000 lender/applicant evaluati
 
 ```
 data/
-  sources/              86 dated snapshots of lender pages + PDF text extractions
+  sources/              dated snapshots of lender pages + PDF text extractions + the Phase 8 verification note
   rules/{lender}.csv    per-lender atomic rules (source of truth)
-  lender_rules_long.csv merged rule table (1,259 rules) consumed by the engine
+  lender_rules_long.csv merged rule table (1,260 rules) consumed by the engine
   conflicts.csv         variables where a lender's own pages disagree + the value used
   lookups/              city->tier, employer->category, profession allow-lists, rate grids
   calibration/          calculator probes + fitted parameters (ICICI, Kotak)
@@ -217,16 +255,17 @@ src/eligibility/
   finance.py            EMI, PV annuity (reducing balance)
   calibration.py        fitted ICICI/Kotak calculator models
   affordability.py      loan sizing + binding-cap tracking
-  pricing.py            rate band, fee+GST, APR by IRR, repricing
-  strength.py           approval-strength scorecard (published weights)
+  pricing.py            rate band, fee+GST, APR by IRR, dated fee waivers, repricing
+  strength.py           rule-fit scorecard (documented weights; not approval odds)
   gates.py              hard-gate evaluation + tiered bureau policy
   engine.py             orchestration across all 20 lenders + best-offer pick
   counterfactual.py     minimal verified "how to qualify" advice
   simulate.py           synthetic population + sensitivity
   cli.py / __main__.py  command-line interface
-  api.py                FastAPI HTTP API (/api/meta, /api/profiles, /api/evaluate)
+  api.py                FastAPI HTTP API (/api/meta, /api/profiles, /api/evaluate, /api/summary, /api/completeness)
+quality.py              rule-base coverage + per-product completeness report
 frontend/               Vite + React + TypeScript UI (form -> 20-lender table + reasons/advice)
-tests/                  phase gates, profiles P01-P16, golden baselines, API tests
+tests/                  phase gates, profiles P01-P16, EDGE01-10, golden baselines, API tests
 ```
 
 ## Frontend + backend
@@ -244,10 +283,21 @@ can serve against the same API.
 
 ## Testing
 
-`pytest` runs everything (193 tests): data contracts, the condition parser over all real
+`pytest` runs the backend suite (296 tests): data contracts, the condition parser over all real
 conditions, boundary tests per gate, Hypothesis property tests, the **calibration replay**
-(every ICICI/Kotak probe reproduced within tolerance), the 16 golden profiles, the audit
-regression/consistency invariants, CLI smoke tests, and the FastAPI endpoints.
+(every ICICI/Kotak probe reproduced within tolerance), the 16 golden profiles, the ten supplied
+EDGE regression profiles (one per observed defect), the 25 required consistency verifications with
+**independently computed** EMI/APR/age reference values, the dated fee-waiver checks, the
+rule-confidence/completeness checks, CLI smoke tests, and the FastAPI endpoints. `cd frontend &&
+npm test` runs the vitest input-mapping suite (10 tests) that proves every sample-profile field
+survives the JSON → form → backend-payload path unchanged, with no zero-filling.
+
+The ten observed defects (A–J) are each reproduced and fixed with a dedicated regression test
+(`tests/test_phase_defects.py`): existing EMI / card outstanding / salary account / employment
+tenure / ITR all survive the pipeline; age is completed-years; the requested tenure and amount are
+never rewritten; a product cannot count as covering a request larger than its supported maximum;
+the Canara ₹1.52 Cr runaway is capped at the published ₹50L; and recent delinquency / enquiries /
+settlement / missing-score cases are read and gated.
 
 See `model_report.md` for the full design, the feature catalogue, the calibration method, and the
 P01–P16 worked examples. The limitations above are enforced in data and surfaced in the UI — every

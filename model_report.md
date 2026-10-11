@@ -6,6 +6,45 @@
 
 ---
 
+## Addendum — production-grade upgrade (2026-10-11)
+
+The engine has since been built and hardened against a detailed audit (`prompts/plan2.md`). The
+sections below are the original design spec; this addendum records what changed in the shipped code,
+and takes precedence where they differ:
+
+- **Canonical input contract.** The Pydantic `Applicant` is the single source of truth, using the
+  canonical field names `existing_monthly_emi`, `card_outstanding`, `salary_account_with`,
+  `max_dpd_days_last_12_months`, `enquiries_last_6_months`, `itr_years_available`, `has_settled_loan`,
+  `settled_loan_months_ago`, `write_off_flag` (legacy names accepted as documented aliases; other
+  unknown keys rejected). Missing material values stay `None`, never 0; bureau state (valid / NTC /
+  unavailable / failed / invalid) is explicit; age is completed calendar years from DOB + application
+  date, with the application date preserved.
+- **Decision statuses** replace the old APPROVE/REDUCED shorthand with:
+  `ELIGIBLE_FOR_REQUESTED_TERMS`, `ELIGIBLE_FOR_ALTERNATIVE_TERMS`, `PRELIMINARILY_ELIGIBLE`,
+  `NOT_ELIGIBLE`, `ADDITIONAL_INFORMATION_REQUIRED`, `MANUAL_REVIEW`, `INVALID_INPUT`,
+  `RULES_UNAVAILABLE`. The requested amount/tenure are never rewritten; a reduced offer is a separate
+  `alternative` quote, not a sanction.
+- **Separate quotes.** `requested`, `alternative` and `max_eligible` each carry their own
+  (amount, tenure, EMI); EMIs are never mixed, and each is labelled with its principal/rate/tenure.
+- **Product caps** are bounded even when `loan_max` is variant-conditional (fixing the Canara ₹1.52 Cr
+  runaway → capped at the published ₹50L); "selectively higher" amounts are flagged, never applied;
+  an estimated-only sizing rule demotes the offer to `PRELIMINARILY_ELIGIBLE` with the max marked
+  indicative.
+- **Pricing/APR** is an IRR on net-of-fee cash flows (RBI Key Facts Statement method), with rate /
+  fee / GST / net disbursal / totals kept separate; time-bound fee waivers apply only inside their
+  effective window.
+- **Confidence taxonomy** (`VERIFIED_PUBLISHED` / `CONFLICT_REQUIRES_REVIEW` / `INFERRED` /
+  `ESTIMATED` / `UNKNOWN`) and a per-product completeness report (21 complete / 13 partial / 0
+  insufficient of 34) are exposed via `/api/summary` and `/api/completeness`.
+- **The "strength score" is redefined** as a documented rule-fit / data-completeness score (0–100),
+  explicitly *not* an approval probability, and excluded from ranking. Ranking is by APR (then EMI)
+  over offers that cover the exact request; estimated-APR offers are listed as indicative.
+- **Tests:** 296 backend (pytest) incl. one regression per observed defect (A–J), the 25 required
+  consistency checks with independent reference values, dated-waiver and completeness checks; plus 10
+  frontend vitest input-mapping tests. Rule table is now 1,260 rows (added YES's published ₹50L cap).
+
+---
+
 ## Table of contents
 
 1. Executive summary
