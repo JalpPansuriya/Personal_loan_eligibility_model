@@ -19,7 +19,7 @@ import datetime as _dt
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import AliasChoices, BaseModel, Field, field_validator, model_validator
 
 
 # --------------------------------------------------------------------------- enums
@@ -27,6 +27,26 @@ class EmploymentType(str, Enum):
     SALARIED = "salaried"
     SEP = "sep"   # self-employed professional (doctor, CA, ...)
     SEB = "seb"   # self-employed business
+
+    @classmethod
+    def _missing_(cls, value):
+        # accept plan2's canonical spellings
+        alias = {
+            "self_employed_professional": cls.SEP,
+            "self_employed_business": cls.SEB,
+            "self-employed-professional": cls.SEP,
+            "self-employed-business": cls.SEB,
+        }
+        return alias.get(str(value).strip().lower())
+
+
+class BureauState(str, Enum):
+    """How to read the applicant's bureau score; keeps 'missing' distinct from 'zero'."""
+    VALID = "valid"            # a real score in 300-900 is present
+    NEW_TO_CREDIT = "ntc"      # has_credit_score is explicitly false
+    UNAVAILABLE = "unavailable"  # score could not be fetched / unknown
+    FAILED = "failed"          # bureau retrieval failed
+    INVALID = "invalid"        # contradictory / out-of-range bureau data
 
 
 class Gender(str, Enum):
@@ -95,9 +115,16 @@ ALLOWED_TENURES: tuple[int, ...] = (3, 6, 9, 12, 18, 24, 36, 48, 60, 72, 84, 96,
 class Applicant(BaseModel):
     """One loan applicant. Field names follow data/variables.csv (F01-F34, +F35 gender).
 
+    The canonical input field names are plan2's (existing_monthly_emi, card_outstanding,
+    salary_account_with, max_dpd_days_last_12_months, enquiries_last_6_months,
+    itr_years_available, has_settled_loan/settled_loan_months_ago/write_off_flag). Legacy
+    internal names (existing_emi_monthly, credit_card_outstanding, ...) are accepted as
+    documented aliases via AliasChoices. Any OTHER unknown key is rejected (extra=forbid),
+    so financially material input is never silently dropped.
+
     Raw features only. Derived (F23-F34) are computed in preprocess.py.
     """
-    model_config = {"extra": "forbid"}
+    model_config = {"extra": "forbid", "populate_by_name": True}
 
     # F01-F03 employment
     employment_type: EmploymentType
@@ -111,25 +138,37 @@ class Applicant(BaseModel):
 
     # F07-F10 income
     net_monthly_income: float = Field(..., gt=0)
+    gross_monthly_income: Optional[float] = Field(None, gt=0)
     itr_income_y1: Optional[float] = Field(None, ge=0)
     itr_income_y2: Optional[float] = Field(None, ge=0)
-    itr_years_filed: int = Field(0, ge=0)
+    # None = unknown (never silently 0); accepts itr_years_available (plan2) or itr_years_filed
+    itr_years_filed: Optional[int] = Field(
+        None, ge=0, validation_alias=AliasChoices("itr_years_filed", "itr_years_available"))
 
-    # F11-F18 bureau
-    existing_emi_monthly: float = Field(0, ge=0)
-    credit_card_outstanding: float = Field(0, ge=0)
-    bureau_score: Optional[int] = None               # None = NTC; else 300-900
+    # F11-F18 obligations + bureau
+    existing_emi_monthly: float = Field(
+        0, ge=0, validation_alias=AliasChoices("existing_emi_monthly", "existing_monthly_emi"))
+    credit_card_outstanding: float = Field(
+        0, ge=0, validation_alias=AliasChoices("credit_card_outstanding", "card_outstanding"))
+    has_credit_score: Optional[bool] = None          # explicit NTC flag when False
+    bureau_score: Optional[int] = None               # None = NTC/unknown; else 300-900
     credit_history_months: Optional[int] = Field(None, ge=0)
-    max_dpd_last_12m: Optional[int] = Field(None, ge=0)
-    enquiries_last_6m: int = Field(0, ge=0)
-    writeoff_or_settled_24m: bool = False
+    max_dpd_last_12m: Optional[int] = Field(
+        None, ge=0, validation_alias=AliasChoices("max_dpd_last_12m", "max_dpd_days_last_12_months"))
+    enquiries_last_6m: int = Field(
+        0, ge=0, validation_alias=AliasChoices("enquiries_last_6m", "enquiries_last_6_months"))
+    has_settled_loan: bool = False
+    settled_loan_months_ago: Optional[int] = Field(None, ge=0)
+    write_off_flag: bool = Field(
+        False, validation_alias=AliasChoices("write_off_flag", "writeoff_or_settled_24m"))
     active_unsecured_loans: int = Field(0, ge=0)
 
     # F19-F21 location / residence / relationship
     city: Optional[str] = None                       # resolved to tier via lookup
     residence_type: Optional[ResidenceType] = None
     residence_stability_months: Optional[int] = Field(None, ge=0)
-    salary_account_with_lender: Optional[str] = None  # lender id or None
+    salary_account_with_lender: Optional[str] = Field(
+        None, validation_alias=AliasChoices("salary_account_with_lender", "salary_account_with"))
 
     # F22 optional request
     requested_tenure_months: Optional[int] = Field(None, ge=1)
@@ -175,16 +214,55 @@ class Applicant(BaseModel):
             raise ValueError("net_monthly_income exceeds 1 crore/month; check units")
         if self.employment_type == EmploymentType.SALARIED and self.business_vintage_months:
             raise ValueError("salaried applicant should not have business_vintage_months")
+        # contradictory bureau data: explicitly NTC but a score given, or score present but flagged NTC
+        if self.has_credit_score is False and self.bureau_score is not None:
+            raise ValueError("has_credit_score is false but a bureau_score was provided")
+        if self.has_credit_score is True and self.bureau_score is None:
+            raise ValueError("has_credit_score is true but no bureau_score was provided")
+        if self.settled_loan_months_ago is not None and not self.has_settled_loan:
+            raise ValueError("settled_loan_months_ago given but has_settled_loan is false")
         return self
 
     @property
     def age_at_application(self) -> float:
-        """F23: exact age in years at application (never a stored integer)."""
+        """F23: exact age in years at application (fractional; used for maturity math)."""
         return (self.application_date - self.date_of_birth).days / 365.25
+
+    @property
+    def age_completed_years(self) -> int:
+        """Completed years at application (calendar), never rounded up before the birthday."""
+        dob, app = self.date_of_birth, self.application_date
+        years = app.year - dob.year
+        if (app.month, app.day) < (dob.month, dob.day):
+            years -= 1
+        return years
+
+    @property
+    def bureau_state(self) -> BureauState:
+        if self.has_credit_score is False:
+            return BureauState.NEW_TO_CREDIT
+        if self.bureau_score is not None:
+            return BureauState.VALID
+        return BureauState.NEW_TO_CREDIT if self.has_credit_score is None else BureauState.UNAVAILABLE
 
     @property
     def is_ntc(self) -> bool:
         return self.bureau_score is None
+
+    @property
+    def writeoff_or_settled_24m(self) -> bool:
+        """Back-compat derived flag: a write-off, or a settlement within the last 24 months."""
+        if self.write_off_flag:
+            return True
+        if self.has_settled_loan:
+            return self.settled_loan_months_ago is None or self.settled_loan_months_ago <= 24
+        return False
+
+    @property
+    def card_obligation_known(self) -> bool:
+        """No lender in our sources publishes card-outstanding treatment, so any positive
+        balance means affordability cannot be fully determined (plan2 §3)."""
+        return self.credit_card_outstanding <= 0
 
 
 # --------------------------------------------------------------------------- rule

@@ -47,6 +47,7 @@ NEXT_ACTION = {
     "EXP_TOTAL_LT_MIN": "Build the required total work experience, then re-check.",
     "EXP_CURRENT_LT_MIN": "Build the required months with the current employer, then re-check.",
     "VINTAGE_LT_MIN": "Provide business-vintage proof meeting the minimum, or wait.",
+    "ITR_YEARS_LT_MIN_MISSING": "Provide ITR history (years filed) so this can be assessed.",
     "ITR_YEARS_LT_MIN": "File the required number of ITRs, then re-check.",
     "SCORE_BELOW_MIN": "Improve the bureau score to the required minimum.",
     "NTC_NOT_ALLOWED": "Build a credit history, or choose a new-to-credit-friendly lender.",
@@ -63,7 +64,7 @@ NEXT_ACTION = {
 }
 
 # codes that mean 'we lack a value to decide' rather than a confirmed violation (§6/§7)
-MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED"}
+MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED", "ITR_YEARS_LT_MIN_MISSING"}
 MANUAL_REVIEW_CODES = {"RELATIONSHIP_UNVERIFIED", "CHECKOFF_UNVERIFIED"}
 
 
@@ -246,6 +247,9 @@ class GateEvaluator:
             return None
 
         if variable == "itr_years_min" and num is not None:
+            if app.itr_years_filed is None:
+                return _reason(ir, "ITR_YEARS_LT_MIN_MISSING", "ITR history not provided",
+                               None, num)
             if app.itr_years_filed < num:
                 return _reason(ir, "ITR_YEARS_LT_MIN", "fewer filed ITRs than required",
                                app.itr_years_filed, num)
