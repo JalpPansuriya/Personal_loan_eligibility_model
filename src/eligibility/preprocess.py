@@ -46,7 +46,9 @@ class DerivedView:
 
     age_at_application: float          # F23
     assessed_income: float             # F26 (net or gross per lender)
-    income_mode: str                   # 'net' | 'gross'
+    income_mode: str                   # 'net' | 'gross' | 'gross_estimated' | 'itr'
+    net_monthly_income: float          # always the raw net (for take-home floors)
+    gross_income_estimated: bool       # True when gross was derived from net (not supplied)
     total_obligations: float           # F27
     current_foir: float                # F28
     score_band: str                    # F31
@@ -71,13 +73,17 @@ def obligations(app: Applicant) -> float:
 def assessed_income(app: Applicant, lender_id: str) -> tuple[float, str]:
     """F26: income as the lender reads it.
 
-    * Salaried gross-FOIR lenders (BoB/PNB/Canara) read gross monthly income; we convert
-      from net with a documented factor (estimated).
+    * Salaried gross-FOIR lenders (BoB/PNB/Canara) read gross monthly income: use the
+      supplied gross_monthly_income if present; otherwise estimate from net (flagged, so the
+      resulting max is marked indicative - plan3 Case A). The net->gross estimate inflates
+      income, so it must never be presented as a verified figure.
     * Self-employed: latest ITR / 12 if available, else net monthly income.
     """
     if app.employment_type == EmploymentType.SALARIED:
         if lender_id in GROSS_INCOME_LENDERS:
-            return app.net_monthly_income * GROSS_FROM_NET, "gross"
+            if app.gross_monthly_income is not None:
+                return app.gross_monthly_income, "gross"
+            return app.net_monthly_income * GROSS_FROM_NET, "gross_estimated"
         return app.net_monthly_income, "net"
     # self-employed
     if app.itr_income_y1:
@@ -109,6 +115,8 @@ def derive(app: Applicant, lender_id: str, product: str, segment: str) -> Derive
         age_at_application=app.age_at_application,
         assessed_income=inc,
         income_mode=mode,
+        net_monthly_income=app.net_monthly_income,
+        gross_income_estimated=(mode == "gross_estimated"),
         total_obligations=obl,
         current_foir=foir,
         score_band=score_band(app.bureau_score),

@@ -123,27 +123,34 @@ def size_loan(store: RuleStore, app: Applicant, d: DerivedView, product: str, se
         caps["calculator"] = calibration.icici_max_loan(d.assessed_income, d.total_obligations)
 
     # generic FOIR capacity.
-    # For calibrated lenders the fitted calculator already embeds the FOIR model, so the
-    # generic FOIR cap is skipped to avoid double-counting at a mismatched rate.
+    # generic FOIR capacity. When gross income was only ESTIMATED from net (BoB/PNB/Canara
+    # with no supplied gross), applying a gross FOIR to the inflated figure double-counts, so
+    # use net income for the FOIR capacity in that case (plan3 Case A).
     fl = foir_limit(store, lender, product, segment)
     if fl is not None and "calculator" not in caps:
-        emi_capacity = fl * d.assessed_income - d.total_obligations
+        foir_base = d.net_monthly_income if d.gross_income_estimated else d.assessed_income
+        emi_capacity = fl * foir_base - d.total_obligations
         caps["foir"] = max(0.0, pv_annuity(emi_capacity, rate_pa, tenure_months))
 
-    # take-home floor (Canara: keep max(25% net, 10k) after all EMIs; PNB fixed floors)
+    # take-home floor (Canara: keep max(25% NET, 10k) after all EMIs; PNB fixed floors).
+    # Canara's rule is on NET take-home pay, so the capacity base and keep-floor use NET
+    # income, not the (possibly net->gross-estimated) assessed income (plan3 Case A).
     thf = take_home_floor(store, lender, product, segment)
     if thf is not None:
         if lender == "canara":
-            keep = max(0.25 * d.assessed_income, 10_000)
+            base = d.net_monthly_income
+            keep = max(0.25 * d.net_monthly_income, 10_000)
         else:
+            base = d.assessed_income
             keep = thf
-        emi_capacity = d.assessed_income - d.total_obligations - keep
+        emi_capacity = base - d.total_obligations - keep
         caps["take_home"] = max(0.0, pv_annuity(emi_capacity, rate_pa, tenure_months))
 
     # income multiple
     mult = income_multiple(store, lender, product, segment)
     if mult is not None and "calculator" not in caps:
-        caps["multiple"] = mult * d.assessed_income
+        mult_base = d.net_monthly_income if d.gross_income_estimated else d.assessed_income
+        caps["multiple"] = mult * mult_base
 
     # product ceiling
     pmax = product_max(store, lender, product, segment)

@@ -203,8 +203,9 @@ class Engine:
         #   ELIGIBLE_FOR_REQUESTED_TERMS    - passes rules and covers the exact request on published pricing
         rate_pub = pricing.rate_confidence in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
         fully_supported = amount_supported and req_tenure_supported
+        gross_est_binds = d.gross_income_estimated and sizing.binding_cap in ("foir", "take_home", "multiple")
         if (gate.bureau_soft_flags or not rate_pub or not app.card_obligation_known
-                or sizing.binding_is_estimated):
+                or sizing.binding_is_estimated or gross_est_binds):
             offer.status = Status.PRELIMINARILY_ELIGIBLE
         elif not fully_supported:
             offer.status = Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS
@@ -224,6 +225,13 @@ class Engine:
                         "it is not imputed, so the affordability-based max is indicative",
                 rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
                 next_action="Provide card_monthly_payment (the monthly obligation on the card balance)."))
+        if gross_est_binds:
+            offer.reasons.append(ReasonCode(
+                code="GROSS_INCOME_ESTIMATED", variable="gross_monthly_income",
+                message="this lender reads gross income; it was estimated from net (net/0.75), "
+                        "so the affordability-based max is indicative",
+                rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
+                next_action="Provide gross_monthly_income for a firmer maximum."))
         if not amount_supported:
             offer.reasons.append(ReasonCode(
                 code="AMOUNT_NOT_COVERED", variable="loan_max",

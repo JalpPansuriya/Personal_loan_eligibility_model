@@ -93,9 +93,14 @@ def test_assessed_income_salaried_net_lender():
     assert mode == "net" and inc == 80000
 
 
-def test_assessed_income_gross_lender_converts_up():
+def test_assessed_income_gross_lender_estimates_up_when_net_only():
     inc, mode = pp.assessed_income(mk(net_monthly_income=75000), "bob")
-    assert mode == "gross" and inc == pytest.approx(100000)  # 75000 / 0.75
+    assert mode == "gross_estimated" and inc == pytest.approx(100000)  # 75000 / 0.75, flagged
+
+
+def test_assessed_income_gross_lender_uses_supplied_gross():
+    inc, mode = pp.assessed_income(mk(net_monthly_income=75000, gross_monthly_income=90000), "bob")
+    assert mode == "gross" and inc == pytest.approx(90000)
 
 
 def test_assessed_income_self_employed_uses_itr():

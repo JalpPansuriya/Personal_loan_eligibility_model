@@ -30,8 +30,8 @@
     },
     "canara": {
       "apr_pa": 10.01,
-      "max_eligible": 4000000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "max_eligible": 3000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "hdfc": {
       "apr_pa": 9.99,

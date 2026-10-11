@@ -1,8 +1,8 @@
 {
   "best": {
-    "apr_pa": 10.91,
-    "lender_id": "canara",
-    "max_eligible": 2833000.0,
+    "apr_pa": 11.65,
+    "lender_id": "sbi",
+    "max_eligible": 2550000.0,
     "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
@@ -25,13 +25,13 @@
     },
     "bob": {
       "apr_pa": 11.72,
-      "max_eligible": 2000000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "max_eligible": 1700000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "canara": {
       "apr_pa": 10.91,
-      "max_eligible": 2833000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "max_eligible": 2125000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "hdfc": {
       "apr_pa": 12.79,

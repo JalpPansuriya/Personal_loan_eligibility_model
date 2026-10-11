@@ -2,8 +2,8 @@
   "best": {
     "apr_pa": 11.11,
     "lender_id": "canara",
-    "max_eligible": 3988000.0,
-    "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
+    "max_eligible": 2837000.0,
+    "status": "PRELIMINARILY_ELIGIBLE"
   },
   "eligible": true,
   "offer_count": 16,
@@ -30,8 +30,8 @@
     },
     "canara": {
       "apr_pa": 11.11,
-      "max_eligible": 3988000.0,
-      "status": "ELIGIBLE_FOR_ALTERNATIVE_TERMS"
+      "max_eligible": 2837000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "hdfc": {
       "apr_pa": 12.79,
