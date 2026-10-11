@@ -1,0 +1,177 @@
+--- page 1 ---
+ 
+1 
+ 
+ 
+ 
+ 
+Interest Rate Policy 
+Bajaj Finance Ltd. 
+March 2026 
+
+--- page 2 ---
+ 
+2 
+ 
+Contents 
+1. Background ............................................................................................................................................................3 
+2. Objective of the policy ............................................................................................................................................3 
+3. Review of Policy ......................................................................................................................................................3 
+4. Organisation Structure ............................................................................................................................................3 
+4.1. Board of Directors ...................................................................................................................................................3 
+4.2. Risk Management Committee (RMC) .......................................................................................................................3 
+4.3. Product Approval Committee (PAC) .........................................................................................................................3 
+4.4. Asset Liability Committee (ALCO) .............................................................................................................................3 
+5. Interest Rate Model ................................................................................................................................................3 
+6. Principles and procedures for charging spreads to calculate final rate ......................................................................4 
+7. Other Charges .........................................................................................................................................................5 
+8. Communication   Framework ...................................................................................................................................5 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- page 3 ---
+ 
+3 
+ 
+ 
+1. Background 
+As per Master Direction – Reserve Bank of India (Non-Banking Financial Company – Responsible Business 
+Conduct) Directions, 2025, the Board of each NBFC shall adopt an interest rate model, taking into account 
+relevant factors such as cost of funds, margin and risk premium and determine the rate of interest to be charged 
+for loans and advances. 
+Further, the directives states that the rate of interest and the approach for gradation of risk and the rationale for 
+charging different rates of interest to different categories of borrowers should be disclosed to the borrowers / 
+customers in the application form and communicated explicitly in the sanction letter.  
+2. Objective of the policy 
+To laydown principles and governance around determination of pricing of loan products for different 
+types of customer segments and to determine the approach of charging spreads to arrive at final rates which 
+should be based on good business and market conduct including fairness and transparency. 
+3. Review of Policy 
+The Policy shall be reviewed at least annually or as required due to changes in internal policies or regulatory 
+guidelines. 
+4. Organisation Structure 
+4.1. Board of Directors 
+The Interest Rate Policy will be approved by the Board of Directors and the board shall have oversight on 
+the same. To ensure effective implementation of the Interest Rate Policy, the Board has delegated operational 
+aspects to Risk Management Committee which may determine the governance protocols for 
+implementing the same through Product Approval Committee, as deemed fit. 
+4.2. Risk Management Committee (RMC) 
+All new products along-with pricing will be recommended by PAC to RMC for approval. Product 
+modifications (including pricing) exceeding the predefined thresholds/limits specified in the PPG Document will 
+be approved by RMC. 
+4.3. Product Approval Committee (PAC) 
+Product level pricing including benchmark in case of floating rate loans should be determined basis the overall 
+framework of Board approved Interest Rate Policy. Any changes to product level pricing outside the approved 
+threshold will be reviewed and recommended by PAC by way of amendment to existing Product Program (PPG) 
+document and put up to RMC/ Board for approval. 
+4.4. Asset Liability Committee (ALCO) 
+Any change in the benchmark rate would be approved by ALCO and put up to the RMC/ Board for approval/ 
+noting. Any rate changes done outside of the ALCO cycle would be done through a sub- 
+committee consisting of VC & MD/, Dy CEO, CFO, CRO, Treasurer and the relevant senior business team members. Any 
+such change will be subsequently ratified by ALCO. 
+5. Interest Rate Model 
+BFL may offer Fixed or Floating rate loans to its customers. The rate of interest should be always defined as 
+interest rate, per annum so that the borrower is aware of the exact rates that would be charged to the account. 
+BFL being a diversified NBFC offers various loan products to cater to needs of different categories of customers. 
+Broad business/ product categories are as follows. 
+
+--- page 4 ---
+ 
+4 
+ 
+• Sales Finance 
+• Personal Loan 
+• Business Loan 
+• Loan against Gold Jewelry 
+• Car Finance 
+• Loan against Securities 
+• Micro Finance Group Loan 
+• Commercial Lending 
+• Home Loan and Loan against Property 
+The above list is illustrative in nature and the Company may offer loan products as may be approved by the Board / 
+RMC. 
+For Floating rate retail loans, businesses may employ an internal Floating Reference Rate (Bajaj FRR), Bajaj PLR 
+or any other external reference rate keeping as it may deem fair and appropriate. For wholesale floating rate 
+businesses, loans can be benchmarked to external benchmarks like REPO or Bank MCLR in addition to Bajaj FRR as 
+agreed with respective customers. 
+Bajaj PLR may include for its computation, a combination of variables such as the Cost of Funds of the company, 
+fund raising cost, market and Liquidity risk premium, drag  on investments, opex ratio, ROA, competition 
+benchmarking, etc. Any changes to the PLR is reviewed by the ALCO and published on the website of the 
+Company. 
+Bajaj FRR may include, for its computation, a combination of variables such as the Cost of Funds of relevant long term 
+instruments, fund raising cost, Market and Liquidity risk premium etc, Any changes to the FRR is reviewed in the Asset 
+Liability Committee meeting and published on the website of the Company 
+Businesses may also use external linked benchmarks such as REPO/T-bill/Government Securities (as published by 
+FBIL- Financial Benchmark India Limited), etc. as underlying benchmark for pricing floating rate loans. Apart from the 
+external benchmark, wholesale businesses may also employ Bajaj FRR rates or Bank MCLR rates which are available 
+in the public domain as an underlying benchmark to price customers. 
+Fixed rate loans are not linked to benchmark but are decided based on various parameters including but not limited 
+to Cost of Funds (allocated through Fund transfer pricing), operational expenditure, business related risks, business 
+strategy premium / discount and desired profit margin. 
+6. Principles and procedures for charging spreads to calculate final rate 
+The rate of interest for loans for various business segments and various schemes thereunder is arrived at after 
+adjusting for spread by the relevant business segment. Major factors considered by businesses for calculating spreads 
+are as follows but not limited to: 
+• Profile of the borrower and Industry segment 
+• Credit risk - Customer Indebtedness (other existing loans), Location delinquency and collection 
+performance, Bureau Score, Credit and default risk in the related business segment, Historical performance 
+of similar homogeneous clients, etc. 
+• Nature  of  product  -  Secured  Vs  unsecured  loan,  Ticket  size  of  loan,  Tenure  of  Loan, Repayment 
+track record of the borrower 
+• Nature and value of collateral security, 
+• Interest rate risk (fixed vs floating loan) 
+
+--- page 5 ---
+ 
+5 
+ 
+The rate of interest for the same product and tenor availed during same period by different customers need not be 
+standardized. It could vary for different customers depending upon consideration of any or combination of above 
+factors. 
+7. Other Charges 
+Besides interest, other charges like processing fees, late payment charges, re-schedulement charges, pre-
+payment / foreclosure charges cheque bouncing charges, part disbursement charges, cheque swap charges, 
+security swap charges, charges for issue of statement account etc., would be levied by the Company. Besides these 
+charges, stamp duty, service tax and cess would be collected at applicable rates from time to time. Any revision in 
+these charges would be applicable with prospective effect. These charges would be decided and approved / noted by the 
+PAC by way of amendment to existing PPG document. 
+BFL will ensure adherence to the business conduct practices and ensure fair pricing of products and services. This 
+will also be transparently communicated to the customers as part of terms and conditions of all loans 
+sourced. 
+8. Communication   Framework 
+Interest rates should be communicated to the customers in a fair and transparent manner at the time of sanction / 
+availing of the loan. 
+Interest Rate Policy should be uploaded on the website of the company and any change in the benchmark 
+rates and charges should also be uploaded on the web site of the Company. 
+Any changes in the benchmark rate, spread and/or charges for existing customers should be communicated in a 
+transparent manner through acceptable modes of communication such as letter, email, SMS, etc. 

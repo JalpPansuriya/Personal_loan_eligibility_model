@@ -1,0 +1,334 @@
+rule_id,lender_id,product,segment,variable,operator,value,unit,effect,condition,source_url,source_file,accessed_date,confidence,estimation_method,quote,notes
+canara-001,canara,canara_budget,salaried,segment_offered,==,true,bool,gate,variant==prime,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Prime : All the confirmed employees of Central Government / State Government / Personnel from Defence and Paramilitary Forces / PSUs & Autonomous Bodies of Central & State Govt.,
+canara-002,canara,canara_budget,salaried,segment_offered,==,true,bool,gate,variant==delight,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"Canara Budget - Delight : All the confirmed employees of Reputed Corporates /MNCs / Public & Private Ltd. Companies/Private Institutions / Universities, Reputed Schools, Reputed Colleges, Reputed Hospitals & IT BT Companies.",
+canara-003,canara,canara_budget,sep,segment_offered,not_offered,,text,gate,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,derived,Canara Budget eligibility lists only confirmed employees (Prime/Delight); no self-employed variant in snapshots,"All the confirmed employees of Reputed Corporates /MNCs / Public & Private Ltd. Companies/Private Institutions / Universities, Reputed Schools, Reputed Colleges, Reputed Hospitals & IT BT Companies.",
+canara-004,canara,canara_budget,seb,segment_offered,not_offered,,text,gate,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,derived,Canara Budget eligibility lists only confirmed employees (Prime/Delight); no self-employed variant in snapshots,"All the confirmed employees of Reputed Corporates /MNCs / Public & Private Ltd. Companies/Private Institutions / Universities, Reputed Schools, Reputed Colleges, Reputed Hospitals & IT BT Companies.",
+canara-005,canara,canara_budget,salaried,employer_category_allowed,in,central_govt|state_govt|defence|paramilitary|psu|autonomous,text,gate,variant==prime,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,All the confirmed employees of Central Government / State Government / Personnel from Defence and Paramilitary Forces / PSUs & Autonomous Bodies of Central & State Govt.,
+canara-006,canara,canara_budget,salaried,employer_category_allowed,in,reputed_corporate|mnc|public_ltd|pvt_ltd|private_institution|university|school|college|hospital|it_bt,text,gate,variant==delight,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"All the confirmed employees of Reputed Corporates /MNCs / Public & Private Ltd. Companies/Private Institutions / Universities, Reputed Schools, Reputed Colleges, Reputed Hospitals & IT BT Companies.",
+canara-007,canara,canara_budget,salaried,exp_current_min_months,>=,12,months,gate,variant==prime; confirmed in service,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Should have minimum 1 year of service & confirmed in the service.,
+canara-008,canara,canara_budget,salaried,exp_current_min_months,>=,12,months,gate,variant==delight; confirmed in service,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Should have minimum 1 year of service & confirmed in the service.,
+canara-009,canara,canara_budget,salaried,relationship_min_months,>=,12,months,gate,variant==prime; when sanction based on salary credit: last 1 year salary credited to Canara salary account,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"In case of loans sanctioned based on salary credit, salary for the last one year shall be credited in the salary account maintained with our Bank.",
+canara-010,canara,canara_budget,salaried,take_home_floor,formula,"max(0.25*net_take_home,10000)",inr_per_month,foir,after existing and proposed instalments,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"The minimum Net Take Home Pay should not be less than 25% or Rs. 10,000/- per month whichever is higher after meeting the existing and proposed loan instalments.",
+canara-011,canara,canara_budget,salaried,foir_max,<=,75,pct,foir,binding only when 25% exceeds 10000,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,derived,"net take-home must remain >=25% after all instalments, i.e. deductions <=75% of net pay (and take-home >=10000)","The minimum Net Take Home Pay should not be less than 25% or Rs. 10,000/- per month whichever is higher after meeting the existing and proposed loan instalments.",
+canara-012,canara,canara_budget,salaried,income_multiple_max,<=,25,x_income,multiple,variant==prime,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Prime : 25 months' gross salary subject to a maximum Rs. 50.00 Lakh. (Higher quantum also can be considered selectively).,months' gross salary
+canara-013,canara,canara_budget,salaried,income_multiple_max,<=,25,x_income,multiple,variant==delight,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Delight : 25 months' gross salary subject to a maximum Rs. 40.00 Lakh. (Higher quantum also can be considered selectively).,months' gross salary
+canara-014,canara,canara_budget,salaried,income_mode,==,gross,text,info,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Prime : 25 months' gross salary subject to a maximum Rs. 50.00 Lakh. (Higher quantum also can be considered selectively).,
+canara-015,canara,canara_budget,salaried,loan_max,<=,5000000,inr,amount_cap,variant==prime,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Prime : 25 months' gross salary subject to a maximum Rs. 50.00 Lakh. (Higher quantum also can be considered selectively).,higher quantum selectively
+canara-016,canara,canara_budget,salaried,loan_max,<=,4000000,inr,amount_cap,variant==delight,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Canara Budget - Delight : 25 months' gross salary subject to a maximum Rs. 40.00 Lakh. (Higher quantum also can be considered selectively).,higher quantum selectively
+canara-017,canara,canara_budget,salaried,tenure_max_months,<=,84,months,tenure,term loan,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,In convenient Equated Monthly Instalments upto 84 months for Term Loan.,
+canara-018,canara,canara_budget,salaried,guarantor_required,==,true,bool,gate,"co-obligation of spouse/legal heir, else suitable co-obligant",https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"Security Co-obligation of spouse/ legal heir of the borrower. Wherever spouse/legal heir of the borrower is not available, suitable Co-obligation good for the loan amount and acceptable to the Bank.",
+canara-019,canara,canara_budget,salaried,foreclosure,info,no pre-payment penalty,text,info,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,No pre-payment penalty.,
+canara-020,canara,canara_budget,salaried,processing_fee_pct,==,0.50,pct,fee,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"0.50% of the Loan amount (Minimum of Rs. 1,000 and Maximum of Rs. 5000",
+canara-021,canara,canara_budget,salaried,processing_fee_min_inr,>=,1000,inr,fee,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"0.50% of the Loan amount (Minimum of Rs. 1,000 and Maximum of Rs. 5000",
+canara-022,canara,canara_budget,salaried,processing_fee_max_inr,<=,5000,inr,fee,,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,"0.50% of the Loan amount (Minimum of Rs. 1,000 and Maximum of Rs. 5000",
+canara-023,canara,canara_budget,salaried,processing_fee_waiver,==,50,pct,fee,application between 2026-10-01 and 2026-12-31,https://www.canarabank.bank.in/canara-budget,canara__www_canarabank_bank_in_canara_budget__2026-10-10.md,2026-10-10,published,,Bank is celebrating Retail Loan Festival and waiver of 50% processing charges from 01.10.2026 to 31.12.2026.,Retail Loan Festival
+canara-024,canara,canara_budget,salaried,rate_benchmark,==,8.00,pct_pa,rate,RLLR w.e.f. 12.03.2026,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,RLLR OF THE BANK - 8.00%* w.e.f 12.03.2026,
+canara-025,canara,canara_budget,salaried,rate_benchmark,==,8.00,pct_pa,rate,new accounts on/after 12.12.2025,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"i. For new accounts including running limits i.e., OD/OCC etc., under RLLR regime opened on or after 12.12.2025, the applicable RLLR is 8.00%",
+canara-026,canara,canara_budget,salaried,rate_min_pa,>=,9.70,pct_pa,rate,contracted loans w.e.f. 12.12.2025,https://www.canarabank.bank.in/pages/interest-rate-range-on-loans,canara__www_canarabank_bank_in_pages_interest_rate_range_on_loans__2026-10-10.md,2026-10-10,published,,"Canara Budget
+|
+9.70 % to 14.70 %",
+canara-027,canara,canara_budget,salaried,rate_max_pa,<=,14.70,pct_pa,rate,contracted loans w.e.f. 12.12.2025,https://www.canarabank.bank.in/pages/interest-rate-range-on-loans,canara__www_canarabank_bank_in_pages_interest_rate_range_on_loans__2026-10-10.md,2026-10-10,published,,"Canara Budget
+|
+9.70 % to 14.70 %",
+canara-028,canara,canara_budget,salaried,rate_mean_pa,==,11.86,pct_pa,rate,contracted loans,https://www.canarabank.bank.in/pages/interest-rate-range-on-loans,canara__www_canarabank_bank_in_pages_interest_rate_range_on_loans__2026-10-10.md,2026-10-10,published,,"Canara Budget
+|
+9.70 % to 14.70 %
+|
+11.86%",
+canara-029,canara,canara_budget,salaried,rate_grid,grid,CRG1=12.65,pct_pa,rate,scheme==budget_individual; floating; RLLR 8.00 + CRP 4.65,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-INDIVIDUAL
+|
+CRG : 1
+|
+8.00
+|
+4.65
+|
+12.65",
+canara-030,canara,canara_budget,salaried,rate_grid,grid,CRG2=12.70,pct_pa,rate,scheme==budget_individual; floating; RLLR 8.00 + CRP 4.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+4.70
+|
+12.70",
+canara-031,canara,canara_budget,salaried,rate_grid,grid,CRG3=13.20,pct_pa,rate,scheme==budget_individual; floating; RLLR 8.00 + CRP 5.20,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+5.20
+|
+13.20",
+canara-032,canara,canara_budget,salaried,rate_grid,grid,CRG4=14.70,pct_pa,rate,scheme==budget_individual; floating; RLLR 8.00 + CRP 6.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70",
+canara-033,canara,canara_budget,salaried,rate_grid,grid,CRG1=9.70,pct_pa,rate,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-PRIME (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+1.70
+|
+9.70",
+canara-034,canara,canara_budget,salaried,rate_grid,grid,CRG2=9.70,pct_pa,rate,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+1.70
+|
+9.70",
+canara-035,canara,canara_budget,salaried,rate_grid,grid,CRG3=9.70,pct_pa,rate,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+1.70
+|
+9.70",
+canara-036,canara,canara_budget,salaried,rate_grid,grid,CRG4=14.70,pct_pa,rate,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 6.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70",
+canara-037,canara,canara_budget,salaried,rate_grid,grid,CRG1=10.70,pct_pa,rate,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-PRIME (WITHOUT SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-038,canara,canara_budget,salaried,rate_grid,grid,CRG2=10.70,pct_pa,rate,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-039,canara,canara_budget,salaried,rate_grid,grid,CRG3=10.70,pct_pa,rate,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-040,canara,canara_budget,salaried,rate_grid,grid,CRG4=14.70,pct_pa,rate,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 6.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70",
+canara-041,canara,canara_budget,salaried,rate_grid,grid,CRG1=10.70,pct_pa,rate,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-DELIGHT
+|
+CRG : 1
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-042,canara,canara_budget,salaried,rate_grid,grid,CRG2=10.70,pct_pa,rate,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-043,canara,canara_budget,salaried,rate_grid,grid,CRG3=10.70,pct_pa,rate,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+2.70
+|
+10.70",
+canara-044,canara,canara_budget,salaried,rate_grid,grid,CRG4=not_eligible,text,rate,variant==delight; with salary tie-up; floating,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+NOT ELIGIBLE FOR LOAN",
+canara-045,canara,canara_budget,salaried,bureau_reject_signal,==,CRG4,text,gate,variant==delight; floating grid,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+NOT ELIGIBLE FOR LOAN",Canara credit risk grade 4 not eligible for Budget-Delight
+canara-046,canara,canara_budget,salaried,rate_grid,grid,CRG1=13.10,pct_pa,rate,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.35; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-INDIVIDUAL
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+4.35
+|
+13.10",
+canara-047,canara,canara_budget,salaried,rate_grid,grid,CRG2=13.15,pct_pa,rate,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+0.75
+|
+4.40
+|
+13.15",
+canara-048,canara,canara_budget,salaried,rate_grid,grid,CRG3=13.65,pct_pa,rate,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.90; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+0.75
+|
+4.90
+|
+13.65",
+canara-049,canara,canara_budget,salaried,rate_grid,grid,CRG4=15.15,pct_pa,rate,scheme==budget_individual; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15",
+canara-050,canara,canara_budget,salaried,rate_grid,grid,CRG1=10.15,pct_pa,rate,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-PRIME (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15",
+canara-051,canara,canara_budget,salaried,rate_grid,grid,CRG2=10.15,pct_pa,rate,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15",
+canara-052,canara,canara_budget,salaried,rate_grid,grid,CRG3=10.15,pct_pa,rate,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15",
+canara-053,canara,canara_budget,salaried,rate_grid,grid,CRG4=15.15,pct_pa,rate,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15",
+canara-054,canara,canara_budget,salaried,rate_grid,grid,CRG1=11.15,pct_pa,rate,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-PRIME (WITHOUT SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-055,canara,canara_budget,salaried,rate_grid,grid,CRG2=11.15,pct_pa,rate,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-056,canara,canara_budget,salaried,rate_grid,grid,CRG3=11.15,pct_pa,rate,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-057,canara,canara_budget,salaried,rate_grid,grid,CRG4=15.15,pct_pa,rate,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15",
+canara-058,canara,canara_budget,salaried,rate_grid,grid,CRG1=11.15,pct_pa,rate,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET-DELIGHT (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-059,canara,canara_budget,salaried,rate_grid,grid,CRG2=11.15,pct_pa,rate,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 2
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-060,canara,canara_budget,salaried,rate_grid,grid,CRG3=11.15,pct_pa,rate,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 3
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15",
+canara-061,canara,canara_budget,salaried,rate_grid,grid,CRG4=not_eligible,text,rate,variant==delight; with salary tie-up; fixed,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+NOT ELIGIBLE FOR LOAN",
+canara-062,canara,canara_budget,salaried,bureau_reject_signal,==,CRG4,text,gate,variant==delight; fixed grid,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,canara__ww_canarabank_bank_in_interest_for_retail_lending_schemes_linked_to_fixed_rate_of_interest__2026-10-10.md,2026-10-10,published,,"CRG : 4
+|
+NOT ELIGIBLE FOR LOAN",Canara credit risk grade 4 not eligible for Budget-Delight
+canara-063,canara,canara_budget,salaried,rate_grid,grid,special_package_with_tie_up=12.40,pct_pa,rate,scheme==budget_special_package; floating; RLLR 8.00 + CRP 4.40,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"CANARA BUDGET- SPECIAL PACKAGE
+|
+|
+|
+(With Salary Tie-Up)
+|
+8.00
+|
+4.40
+|
+12.40",
+canara-064,canara,canara_budget,salaried,rate_grid,grid,special_package_without_tie_up=13.40,pct_pa,rate,scheme==budget_special_package; floating; RLLR 8.00 + CRP 5.40,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,canara__www_canarabank_bank_in_rates_of_interest_for_retail_lending_schemes_linked_to_rllr__2026-10-10.md,2026-10-10,published,,"(Without Salary Tie-Up)
+|
+8.00
+|
+5.40
+|
+13.40",
+canara-065,canara,canara_budget,salaried,age_min,>=,21,years,gate,,,,2026-10-10,estimated,not stated on lender pages; industry-standard minimum age 21 used,,
+canara-066,canara,canara_budget,salaried,age_max_at_maturity,<=,60,years,gate,,,,2026-10-10,estimated,not stated; assumed 60 (common bank cap),,
+canara-067,canara,canara_budget,salaried,income_min_monthly,>=,15000,inr_per_month,gate,,,,2026-10-10,estimated,not stated; assumed 15000 conservative floor for PSU bank salaried PL,,only a take-home floor (>=10000 after EMIs) is published
+canara-068,canara,canara_budget,salaried,score_min,>=,700,score,gate,,,,2026-10-10,estimated,not stated; stricter-value policy: 700 assumed for bank,,"pricing uses internal CRG grades, not bureau score"
+canara-069,canara,canara_budget,salaried,ntc_allowed,==,false,bool,gate,,,,2026-10-10,estimated,not stated; stricter-value policy: NTC treated as not allowed,,
+canara-070,canara,canara_budget,salaried,tenure_min_months,>=,12,months,tenure,,,,2026-10-10,estimated,not stated; assumed 12,,
+canara-071,canara,canara_budget,salaried,loan_min,>=,50000,inr,amount_cap,,,,2026-10-10,estimated,not stated; assumed 50000,,

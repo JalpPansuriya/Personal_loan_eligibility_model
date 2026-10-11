@@ -1,0 +1,27 @@
+# Conversation logs / prior-employer material — never commit
+session-*.md
+*.session.md
+
+# Prompts / planning docs — not part of the deliverable
+prompts/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+build/
+dist/
+
+# Playwright / browser artefacts
+.playwright/
+playwright-report/
+test-results/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

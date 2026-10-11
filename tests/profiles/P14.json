@@ -1,0 +1,16 @@
+{
+  "profile_id": "P14",
+  "description": "Govt employee, SBI salary account",
+  "date_of_birth": "1981-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 85000,
+  "bureau_score": 760,
+  "total_experience_months": 240,
+  "current_job_tenure_months": 120,
+  "employer_category": "govt",
+  "city": "Lucknow",
+  "salary_account_with_lender": "sbi",
+  "requested_amount": 1200000,
+  "requested_tenure_months": 60
+}

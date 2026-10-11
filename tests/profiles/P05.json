@@ -1,0 +1,15 @@
+{
+  "profile_id": "P05",
+  "description": "Fresher 21, 8 months exp, NTC",
+  "date_of_birth": "2005-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 45000,
+  "bureau_score": null,
+  "total_experience_months": 8,
+  "current_job_tenure_months": 8,
+  "employer_category": "private_ltd",
+  "city": "Pune",
+  "requested_amount": 200000,
+  "requested_tenure_months": 36
+}

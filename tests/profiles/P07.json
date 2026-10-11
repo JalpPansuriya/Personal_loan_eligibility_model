@@ -1,0 +1,18 @@
+{
+  "profile_id": "P07",
+  "description": "Self-employed doctor",
+  "date_of_birth": "1986-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "sep",
+  "profession": "doctor",
+  "net_monthly_income": 200000,
+  "business_vintage_months": 72,
+  "bureau_score": 790,
+  "itr_years_filed": 3,
+  "itr_income_y1": 2400000,
+  "itr_income_y2": 2200000,
+  "total_experience_months": 180,
+  "city": "Mumbai",
+  "requested_amount": 1500000,
+  "requested_tenure_months": 60
+}

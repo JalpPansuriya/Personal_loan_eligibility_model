@@ -1,0 +1,35 @@
+feature_id,name,unit,type,origin,description,rule_variables,lenders_published_or_derived,lenders_any_incl_estimated
+F01,employment_type,enum,categorical,A+D,salaried | sep (self-employed professional) | seb (self-employed business); selects the rule set,segment_offered,19,20
+F02,employer_category,enum,categorical,A+D,govt | psu | defence | listed_mnc | private_large | private_small | other,employer_category_allowed,15,15
+F03,profession,enum,categorical,A+D,doctor | ca | cs | cost_accountant | architect | engineer | consultant | other (sep only),profession_allowed,4,4
+F04,total_experience_months,months,integer,A+D,Total work experience at application date,exp_total_min_months,8,16
+F05,current_job_tenure_months,months,integer,A+D,Months with current employer (payslips / DOJ),exp_current_min_months,11,15
+F06,business_vintage_months,months,integer|null,D,Months since business/practice start (GST/registration); NULL for salaried,business_vintage_min_months|post_qualification_exp_min_months,5,5
+F07,net_monthly_income,INR/month,number,D,Take-home income after tax and PF (payslip / bank statement),income_min_monthly|income_min_annual|household_income_min_monthly|household_income_min_annual|income_multiple_max|foir_max|take_home_floor,20,20
+F08,itr_income_y1,INR/year,number|null,D,Total income in latest filed ITR; NULL for salaried,income_min_annual,3,3
+F09,itr_income_y2,INR/year,number|null,D,Total income in previous ITR; NULL if fewer than 2 filed,income_min_annual,3,3
+F10,itr_years_filed,count,integer,D,Number of assessment years with a filed ITR,itr_years_min,7,7
+F11,existing_emi_monthly,INR/month,number,B,Sum of EMIs on active loans in bureau report,foir_max|take_home_floor|income_multiple_max,6,20
+F12,credit_card_outstanding,INR,number,B,Revolving outstanding; monthly load = 5% (estimated) added to obligations,foir_max,5,20
+F13,bureau_score,300-900 or NULL,integer|null,B,CIBIL/Experian score; NULL = new to credit (never 0),score_min|score_preferred|rate_grid,19,20
+F14,credit_history_months,months or NULL,integer|null,B,Age of oldest trade line; NULL if none,ntc_allowed,4,20
+F15,max_dpd_last_12m,days or NULL,integer|null,B,Worst days-past-due in last 12 months; NULL if no history,bureau_reject_signal,5,5
+F16,enquiries_last_6m,count,integer,B,Hard enquiries in last 6 months,bureau_reject_signal,5,5
+F17,writeoff_or_settled_24m,bool,boolean,B,Any write-off or settlement in last 24 months,bureau_reject_signal,5,5
+F18,active_unsecured_loans,count,integer,B,Count of active unsecured trade lines,max_active_loans,1,1
+F19,city_tier,1/2/3,categorical,A+D,From data/lookups/city_tier.csv (GoI HRA X/Y/Z); pincode used only for lookup,city_serviced|income_min_monthly,16,18
+F20,residence_type,enum,categorical,A+D,owned | rented | company | parental,residence_stability_min_months,1,1
+F21,salary_account_with_lender,lender id or none,categorical,A,Bank where salary is credited,salary_account_required|relationship_min_months|rate_grid,7,7
+F22,requested_tenure_months,months,integer|null,A,Optional requested tenure,tenure_min_months|tenure_max_months,20,20
+F23,age_at_application,years,number,S,(application_date - DOB)/365.25; never a stored age,age_min|age_max_at_application,17,20
+F24,age_at_maturity,years,number,S,F23 + tenure/12,age_max_at_maturity,10,20
+F25,max_tenure_by_age_L,months,integer,S,"min(product max tenure, (maturity cap - F23) x 12) per lender",age_max_at_maturity|tenure_max_months,20,20
+F26,assessed_income_L,INR/month,number,S,Income as the lender reads it (net vs gross; SE: latest ITR/12),income_mode|income_min_monthly,19,19
+F27,total_obligations_L,INR/month,number,S,F11 + 5% x F12,foir_max|take_home_floor,6,20
+F28,current_foir,ratio,number,S,F27 / F26,foir_max,5,20
+F29,emi_capacity_L,INR/month,number,S,F26 x foir_limit_L - F27 (or take-home floor rule),foir_max|take_home_floor,6,20
+F30,post_loan_foir,ratio,number,S,(F27 + EMI of requested loan) / F26,foir_max,5,20
+F31,score_band,enum,categorical,S,>=800 | 750-799 | 700-749 | 650-699 | <650 | NTC,rate_grid|score_min,15,20
+F32,bureau_clean_flag,bool,boolean,S,F15 < 30 (or NULL) and not F17,bureau_reject_signal,5,5
+F33,itr_income_growth,ratio,number|null,S,(F08 - F09) / F09; NULL if fewer than 2 ITRs,itr_years_min,7,7
+F34,foir_headroom,ratio,number,S,foir_limit_L - F30; negative = over limit; drives counterfactual fixes,foir_max|take_home_floor,6,20

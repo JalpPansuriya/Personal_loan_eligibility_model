@@ -1,0 +1,65 @@
+lender,url,probed_on,employer,income,existing_emi,tenure_years,holdout,max_loan,raw
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,25000,0,,0,810000.0,"eligible for a total loan amount of
+₹8,10,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,25000,3800,,0,640000.0,"eligible for a total loan amount of
+₹6,40,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,25000,7500,,0,470000.0,"eligible for a total loan amount of
+₹4,70,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,25000,11200,,0,290000.0,"eligible for a total loan amount of
+₹2,90,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,40000,0,,0,1300000.0,"eligible for a total loan amount of
+₹13,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,40000,6000,,1,1020000.0,"eligible for a total loan amount of
+₹10,20,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,40000,12000,,0,740000.0,"eligible for a total loan amount of
+₹7,40,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,40000,18000,,0,470000.0,"eligible for a total loan amount of
+₹4,70,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,60000,0,,0,1950000.0,"eligible for a total loan amount of
+₹19,50,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,60000,9000,,0,1540000.0,"eligible for a total loan amount of
+₹15,40,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,60000,18000,,0,1120000.0,"eligible for a total loan amount of
+₹11,20,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,60000,27000,,0,700000.0,"eligible for a total loan amount of
+₹7,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,80000,0,,0,2610000.0,"eligible for a total loan amount of
+₹26,10,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,80000,12000,,1,2050000.0,"eligible for a total loan amount of
+₹20,50,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,80000,24000,,0,1490000.0,"eligible for a total loan amount of
+₹14,90,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,80000,36000,,0,930000.0,"eligible for a total loan amount of
+₹9,30,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,100000,0,,1,3260000.0,"eligible for a total loan amount of
+₹32,60,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,100000,15000,,0,2560000.0,"eligible for a total loan amount of
+₹25,60,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,100000,30000,,0,1860000.0,"eligible for a total loan amount of
+₹18,60,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,100000,45000,,0,1160000.0,"eligible for a total loan amount of
+₹11,60,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,150000,0,,1,4890000.0,"eligible for a total loan amount of
+₹48,90,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,150000,22500,,0,3840000.0,"eligible for a total loan amount of
+₹38,40,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,150000,45000,,1,2790000.0,"eligible for a total loan amount of
+₹27,90,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,150000,67500,,0,1740000.0,"eligible for a total loan amount of
+₹17,40,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,200000,0,,0,5000000.0,"eligible for a total loan amount of
+₹50,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,200000,30000,,0,5000000.0,"eligible for a total loan amount of
+₹50,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,200000,60000,,0,3720000.0,"eligible for a total loan amount of
+₹37,20,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,200000,90000,,0,2330000.0,"eligible for a total loan amount of
+₹23,30,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,300000,0,,0,5000000.0,"eligible for a total loan amount of
+₹50,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,300000,45000,,0,5000000.0,"eligible for a total loan amount of
+₹50,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,300000,90000,,0,5000000.0,"eligible for a total loan amount of
+₹50,00,000"
+icici,https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility,2026-10-11,STATE BANK OF INDIA,300000,135000,,0,3490000.0,"eligible for a total loan amount of
+₹34,90,000"

@@ -1,0 +1,15 @@
+{
+  "profile_id": "P15",
+  "description": "Exactly at thresholds",
+  "date_of_birth": "2005-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 25000,
+  "bureau_score": 700,
+  "total_experience_months": 12,
+  "current_job_tenure_months": 12,
+  "employer_category": "private_ltd",
+  "city": "Jaipur",
+  "requested_amount": 300000,
+  "requested_tenure_months": 36
+}

@@ -1,0 +1,16 @@
+{
+  "profile_id": "P16",
+  "description": "Settled loan 18m ago",
+  "date_of_birth": "1987-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 90000,
+  "bureau_score": 680,
+  "writeoff_or_settled_24m": true,
+  "total_experience_months": 120,
+  "current_job_tenure_months": 60,
+  "employer_category": "private_ltd",
+  "city": "Delhi",
+  "requested_amount": 500000,
+  "requested_tenure_months": 48
+}

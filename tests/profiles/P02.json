@@ -1,0 +1,18 @@
+{
+  "profile_id": "P02",
+  "description": "Low score 640, recent DPD and enquiries",
+  "date_of_birth": "1991-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 80000,
+  "existing_emi_monthly": 10000,
+  "bureau_score": 640,
+  "max_dpd_last_12m": 30,
+  "enquiries_last_6m": 4,
+  "total_experience_months": 96,
+  "current_job_tenure_months": 36,
+  "employer_category": "private_ltd",
+  "city": "Delhi",
+  "requested_amount": 500000,
+  "requested_tenure_months": 48
+}

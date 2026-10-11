@@ -1,0 +1,377 @@
+--- page 1 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Interest rate framework and policy for determining 
+Penal, Processing & Other charges 
+Aditya Birla Capital Limited 
+Version 4.0 
+Internal 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ABCL_July 31, 2026 1 
+
+
+--- page 2 ---
+2 ABCL July 31, 2026  
+ Table of Content  
+ 
+Particulars Pg. No. 
+Preamble 3 
+Document Details, Version control, Approval 4 
+Pricing Determination Mechanism 5 
+Reference Rate Model 5 
+Indicative Rate of Interest 6 
+Other procedural aspects 6 
+Penal and other charges 7 
+Customer Communication 9 
+Review 10 
+
+--- page 3 ---
+3 ABCL July 31, 2026  
+Preamble  
+This document is intended to present Aditya Birla Capital Limited (“ABCL”) policies of providing adequate transparency 
+to customers and ensuring an equitable interest rate mechanism. 
+ 
+The purpose of this Policy is to set out the principles followed while arriving at Long Term Reference Rate / Short Term 
+Reference Rate and levying interest rate/margin on credit facilities extended by ABCL to its customers. 
+ 
+This Policy broadly outlining the pricing determination mechanism, rationale for charging different rates of interest for 
+different category of borrowers is in compliance with the directives of the Reserve Bank of India to have a documented 
+policy for interest rates charged on the loans disbursed by ABCL . 
+ 
+Given the business model of ABCL, the rate of interest could vary for different loan products, tenors and risk profiles of 
+borrowers. Most of these products, generally, are linked to the reference rates of ABCL . Indicative factors considered 
+for determining pricing is covered in ensuing paragraphs. Customers will be made upfront aware of the offered price on 
+their facility on the sanction documents / Key Fact Statement / agreements as applicable to that product category, 
+enabling the customer to be aware of all costs and fees, charges for availing the loan and to enable him/her to compare 
+the same with any offering from other lenders. 
+
+--- page 4 ---
+4 ABCL July 31, 2026  
+ Document Details:  
+ 
+Particulars Details 
+Document Title Interest rate framework and policy for determining Penal, Processing & Other charges 
+Document Owner Treasury and Finance, Product and Policy Teams 
+Review Process Sign off from CEO & CFO in consultation with Business Heads on suggested amendments. Such amendments to be approved by the Board of Directors. 
+Document Code ABCL_July 31, 2026 
+Document Version No. 4.0 
+Document Classification Internal 
+Approval Date  July 31, 2026  
+ 
+ Version Control:  
+ 
+Version No Date Modified by Nature of Change 
+1.0 January 2025 - - 
+2.0 February 2026 Compliance Update in Bounce charges  
+3.0 May 2026 RCMB- & UdyogPlus Update in Penal Charges and Product name 
+4.0 July 2026 Mid Market & Gold Loan  Update in capping, Penal charges and business vertical details 
+ 
+ Approval:  
+ 
+Approved By/In Date Remarks 
+ABCL Board January 2025  
+ABCL Board February 2026  
+ABCL Board May 2026  
+ABCL Board July 2026  
+
+--- page 5 ---
+5 ABCL July 31, 2026  
+ Pricing Determination Mechanism  
+ 
+ABCL offers floating rate as well as fixed rate loans to its customers. The existing loan portfolio and new bookings 
+comprise both these categories of loan. With respect to providing adequate transparency to customers and ensuring an 
+equitable interest rate mechanism, ABCL publishes its reference rates and reference rates are used for pricing of all 
+variable rate asset products offered by ABCL. ABCL also offers floating rates loans linked to external reference rates. The 
+impact of any changes in the reference rates are affected only prospectively and are passed onto the existing customer 
+base in a transparent manner. Any change in the reference rates is approved by ALCO. 
+ 
+Any changes to reference rates are passed on to existing customers keeping the contracted spread (as agreed by both 
+parties in the loan agreement) unchanged as deemed fit unless there is a credit quality deterioration/enhancement. 
+Premium over / below reference rate offered to new customers are determined by considering the various factors, 
+including, but not limited to: 
+ Ticket size of the loan 
+ Tenor of the loan 
+ End use of fund 
+ Method of financial evaluation 
+ Credit profile of the customer 
+ Industry/competition pricing 
+ Structuring premium 
+ Margin 
+ Cost of Funds 
+ Reference rate model  
+ 
+Reference rates for ABCL are determined basis following broad factors. Reference rates also factors in various other 
+factors like current and forecasted market conditions, economic conditions at the time of revision. 
+ 
+ Cost of Borrowing: The Company has its sources of short-term and long-term borrowings such as commercial 
+papers, NCDs, ICDs, bank term loans, other term loans, working capital borrowings etc. The borrowing rate for 
+ABCL is dependent on the maturity period for which funds are borrowed. Similarly, the loan assets are priced 
+based on the borrowing rates corresponding to the maturity or tenor for which the asset is created. In case of 
+floating rate loan assets, the pricing is based corresponding to the reset period or like such parameters. 
+ 
+ Tenor Premium and Liquidity Premium as per market conditions 
+ 
+ Operational Costs: Interest rates to be charged should take care of operational cost towards sourcing, 
+sanctioning, disbursing, collection, and management of such loan assets for various business segments. 
+ 
+ Credit Risk: Expected credit losses and NPAs, should be taken into consideration while arriving at the final 
+interest rate for all loan assets. The amount of expected credit losses applicable to a particular type of loan 
+transaction would depend on our internal assessment of the credit strength of our borrower. 
+ 
+ Minimum Profit Margin 
+
+--- page 6 ---
+6 ABCL July 31, 2026  
+ Indicative Rate of Interest  
+ 
+Rate of Interest (ROI) shall be commensurate with the product pricing, cost of funds, operational costs, acquisition cost, 
+etc. The product pricing shall be calculated after factoring in all the factors as enumerated/indicated in the above paras. 
+ 
+The below mentioned maximum ROI, which shall be offered under each of the segment, are indicative and will be 
+modified from time to time based on prevailing market conditions among other factors: 
+ 
+Segment Cap on ROI* / Maximum ROI* 
+Large & Mid Corporate (Secured) 20.0% 
+SME (Secured) 22.0% 
+Personal Loans 28.0% 
+Business Loans 28.0% 
+Small Business Loans (Secured and 
+Unsecured) 32.0% 
+Gold Loan 27.0% 
+ 
+*(While the Company will ensure to cap ROI at abovementioned rates while sanctioning loans from April 01, 2025, in 
+case of floating rate loans where the loan is linked to internal / external benchmark, the customer ROI could exceed the 
+abovementioned cap upon increase in the internal / external benchmark rate to that extent) 
+ 
+ Other procedural aspects  
+ 
+ Lending to a particular borrower is decided after taking into consideration market reputation, repayment track 
+record, risk profile, income available to service debt, etc. of the applicant, and also nature and value of 
+primary and collateral security offered. 
+ 
+ The rate of interest for the same product and tenor availed during same period by different borrowers need 
+not be standardized. It could vary from borrower to borrower depending upon consideration of any or 
+combination of above factors. 
+ 
+ The Company shall levy penal charges for non-compliance of material terms & conditions of loan contract 
+along with Penal charges for delay or default in making payments towards the overdue amount for the 
+delayed period. 
+ 
+ There shall be no capitalization of penal charges i.e., no further interest computed on such charges. However, 
+this will not affect the normal procedures for compounding of interest in the loan account. 
+ 
+ Other financial charges like processing fees, pre-payment/foreclosure charges, documentation and other 
+charges recovered are stated expressively in the Loan Documents containing the terms and conditions of the 
+loan. They may vary across different products offered by the Company based on the asset financed, exposure 
+limit, expense incurred in the geographical location and borrower segment among other factors. 
+
+--- page 7 ---
+7 ABCL July 31, 2026  
+ Penal and other charges  
+ 
+A. Penal Charges 
+With an intent to inculcate a sense of credit discipline in the borrowers i.e. to encourage timely repayment and 
+discourage delinquency, penal charges as mentioned below shall be levied as a deterrent: 
+ 
+1. Penal charges (charges levied for non-payment of overdue amount): 
+Sr. 
+No. 
+Business Vertical Penal charge 
+1. Wholesale Lending Business: 
+(Term Loan, Credit substitutes, Project 
+Finance, Corporate Loan, Structured 
+Finance) 
+2% p.a. on the overdue amount for the delayed 
+period, above current applicable interest rate on 
+the overdue amount. 
+2. Mid-Market: 
+(Term Loan, Working Capital Demand Loan, 
+Line of Credit, Dropline Credit, Invoice 
+Discounting, Purchase Finance, Bills of 
+Exchange discounting, Trade Partnership 
+Program, Factoring, Capital Market Group 
+Institution & Retail, Vendor Finance, 
+Channel Finance and Assignment of 
+Receivable products) 
+Secured Products: 2% p.a. on the overdue 
+amount for the delayed period.  
+ 
+Unsecured Products: up to 5% p.a. on the 
+overdue amount for the delayed period.. 
+3. Small Medium Enterprise Business: 
+(Loan Against Property, Lease Rental 
+Discounting, Construction Finance, 
+Machinery Purchase Loan, Solar Equipment 
+Loan, Line of Credit products and its 
+variants) 
+Term Loans: 3% p.m. (36% p.a.) on the overdue 
+amount for the delayed period. 
+ 
+Line of Credit products and its variants: 3% p.a. 
+on the overdue amount for the delayed period. 
+4. Retail Consumer & Micro Business – 
+Secured: 
+(Small Ticket Secured Loan, Micro Loan 
+Against Property and their variants) 
+3% p.m. (36% p.a.) on the overdue amount for 
+the delayed period. 
+5. Retail Consumer & Micro Business  – 
+Unsecured: 
+(Personal Instalment Loan / Personal Loan, 
+Business Instalment Loan / Business Loan, 
+Short Term Unsecured Loan, Corporate 
+Employee Solution Business – Personal 
+Loan and their variants) 
+3% p.m. (36% p.a.) on the overdue amount for 
+the delayed period. 
+6. Retail Consumer & Micro Business - Digital: 
+(Personal Loan, Buy Now Pay Later/Check- out 
+Financing, Equated Daily Instrument Product (EDI))
+3% p.m. (36% p.a.) on the overdue amount for 
+the delayed period. 
+7. Udyog Plus / Digital Ecosystem: 
+(Business Loan, Small Business Loans, Personal
+Loan, Short Term Unsecured Loan) 
+3% p.m. (36% p.a.) on the overdue amount for 
+the delayed period. 
+8. Udyog Plus_Supply Chain Finance: a. up to12% p.a. on the overdue amount for the 
+delayed period, above current applicable 
+
+--- page 8 ---
+8 ABCL July 31, 2026  
+ a. Anchor based 
+b. Non-Anchor based 
+ 
+ 
+(Channel Finance, Vendor Finance, Term 
+Loan, Working Capital Demand / Term Loan, 
+Line of Credit, Invoice Discounting / 
+Purchase Finance Facility, Assignment of 
+Receivables) 
+interest rate on the overdue amount 
+b. Up to 2% p.m. (up to 24% p.a.)on the overdue 
+amount for the delayed period, above 
+current applicable interest rate on the 
+overdue amount 
+9. Buy Now Pay Later / Check-Out financing  Overdue Amount Charges (in Rs.)  
+Upto Rs 100 Rs 0 – Rs. 25 
+Rs 101 to RS 250 Rs 26 – Rs. 50 
+Rs 251 to 500 Rs 51 - Rs 100 
+Rs 501 to 1000 Rs 101 - Rs 250 
+Rs. 1001 to Rs. 2500 Rs 251 - Rs 500 
+Rs. 2501 to Rs. 5000 Rs 501 - Rs 750 
+Rs. 5001 & Above Rs 751 
+10. Equated Daily Instalment (EDI) Product 3% p.m. (36% p.a.) on the overdue amount 
+beyond grace period at the end of month. 
+11.  Gold Loan 6 % p.a. on the overdue amount for the delayed 
+period. 
+ 
+ 
+2. Penal charges for non-compliance with material terms and conditions (covenants / stipulated conditions) 
+mentioned in the Sanction Letter / Loan Agreement (If applicable): 
+Up to 2% p.a. on the outstanding loan amount till the date of compliance. 
+ 
+3. Cheque return/bounce charges/ECS/SI/NACH failure charges (excluding EDI products): up to Rs. 1,000 per 
+instance and per agreed repayment cycle. 
+ 
+4. Mandate cancellation charges (one-time charge levied in case customer cancels an active mandate instruction 
+for recurring repayment(s) and no new mandate is registered): Rs. 450 per instance (subject to GST, if 
+applicable) 
+ 
+Note: Any change in rate of abovementioned Penal Charges or introduction of any new Penal Charges applicable to 
+various products offered by the Company, the same to be approved by the Board of Directors as part of this Policy. 
+ 
+B. Charges applicable for switching of loans from floating to fixed interest rate and vice versa 
+ 
+Chapter III Para D of Reserve Bank of India (Non-Banking Financial Companies – Responsible Business Conduct) 
+Directions, 2025 dated November 28, 2025  as updated from time to time provides for ‘Reset of Floating Interest Rate 
+on Equated Monthly Instalments (EMI) based Personal Loans’.  
+
+--- page 9 ---
+9 ABCL July 31, 2026  
+ 
+These guidelines shall be applicable to all EMI based floating rate Personal Loans given to individuals consisting of (a) 
+Consumer Credit (b) Education Loan, (c) Loans given for creation/ enhancement of immovable assets (e.g., housing, etc.) 
+and (d) Loans given for investment in financial assets (shares, debentures, etc.) 
+ 
+As per the aforementioned directions, the Board of Directors of the Company is required to approve the charges 
+applicable for switching of Eligible loans from floating to fixed interest rate & vice-versa. Such charges shall also be 
+displayed on the website of the Company. 
+ 
+In accordance with the aforementioned directions, the charges for switching to fixed from floating rate of interest and 
+vice- versa upon receipt of request from borrowers of Eligible Loan(s) shall be as under: 
+ Up to 3% of the principal outstanding amount (subject to GST, if applicable) 
+ 
+The above charges shall form part of Schedule of Charges of applicable/eligible loan product offered by ABCL. 
+ 
+Note: Any change in rate of abovementioned Charge as applicable to Eligible loan products offered by the Company, the 
+same to be approved by the Board of Directors as part of this Policy. 
+ 
+C. Processing /Documentation and Other charges 
+ 
+All other charges including processing / documentation charges are expressly mentioned in the Schedule of Charges 
+forming part of the Loan Agreement / Terms & Conditions and Key Fact Statement. Such charges may vary based on 
+product type and applicable conditions. 
+ 
+The Product Approval Committee (PAC) shall approve and review reasonableness of other charges including processing 
+/ documentation charges (including introduction of new charges / amendments to existing charges, if any) applicable to 
+various products offered by the Company. 
+ 
+D. OTHER ASPECTS 
+ 
+The Schedule of Charges comprising of indicative range of Rate of Interest, Penal charges, Fees and Other charges levied 
+for each product offered by the ABCL is hosted on the website of the ABCL . 
+ 
+Based on the merits of each loan account and subject to discretion of the Company, the charges / fees as indicated in 
+the Schedule of Charges may be settled at a lower rates or waived at a loan account level as per the Company’s 
+Delegation of Authority matrix. 
+ 
+As regards Penal and Other Charges / Fees to be levied to the customers in case of a Co-lending arrangement, the Board 
+approved Policy adopted in line with the “Reserve Bank of India (Non-Banking Financial Companies – Responsible 
+Business Conduct) Directions, 2025 dated November 28, 2025, as updated from time to time read with Reserve Bank of 
+India (Non-Banking Financial Companies - Transfer and Distribution of Credit Risk) Directions, 2025 dated November 28, 
+2025, as  updated  from time to time ‘”by the Co-lending partner sourcing the customers shall be adhered to. 
+ 
+ Customer Communication  
+ 
+ During the loan sanctioning process the borrower is clearly informed and explained about rate of interest, all 
+the applicable charges and other terms and conditions pertaining to the loan facility; the borrower signs a 
+Loan Agreement, a Sanction Letter, Key Fact Statement (as applicable) as received from the ABCL. 
+
+--- page 10 ---
+10ABCL July 31, 2026  
+ A copy of the same is kept for reference on the ABCL’s ’s records. 
+ Any changes in the terms and conditions, interest rates and charges shall be communicated to the borrower in 
+a mode and manner deemed fit, and such changes are affected only prospectively. 
+ 
+ Review  
+ 
+This policy shall be reviewed by the Board of Directors at such intervals as and when deemed necessary or atleast on an 
+annual basis, in order to align the same with the prevalent regulatory and business requirements. 
+ 
+ 

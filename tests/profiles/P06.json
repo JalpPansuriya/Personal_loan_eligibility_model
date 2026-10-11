@@ -1,0 +1,16 @@
+{
+  "profile_id": "P06",
+  "description": "Age 57, wants 60 months",
+  "date_of_birth": "1969-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 150000,
+  "existing_emi_monthly": 20000,
+  "bureau_score": 780,
+  "total_experience_months": 360,
+  "current_job_tenure_months": 120,
+  "employer_category": "private_ltd",
+  "city": "Chennai",
+  "requested_amount": 1000000,
+  "requested_tenure_months": 60
+}

@@ -1,0 +1,15 @@
+{
+  "profile_id": "P13",
+  "description": "High earner wants 50L",
+  "date_of_birth": "1984-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 300000,
+  "bureau_score": 810,
+  "total_experience_months": 180,
+  "current_job_tenure_months": 96,
+  "employer_category": "private_ltd",
+  "city": "Mumbai",
+  "requested_amount": 5000000,
+  "requested_tenure_months": 60
+}

@@ -1,0 +1,112 @@
+{
+  "best": {
+    "apr_pa": 30.98,
+    "lender_id": "kreditbee",
+    "max_eligible": 400000.0,
+    "status": "PRELIMINARILY_ELIGIBLE"
+  },
+  "eligible": true,
+  "offer_count": 1,
+  "offers": {
+    "abcl": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "axis": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "bajaj": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "bob": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "canara": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "hdfc": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "icici": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "idfc": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "indusind": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "kotak": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "kreditbee": {
+      "apr_pa": 30.98,
+      "max_eligible": 400000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "lnt": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "moneyview": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "navi": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "pnb": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "poonawalla": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "sbi": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "tata": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "union": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "yes": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    }
+  }
+}

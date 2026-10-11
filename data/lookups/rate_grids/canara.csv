@@ -1,0 +1,283 @@
+rule_id,product,segment,value,condition,confidence,source_url,quote
+canara-029,canara_budget,salaried,CRG1=12.65,scheme==budget_individual; floating; RLLR 8.00 + CRP 4.65,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CANARA BUDGET-INDIVIDUAL
+|
+CRG : 1
+|
+8.00
+|
+4.65
+|
+12.65"
+canara-030,canara_budget,salaried,CRG2=12.70,scheme==budget_individual; floating; RLLR 8.00 + CRP 4.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 2
+|
+8.00
+|
+4.70
+|
+12.70"
+canara-031,canara_budget,salaried,CRG3=13.20,scheme==budget_individual; floating; RLLR 8.00 + CRP 5.20,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 3
+|
+8.00
+|
+5.20
+|
+13.20"
+canara-032,canara_budget,salaried,CRG4=14.70,scheme==budget_individual; floating; RLLR 8.00 + CRP 6.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70"
+canara-033,canara_budget,salaried,CRG1=9.70,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CANARA BUDGET-PRIME (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+1.70
+|
+9.70"
+canara-034,canara_budget,salaried,CRG2=9.70,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 2
+|
+8.00
+|
+1.70
+|
+9.70"
+canara-035,canara_budget,salaried,CRG3=9.70,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 1.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 3
+|
+8.00
+|
+1.70
+|
+9.70"
+canara-036,canara_budget,salaried,CRG4=14.70,variant==prime; with salary tie-up; floating; RLLR 8.00 + CRP 6.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70"
+canara-037,canara_budget,salaried,CRG1=10.70,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CANARA BUDGET-PRIME (WITHOUT SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-038,canara_budget,salaried,CRG2=10.70,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 2
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-039,canara_budget,salaried,CRG3=10.70,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 3
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-040,canara_budget,salaried,CRG4=14.70,variant==prime; without salary tie-up; floating; RLLR 8.00 + CRP 6.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 4
+|
+8.00
+|
+6.70
+|
+14.70"
+canara-041,canara_budget,salaried,CRG1=10.70,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CANARA BUDGET-DELIGHT
+|
+CRG : 1
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-042,canara_budget,salaried,CRG2=10.70,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 2
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-043,canara_budget,salaried,CRG3=10.70,variant==delight; with salary tie-up; floating; RLLR 8.00 + CRP 2.70,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 3
+|
+8.00
+|
+2.70
+|
+10.70"
+canara-044,canara_budget,salaried,CRG4=not_eligible,variant==delight; with salary tie-up; floating,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CRG : 4
+|
+8.00
+|
+NOT ELIGIBLE FOR LOAN"
+canara-046,canara_budget,salaried,CRG1=13.10,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.35; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CANARA BUDGET-INDIVIDUAL
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+4.35
+|
+13.10"
+canara-047,canara_budget,salaried,CRG2=13.15,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 2
+|
+8.00
+|
+0.75
+|
+4.40
+|
+13.15"
+canara-048,canara_budget,salaried,CRG3=13.65,scheme==budget_individual; fixed; RLLR 8.00 + CRP 4.90; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 3
+|
+8.00
+|
+0.75
+|
+4.90
+|
+13.65"
+canara-049,canara_budget,salaried,CRG4=15.15,scheme==budget_individual; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15"
+canara-050,canara_budget,salaried,CRG1=10.15,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CANARA BUDGET-PRIME (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15"
+canara-051,canara_budget,salaried,CRG2=10.15,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 2
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15"
+canara-052,canara_budget,salaried,CRG3=10.15,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 1.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 3
+|
+8.00
+|
+0.75
+|
+1.40
+|
+10.15"
+canara-053,canara_budget,salaried,CRG4=15.15,variant==prime; with salary tie-up; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15"
+canara-054,canara_budget,salaried,CRG1=11.15,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CANARA BUDGET-PRIME (WITHOUT SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-055,canara_budget,salaried,CRG2=11.15,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 2
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-056,canara_budget,salaried,CRG3=11.15,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 3
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-057,canara_budget,salaried,CRG4=15.15,variant==prime; without salary tie-up; fixed; RLLR 8.00 + CRP 6.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 4
+|
+8.00
+|
+0.75
+|
+6.40
+|
+15.15"
+canara-058,canara_budget,salaried,CRG1=11.15,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CANARA BUDGET-DELIGHT (WITH SALARY TIE-UP)
+|
+CRG : 1
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-059,canara_budget,salaried,CRG2=11.15,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 2
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-060,canara_budget,salaried,CRG3=11.15,variant==delight; with salary tie-up; fixed; RLLR 8.00 + CRP 2.40; FRP 0.75,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 3
+|
+8.00
+|
+0.75
+|
+2.40
+|
+11.15"
+canara-061,canara_budget,salaried,CRG4=not_eligible,variant==delight; with salary tie-up; fixed,published,https://www.canarabank.bank.in/interest-for-retail-lending-schemes-linked-to-fixed-rate-of-interest,"CRG : 4
+|
+NOT ELIGIBLE FOR LOAN"
+canara-063,canara_budget,salaried,special_package_with_tie_up=12.40,scheme==budget_special_package; floating; RLLR 8.00 + CRP 4.40,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"CANARA BUDGET- SPECIAL PACKAGE
+|
+|
+|
+(With Salary Tie-Up)
+|
+8.00
+|
+4.40
+|
+12.40"
+canara-064,canara_budget,salaried,special_package_without_tie_up=13.40,scheme==budget_special_package; floating; RLLR 8.00 + CRP 5.40,published,https://www.canarabank.bank.in/rates-of-interest-for-retail-lending-schemes-linked-to-rllr,"(Without Salary Tie-Up)
+|
+8.00
+|
+5.40
+|
+13.40"

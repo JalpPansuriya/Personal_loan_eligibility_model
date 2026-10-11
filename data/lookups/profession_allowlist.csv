@@ -1,0 +1,60 @@
+lender_id,product,segment,profession,confidence,rule_id,source_url
+bob,baroda_personal_loan,sep,doctor,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,engineer,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,architect,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,interior_designer,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,tech_consultant,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,management_consultant,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,company_secretary,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+bob,baroda_personal_loan,sep,etc,published,bob-007,https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan
+pnb,pnb_sahyog_rin_personal_loan_public,salaried,doctors MBBS/BDS & above with annual income >=4L,published_conflict,pnb-025,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html
+pnb,pnb_personal_loan_self_employed,sep,ca,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,cs,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,data_analyst,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,architect,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,valuer,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,lic_agent,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,engineer,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,software_developer,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+pnb,pnb_personal_loan_self_employed,sep,financial_consultant,published,pnb-070,https://pnb.bank.in/personalloanforpublic.html
+poonawalla,poonawalla_professional_loan,sep,doctor,derived,poonawalla-084,https://poonawallafincorp.com/professional-loan/eligibility-and-documents
+poonawalla,poonawalla_professional_loan,sep,ca,derived,poonawalla-084,https://poonawallafincorp.com/professional-loan/eligibility-and-documents
+poonawalla,poonawalla_professional_loan,sep,cs,derived,poonawalla-084,https://poonawallafincorp.com/professional-loan/eligibility-and-documents
+union,union_professional_personal,salaried,CA,estimated,union-063,
+union,union_professional_personal,salaried,CS,estimated,union-063,
+union,union_professional_personal,salaried,Cost Accountant,estimated,union-063,
+union,union_professional_personal,salaried,Doctor,estimated,union-063,
+union,union_professional_personal,salaried,Engineer,estimated,union-063,
+union,union_professional_personal,sep,CA,estimated,union-073,
+union,union_professional_personal,sep,CS,estimated,union-073,
+union,union_professional_personal,sep,Cost Accountant,estimated,union-073,
+union,union_professional_personal,sep,Doctor,estimated,union-073,
+union,union_professional_personal,sep,Engineer,estimated,union-073,
+union,union_women_professional,salaried,Healthcare,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Accountancy/Audit,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Wealth Management/Financial Services,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Engineering/Architect/Interior Designing,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Fashion designing,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Art & culture,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Coaching/Counselling,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Photography/Film making,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Mass media/Communications/Publicity,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Beauty & cosmetics,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Event Management,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Legal Services,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Education & Research,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,salaried,Aviation,published,union-104,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Healthcare,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Accountancy/Audit,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Wealth Management/Financial Services,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Engineering/Architect/Interior Designing,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Fashion designing,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Art & culture,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Coaching/Counselling,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Photography/Film making,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Mass media/Communications/Publicity,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Beauty & cosmetics,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Event Management,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Legal Services,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Education & Research,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme
+union,union_women_professional,sep,Aviation,published,union-105,https://unionbankofindia.bank.in/en/Details/union-women-professional-personal-loan-scheme

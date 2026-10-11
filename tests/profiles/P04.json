@@ -1,0 +1,15 @@
+{
+  "profile_id": "P04",
+  "description": "New job 4 months",
+  "date_of_birth": "1999-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 90000,
+  "bureau_score": 770,
+  "total_experience_months": 36,
+  "current_job_tenure_months": 4,
+  "employer_category": "private_ltd",
+  "city": "Pune",
+  "requested_amount": 500000,
+  "requested_tenure_months": 36
+}

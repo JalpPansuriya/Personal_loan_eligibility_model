@@ -1,0 +1,11 @@
+pandas==3.0.6
+numpy==2.5.3
+scipy==1.18.1
+pydantic==2.14.0
+pytest==9.1.1
+hypothesis==6.168.5
+fastapi==0.143.0
+uvicorn==0.54.0
+httpx==0.28.1
+playwright==1.63.0
+pypdf==6.20.0

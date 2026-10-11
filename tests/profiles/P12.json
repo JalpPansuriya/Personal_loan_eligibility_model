@@ -1,0 +1,15 @@
+{
+  "profile_id": "P12",
+  "description": "Tier-3 city, low income",
+  "date_of_birth": "1996-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 22000,
+  "bureau_score": 730,
+  "total_experience_months": 60,
+  "current_job_tenure_months": 36,
+  "employer_category": "private_ltd",
+  "city": "Rourkela",
+  "requested_amount": 150000,
+  "requested_tenure_months": 36
+}

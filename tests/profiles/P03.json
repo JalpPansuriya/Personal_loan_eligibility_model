@@ -1,0 +1,16 @@
+{
+  "profile_id": "P03",
+  "description": "High existing EMI ~55%",
+  "date_of_birth": "1988-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 100000,
+  "existing_emi_monthly": 55000,
+  "bureau_score": 760,
+  "total_experience_months": 120,
+  "current_job_tenure_months": 60,
+  "employer_category": "private_ltd",
+  "city": "Bengaluru",
+  "requested_amount": 600000,
+  "requested_tenure_months": 60
+}

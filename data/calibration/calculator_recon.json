@@ -1,0 +1,882 @@
+{
+  "icici": {
+    "url": "https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "0",
+        "max": "100",
+        "value": "1.65",
+        "placeholder": "",
+        "label": "Net monthly Income"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "rangeSliderVal",
+        "min": "",
+        "max": "",
+        "value": "50,000",
+        "placeholder": "",
+        "label": "Net monthly Income"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "0",
+        "max": "100",
+        "value": "0",
+        "placeholder": "",
+        "label": "Total existing obligation/EMI"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "rangeSliderVal",
+        "min": "",
+        "max": "",
+        "value": "0",
+        "placeholder": "",
+        "label": "Total existing obligation/EMI"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "searchOrg",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Select Organization",
+        "label": "Organization"
+      }
+    ],
+    "frames": [
+      "https://www.icici.bank.in/personal-banking/loans/personal-loan/eligibility"
+    ]
+  },
+  "idfc": {
+    "url": "https://www.idfcfirst.bank.in/personal-banking/loans/personal-loan/personal-loan-eligibility-calculator",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "search-main",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Search for",
+        "label": "Search"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "emi-pl-amt",
+        "min": "",
+        "max": "",
+        "value": "75,000",
+        "placeholder": " ",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "slider-emi-pl-amt",
+        "min": "0",
+        "max": "10",
+        "value": "0.496644295302013",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "emi-pl-amt2",
+        "min": "",
+        "max": "",
+        "value": "1,00,000",
+        "placeholder": " ",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "slider-emi-pl-amt2",
+        "min": "0",
+        "max": "10",
+        "value": "0.25",
+        "placeholder": "",
+        "label": ""
+      }
+    ],
+    "frames": [
+      "https://www.idfcfirst.bank.in/personal-banking/loans/personal-loan/personal-loan-eligibility-calculator"
+    ]
+  },
+  "lnt": {
+    "url": "https://www.ltfinance.com/personal-loan-eligibility-calculator",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "modalInput",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "",
+        "label": "Search for Business loans, Farmer loans, Rural loans, Home loans, Gold Loans, Pe"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "btloan-Requirement-range",
+        "min": "15000",
+        "max": "2000000",
+        "value": "15000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "nhloan-Tenure-input",
+        "min": "0",
+        "max": "2000000",
+        "value": "0",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "btloan-Tenure-range",
+        "min": "3",
+        "max": "72",
+        "value": "3",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "btloan-Requirement-range",
+        "min": "7.99",
+        "max": "15",
+        "value": "7.99",
+        "placeholder": "",
+        "label": ""
+      }
+    ],
+    "frames": [
+      "https://www.ltfinance.com/personal-loan-eligibility-calculator",
+      "about:blank",
+      "https://hlsa-webfrontend-prod.ltfinance.com/home"
+    ]
+  },
+  "tata": {
+    "url": "https://www.tatacapital.com/personal-loan/eligibility-calculator.html",
+    "inputs": [
+      {
+        "tag": "SELECT",
+        "type": "select-one",
+        "name": "",
+        "id": "P9LngDdl",
+        "min": "",
+        "max": "",
+        "value": "English",
+        "placeholder": "",
+        "label": "English \u0939\u093f\u0928\u094d\u0926\u0940 \u09ac\u09be\u0982\u09b2\u09be \u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0 \u092e\u0930\u093e\u0920\u0940 \u0c95\u0ca8\u0ccd\u0ca8\u0ca1 \u0c24\u0c46\u0c32\u0c41\u0c17\u0c41 \u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "field-control",
+        "min": "",
+        "max": "",
+        "value": "1,00,000",
+        "placeholder": "",
+        "label": "\u20b9"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "my_range",
+        "id": "15-000-500-000-00100-000-2",
+        "min": "",
+        "max": "",
+        "value": "100000",
+        "placeholder": "",
+        "label": "\u20b9 15,000 \u20b9 5,00,000"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "3",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "my_range",
+        "id": "1-6-003-2",
+        "min": "",
+        "max": "",
+        "value": "3",
+        "placeholder": "",
+        "label": "1 Year 6 Years"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "field-control-2",
+        "min": "",
+        "max": "",
+        "value": "50,000",
+        "placeholder": "",
+        "label": "\u20b9"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "my_range",
+        "id": "0-500-000-0050-000-2",
+        "min": "",
+        "max": "",
+        "value": "50000",
+        "placeholder": "",
+        "label": "\u20b9 0 \u20b9 5,00,000"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "",
+        "label": "Email ID"
+      }
+    ],
+    "frames": [
+      "https://www.tatacapital.com/personal-loan/eligibility-calculator.html",
+      "about:blank",
+      "about:blank",
+      "",
+      ""
+    ]
+  },
+  "bajaj": {
+    "url": "https://www.bajajfinserv.in/personal-loan-eligibility-calculator",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Search Bajaj Finance",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Select city",
+        "label": "Select city"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Date of birth",
+        "label": "Date of birth"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "0",
+        "max": "1000000",
+        "value": "",
+        "placeholder": "0",
+        "label": "0"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "0",
+        "max": "1000000",
+        "value": "",
+        "placeholder": "0",
+        "label": "0"
+      }
+    ],
+    "frames": [
+      "https://www.bajajfinserv.in/personal-loan-eligibility-calculator",
+      "about:blank",
+      "chrome-error://chromewebdata/"
+    ]
+  },
+  "kotak": {
+    "url": "https://www.kotak.com/en/personal-banking/loans/personal-loan/eligibility.html",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "20000",
+        "max": "500000",
+        "value": " 50,000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "myRange",
+        "min": "20000",
+        "max": "500000",
+        "value": "50000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "0",
+        "max": "200000",
+        "value": " 5,000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "myRange",
+        "min": "0",
+        "max": "200000",
+        "value": "5000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "1",
+        "max": "200",
+        "value": "10 years",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "myRange",
+        "min": "1",
+        "max": "200",
+        "value": "120",
+        "placeholder": "",
+        "label": ""
+      }
+    ],
+    "frames": [
+      "https://www.kotak.bank.in/en/personal-banking/loans/personal-loan/eligibility.html",
+      "about:blank",
+      "about:blank",
+      "about:blank"
+    ]
+  },
+  "axis": {
+    "url": "https://www.axis.bank.in/loans/personal-loan",
+    "inputs": [
+      {
+        "tag": "SELECT",
+        "type": "select-one",
+        "name": "",
+        "id": "language-select",
+        "min": "",
+        "max": "",
+        "value": "Eng",
+        "placeholder": "",
+        "label": "language select here"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "loan_amt",
+        "id": "loan_amount",
+        "min": "",
+        "max": "",
+        "value": "5,00,000",
+        "placeholder": "",
+        "label": "Loan Amount"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "loan_range_slider",
+        "id": "",
+        "min": "50000",
+        "max": "5000000",
+        "value": "500000",
+        "placeholder": "",
+        "label": "Loan amount between Rupees 50000 and Rupees 5000000"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "interest_rate",
+        "id": "interest_rate",
+        "min": "9.99",
+        "max": "22",
+        "value": "9.99",
+        "placeholder": "",
+        "label": "Interest Rate (p.a)"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "interest_rate_slider",
+        "id": "homeInterestRange",
+        "min": "9.99",
+        "max": "22",
+        "value": "9.99",
+        "placeholder": "",
+        "label": "Interest Rate between 9.99% and 22%"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "loan_tenure",
+        "id": "tenure",
+        "min": "",
+        "max": "",
+        "value": "12",
+        "placeholder": "",
+        "label": "Tenure (months)"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "homeloan_tenure_slider",
+        "id": "",
+        "min": "12",
+        "max": "84",
+        "value": "12",
+        "placeholder": "",
+        "label": "Tenure between 12 months and 84 months"
+      }
+    ],
+    "frames": [
+      "https://www.axis.bank.in/loans/personal-loan",
+      "",
+      "https://axisbank.demdex.net/dest5.html?d_nsid=0#https%3A%2F%2Fwww.axis.bank.in"
+    ]
+  },
+  "hdfc": {
+    "url": "https://www.hdfc.bank.in/personal-loan/eligibility-criteria",
+    "inputs": [
+      {
+        "tag": "SELECT",
+        "type": "select-one",
+        "name": "",
+        "id": "hdfcwebsite",
+        "min": "",
+        "max": "",
+        "value": "HDFC Group Websites",
+        "placeholder": "",
+        "label": "select hdfc websites"
+      },
+      {
+        "tag": "SELECT",
+        "type": "select-one",
+        "name": "",
+        "id": "hdfcgroup",
+        "min": "",
+        "max": "",
+        "value": "HDFC Bank Offshore Branches",
+        "placeholder": "",
+        "label": "select hdfc groups"
+      }
+    ],
+    "frames": [
+      "https://www.hdfc.bank.in/personal-loan/eligibility-criteria",
+      "about:blank",
+      "https://hdfcbank.demdex.net/dest5.html?d_nsid=0#https%3A%2F%2Fwww.hdfc.bank.in"
+    ]
+  },
+  "abcl": {
+    "url": "https://www.adityabirlacapital.com/loans/personal-finance/personal-loan/eligibility-criteria",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "slider-55-input",
+        "min": "",
+        "max": "3000000",
+        "value": "5,00,000",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "slider-56-input",
+        "min": "",
+        "max": "7",
+        "value": "5",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "slider-57-input",
+        "min": "",
+        "max": "13",
+        "value": "10",
+        "placeholder": "",
+        "label": ""
+      }
+    ],
+    "frames": [
+      "https://www.adityabirlacapital.com/loans/personal-finance/personal-loan/eligibility-criteria",
+      "about:blank",
+      "about:blank",
+      "about:blank",
+      "about:blank",
+      "about:blank",
+      "about:blank"
+    ]
+  },
+  "poonawalla": {
+    "url": "https://poonawallafincorp.com/personal-loan/interest-rates-and-charges",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "emailIDDesk",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Enter your email",
+        "label": "Enter your email"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "emailIDFooter",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "e-mail address",
+        "label": "Email address"
+      }
+    ],
+    "frames": [
+      "https://poonawallafincorp.com/personal-loan/interest-rates-and-charges",
+      "about:blank",
+      "https://inzaa1316dd.in.webengage.co/storage-frame-1.13.htm?cdn=y&cbf=webengage-engagement-callback-frame&lc=in~aa1316dd"
+    ]
+  },
+  "indusind": {
+    "url": "https://www.indusind.bank.in/in/en/personal/loans/personal-loan.html",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "1,00,000",
+        "placeholder": "",
+        "label": "\u20b9"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "10000",
+        "max": "2000000",
+        "value": "100000",
+        "placeholder": "",
+        "label": "30,000 1,00,000"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "10.49",
+        "placeholder": "",
+        "label": "%"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "10.49",
+        "max": "30",
+        "value": "10.49",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "5",
+        "placeholder": "",
+        "label": "Yrs"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "1",
+        "max": "7",
+        "value": "5",
+        "placeholder": "",
+        "label": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "emailinput",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Enter E-mail for Update",
+        "label": "Submit"
+      }
+    ],
+    "frames": [
+      "https://www.indusind.bank.in/in/en/personal/loans/personal-loan.html",
+      "about:blank",
+      "about:blank",
+      "about:blank",
+      "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LfFPr4UAAAAAMM_MFKk-QkT8aViwrHLRHGXmUfR&co=aHR0cHM6Ly93d3cuaW5kdXNpbmQuYmFuay5pbjo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=wn4ri78a2xxx",
+      "about:blank",
+      "about:blank"
+    ]
+  },
+  "yes": {
+    "url": "https://www.yes.bank.in/personal-banking/loans/personal-loan/eligibility-criteria",
+    "inputs": [],
+    "frames": [
+      "https://www.yes.bank.in/personal-banking/loans/personal-loan/eligibility-criteria",
+      "https://yesbank.demdex.net/dest5.html?d_nsid=0#https%3A%2F%2Fwww.yes.bank.in",
+      "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LcinuksAAAAAFNEECF20GG9t9mOGa8_yN3ojDRN&co=aHR0cHM6Ly93d3cueWVzLmJhbmsuaW46NDQz&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=normal&anchor-ms=20000&execute-ms=30000&cb=1dzaulvrps98",
+      "about:blank"
+    ]
+  },
+  "moneyview": {
+    "url": "https://moneyview.in/personal-loan-eligibility-check",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "_R_2jacqladaav5umdb_",
+        "min": "",
+        "max": "",
+        "value": "\u20b950,000",
+        "placeholder": "",
+        "label": "\u200b"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "5000",
+        "max": "6000000",
+        "value": "50000",
+        "placeholder": "",
+        "label": "Loan Amount Slider"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "_R_2jadaladaav5umdb_",
+        "min": "",
+        "max": "",
+        "value": "8%",
+        "placeholder": "",
+        "label": "\u200b"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "6",
+        "max": "36",
+        "value": "8",
+        "placeholder": "",
+        "label": "Rate of Interest Slider"
+      },
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "min": "",
+        "max": "",
+        "value": "months",
+        "placeholder": "",
+        "label": "months \u200b"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "",
+        "min": "3",
+        "max": "72",
+        "value": "5",
+        "placeholder": "",
+        "label": "Loan Tenure Slider"
+      }
+    ],
+    "frames": [
+      "https://moneyview.in/personal-loan-eligibility-check"
+    ]
+  },
+  "sbi": {
+    "url": "https://sbi.bank.in/web/personal-banking/loans/personal-loans/sbi-personal-loan",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "text",
+        "name": "_com_liferay_portal_search_web_portlet_SearchPortlet_keywords",
+        "id": "_com_liferay_portal_search_web_portlet_SearchPortlet_keywords",
+        "min": "",
+        "max": "",
+        "value": "",
+        "placeholder": "Search",
+        "label": ""
+      },
+      {
+        "tag": "SELECT",
+        "type": "select-one",
+        "name": "",
+        "id": "rate-picker",
+        "min": "",
+        "max": "",
+        "value": "0",
+        "placeholder": "",
+        "label": "Home Loan Personal Loan Pension Loan SB Account Gold Loan NRE SB Account Educati"
+      }
+    ],
+    "frames": [
+      "https://sbi.bank.in/web/personal-banking/loans/personal-loans/sbi-personal-loan"
+    ]
+  },
+  "bob": {
+    "url": "https://www.bankofbaroda.in/personal-banking/loans/personal-loan/baroda-personal-loan",
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "amt_id",
+        "min": "10000",
+        "max": "1500000",
+        "value": "500000",
+        "placeholder": "",
+        "label": "10K 15L"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "rates_id",
+        "min": "5",
+        "max": "18",
+        "value": "10.7",
+        "placeholder": "",
+        "label": "5% 18%"
+      },
+      {
+        "tag": "INPUT",
+        "type": "range",
+        "name": "",
+        "id": "month_id",
+        "min": "12",
+        "max": "84",
+        "value": "60",
+        "placeholder": "",
+        "label": "12 84"
+      }
+    ],
+    "frames": [
+      "https://bankofbaroda.bank.in/loans/personal-loan/baroda-personal-loan",
+      "about:blank",
+      "about:blank",
+      "about:blank"
+    ]
+  }
+}

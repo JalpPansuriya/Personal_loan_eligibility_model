@@ -1,0 +1,3 @@
+rule_id,product,segment,value,condition,confidence,source_url,quote
+icici-042,icici_personal_loan,all,spread=1.59..8.10,benchmark 1Y MCLR 8.40,published,https://www.icici.bank.in/personal-banking/loans/personal-loan/personal-loan-interest-rates,1.59% to 8.10%
+icici-046,icici_personal_loan,all,varies_by_income|credit_profile|employer_category|relationship,,published,https://www.icici.bank.in/personal-banking/loans/personal-loan/personal-loan-interest-rates,"may vary based on factors such as income, credit profile, repayment history, employer category and existing relationship with the Bank"

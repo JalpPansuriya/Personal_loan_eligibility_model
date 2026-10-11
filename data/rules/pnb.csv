@@ -1,0 +1,379 @@
+rule_id,lender_id,product,segment,variable,operator,value,unit,effect,condition,source_url,source_file,accessed_date,confidence,estimation_method,quote,notes
+pnb-001,pnb,pnb_sahyog_rin_personal_loan_public,salaried,segment_offered,==,true,bool,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,To make available Financial Assistance to the salaried for their personal needs.,
+pnb-002,pnb,pnb_sahyog_rin_personal_loan_public,salaried,employer_category_allowed,in,central_govt|state_govt|psu|reputed_company|school|college|university|autonomous|hospital|nursing_home,text,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"All Confirmed/ permanent employees of Central/ State Govt./ PSUs minimum 2 years of service, including service with the previous employer(s), if any, all reputed* companies/Institutions including Schools, Colleges, Universities, autonomous bodies, Hospitals,/Nursing Homes",
+pnb-003,pnb,pnb_sahyog_rin_personal_loan_public,salaried,salary_account_required,==,true,bool,gate,unless check_off_facility,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Drawing salary from our Bank:,alternative: employer check-off facility
+pnb-004,pnb,pnb_sahyog_rin_personal_loan_public,salaried,exp_total_min_months,>=,24,months,gate,salary_account==pnb,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"All Confirmed/ permanent employees of Central/ State Govt./ PSUs minimum 2 years of service, including service with the previous employer(s), if any",includes previous employer service
+pnb-005,pnb,pnb_sahyog_rin_personal_loan_public,salaried,exp_total_min_months,>=,36,months,gate,check_off_facility (others),https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"Check-off facility: Others minimum 3 years of service, including service with the previous employer(s), if any.",includes previous employer service
+pnb-006,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_multiple_max,<=,24,x_income,multiple,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published_conflict,,Up to 24 times of Gross Monthly Salary with a maximum of Rs.20.00 Lakh depending upon the repaying capacity.*,x gross monthly salary; FAQ (Sahyog) says 15x - conflict
+pnb-007,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_multiple_max,<=,15,x_income,multiple,,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,PNB Sahyog - Personal Loan Scheme for Public/ LIC Agents Sr. No. Questions Reply 1. How much amount can be sanctioned under PNB Personal Loan Scheme? Up to 15 times of Gross Monthly Salary with a maximum of Rs.10.00 Lakh.,FAQ PNB Sahyog; product page says 24x - conflict
+pnb-008,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_multiple_max,<=,20,x_income,multiple,loan_amount<=500000,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,"Rs. 4,00,000 or 20 times monthly net salary whichever is lower subject to minimum Net monthly salary as under:",older generic FAQ: 20x net monthly salary (max 4L/5L/10L tiers) - conflicts with product page
+pnb-009,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_mode,==,gross,text,info,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Up to 24 times of Gross Monthly Salary with a maximum of Rs.20.00 Lakh depending upon the repaying capacity.*,
+pnb-010,pnb,pnb_sahyog_rin_personal_loan_public,salaried,loan_max,<=,2000000,inr,amount_cap,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published_conflict,,Up to 24 times of Gross Monthly Salary with a maximum of Rs.20.00 Lakh depending upon the repaying capacity.*,FAQ (Sahyog) says max 10L - conflict
+pnb-011,pnb,pnb_sahyog_rin_personal_loan_public,salaried,loan_max,<=,1000000,inr,amount_cap,,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,PNB Sahyog - Personal Loan Scheme for Public/ LIC Agents Sr. No. Questions Reply 1. How much amount can be sanctioned under PNB Personal Loan Scheme? Up to 15 times of Gross Monthly Salary with a maximum of Rs.10.00 Lakh.,FAQ PNB Sahyog; product page says 20L
+pnb-012,pnb,pnb_sahyog_rin_personal_loan_public,salaried,loan_max,<=,400000,inr,amount_cap,default tier,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,"Rs. 4,00,000 or 20 times monthly net salary whichever is lower subject to minimum Net monthly salary as under:",older generic FAQ tiers (4L / 5L with 3y service & NMI>=30000 / 10L for PNB salary & 3y)
+pnb-013,pnb,pnb_sahyog_rin_personal_loan_public,salaried,loan_min,>=,50000,inr,amount_cap,,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,Minimum Rs.50000/-,generic FAQ Personal Loan section; product page silent
+pnb-014,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_min_monthly,>=,15000,inr_per_month,gate,city_tier==metro,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,"Rs. 4,00,000 or 20 times monthly net salary whichever is lower subject to minimum Net monthly salary as under: Metro Centres : Rs.15000/-",net monthly salary; generic FAQ section
+pnb-015,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_min_monthly,>=,12500,inr_per_month,gate,city_tier==urban,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,Urban Centres : Rs.12500/-,generic FAQ section
+pnb-016,pnb,pnb_sahyog_rin_personal_loan_public,salaried,income_min_monthly,>=,10000,inr_per_month,gate,city_tier in semi_urban|rural,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,Semi- Urban/ Rural Centres : Rs.10000/-,generic FAQ section
+pnb-017,pnb,pnb_sahyog_rin_personal_loan_public,salaried,take_home_floor,>=,15000,inr_per_month,foir,city_tier in metro|urban,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,Minimum take home after all deductions should be Rs. 15000.00 in Metro/ Urban centre & Rs. 10000.00 in Semi Urban/ Rural centre.,FAQ PNB Sahyog: min take home after all deductions
+pnb-018,pnb,pnb_sahyog_rin_personal_loan_public,salaried,take_home_floor,>=,10000,inr_per_month,foir,city_tier in semi_urban|rural,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published,,Minimum take home after all deductions should be Rs. 15000.00 in Metro/ Urban centre & Rs. 10000.00 in Semi Urban/ Rural centre.,FAQ PNB Sahyog
+pnb-019,pnb,pnb_sahyog_rin_personal_loan_public,salaried,guarantor_required,==,true,bool,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Security Suitable third party guarantee acceptable to the Bank,
+pnb-020,pnb,pnb_sahyog_rin_personal_loan_public,salaried,tenure_max_months,<=,72,months,tenure,or remaining service whichever earlier,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published_conflict,,The entire loan (principal & interest) shall be repaid within remaining period of service or in maximum 72 (Seventy-Two) equated monthly installments (EMIs) whichever is earlier. Repayment to start one month after disbursement of the loan.,FAQ (Sahyog/generic) says 60 EMIs - conflict
+pnb-021,pnb,pnb_sahyog_rin_personal_loan_public,salaried,tenure_max_months,<=,60,months,tenure,or remaining service,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,The entire loan (principal & interest) shall be repaid within remaining period of service or in maximum 60 (sixty) equated monthly installments (EMIs).,FAQ PNB Sahyog; product page says 72
+pnb-022,pnb,pnb_sahyog_rin_personal_loan_public,salaried,tenure_max_months,<=,60,months,tenure,employer_category==defence,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"Personal loans allowed to Defence Personnel including officials of Military Station Headquarters, Border Security Force, Central Reserve Police Force, Central Industrial Security Force, Indo Tibet Border Police etc. shall be Repayable in maximum 60 equated monthly installments.",
+pnb-023,pnb,pnb_sahyog_rin_personal_loan_public,salaried,age_max_at_maturity,info,remaining period of service,text,tenure,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,The entire loan (principal & interest) shall be repaid within remaining period of service or in maximum 72 (Seventy-Two) equated monthly installments (EMIs) whichever is earlier. Repayment to start one month after disbursement of the loan.,retirement age not stated; see estimated row
+pnb-024,pnb,pnb_sahyog_rin_personal_loan_public,salaried,foreclosure,info,nil prepayment charges,text,info,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Prepayment Charges NIL,
+pnb-025,pnb,pnb_sahyog_rin_personal_loan_public,salaried,profession_allowed,info,doctors MBBS/BDS & above with annual income >=4L,text,info,,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,"c) Professionally qualified Doctors viz. MBBS, BDS & above having annual income of Rs.4.00 lac & above",generic FAQ lists doctors as eligible; SE scheme allow-list excludes doctors (separate Doctors Delight scheme)
+pnb-026,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_min_pa,>=,10.50,pct_pa,rate,,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,7. PNB SAHYOG RIN - PERSONAL LOAN SCHEME FOR PUBLIC ROI STAERTING FROM 10.50% p.a.,
+pnb-027,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_benchmark,==,8.35,pct_pa,rate,RLLR w.e.f. 08.10.2026,https://pnb.bank.in/interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"RLLR w.e.f. 08.10.2026
+Repo Linked Lending Rate (RLLR)
+|
+Existing w.e.f.01.10.2026
+|
+Revised w.e.f.08.10.2026
+|
+8.10%
+|
+8.35%",
+pnb-028,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_benchmark,==,8.35,pct_pa,rate,RLLR,https://pnb.bank.in/interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,RLLR : 8.35%,
+pnb-029,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score=not_applicable=10.50,pct_pa,rate,category==A_defence_paramilitary_salary_pnb; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"A
+|
+Loan to Defence/ Para Military Personals drawing salaries through our Bank including customers covered under Rakshak Plus scheme
+|
+Not applicable
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50%)
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50 %)
+|
+11.50%
+|
+11.50%",
+pnb-030,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score=not_applicable=11.50,pct_pa,rate,category==A_defence_paramilitary_salary_pnb; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"A
+|
+Loan to Defence/ Para Military Personals drawing salaries through our Bank including customers covered under Rakshak Plus scheme
+|
+Not applicable
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50%)
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50 %)
+|
+11.50%
+|
+11.50%",
+pnb-031,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=10.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">= 800
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+11.85%
+|
+11.85%",
+pnb-032,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=11.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">= 800
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+11.85%
+|
+11.85%",
+pnb-033,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=11.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%",
+pnb-034,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=12.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%",
+pnb-035,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=12.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%",
+pnb-036,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=13.85,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%",
+pnb-037,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=13.35,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%",
+pnb-038,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=14.35,pct_pa,rate,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%",
+pnb-039,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=11.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score >= 800
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%",
+pnb-040,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=12.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score >= 800
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%",
+pnb-041,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=12.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%",
+pnb-042,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=13.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%",
+pnb-043,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=14.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+15.85%
+|
+15.85%",
+pnb-044,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=15.85,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+15.85%
+|
+15.85%",
+pnb-045,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=15.35,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+16.35%
+|
+16.35%",
+pnb-046,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=16.35,pct_pa,rate,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+16.35%
+|
+16.35%",
+pnb-047,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=13.35,pct_pa,rate,category==D_check_off; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">= 800
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%",
+pnb-048,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score>=800=14.35,pct_pa,rate,category==D_check_off; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">= 800
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%",
+pnb-049,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=13.85,pct_pa,rate,category==D_check_off; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+14.85%
+|
+14.85%",
+pnb-050,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 750-799 or ntc(-1/0)=14.85,pct_pa,rate,category==D_check_off; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+14.85%
+|
+14.85%",
+pnb-051,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=15.55,pct_pa,rate,category==D_check_off; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+16.55%
+|
+16.55%",
+pnb-052,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score 681-749=16.55,pct_pa,rate,category==D_check_off; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"681 to 749
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+16.55%
+|
+16.55%",
+pnb-053,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=16.05,pct_pa,rate,category==D_check_off; floating TL/OD; RLLR+BSP,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+17.05%
+|
+17.05%",
+pnb-054,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_grid,grid,score<681=17.05,pct_pa,rate,category==D_check_off; fixed TL/OD,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,published,,"Score less than 681
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+17.05%
+|
+17.05%",
+pnb-055,pnb,pnb_sahyog_rin_personal_loan_public,salaried,ntc_allowed,==,true,bool,gate,,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,derived,"rate grid prices 'Nil credit history (-1 or 0)' applicants in the 750-799 band, so NTC is priced not rejected",">=750 less than 800 Or With Nil credit history (i,e -1 or 0)",
+pnb-056,pnb,pnb_sahyog_rin_personal_loan_public,salaried,rate_max_pa,<=,17.05,pct_pa,rate,fixed; category D score<681,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,pnb__pnb_bank_in_Retail_Advances_interst_rate_on_advances_linked_to_mclr_html__2026-10-10.md,2026-10-10,derived,highest cell of Sahyog Rin grid (fixed); floating max 16.05,,
+pnb-057,pnb,pnb_sahyog_rin_personal_loan_public,salaried,processing_fee_pct,==,1.00,pct,fee,,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published_conflict,,Personal Loan Processing Fees* Documentation Charges* 1.00% of loan amount,FAQ says 1.80% - conflict
+pnb-058,pnb,pnb_sahyog_rin_personal_loan_public,salaried,processing_fee_pct,==,1.80,pct,fee,,https://pnb.bank.in/FAQ-PERSONAL-LOAN.html,pnb__pnb_bank_in_FAQ_PERSONAL_LOAN_html__2026-10-10.md,2026-10-10,published_conflict,,"Processing charges are 1.80 per cent (exclusive of GST) of the loan amount, to be paid upfront.",generic FAQ; service-charge page says 1.00%
+pnb-059,pnb,pnb_sahyog_rin_personal_loan_public,salaried,processing_fee_waiver,==,100,pct,fee,employer_category==defence,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,For Defence Personnel - Nil,
+pnb-060,pnb,pnb_sahyog_rin_personal_loan_public,salaried,documentation_fee_inr,==,270,inr,fee,loan_amount<=200000,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,Upto Rs. 2 lac- Rs. 270/-,
+pnb-061,pnb,pnb_sahyog_rin_personal_loan_public,salaried,documentation_fee_inr,==,450,inr,fee,loan_amount>200000,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,Above Rs. 2 lac- Rs. 450/-,
+pnb-062,pnb,pnb_sahyog_rin_personal_loan_public,salaried,documentation_fee_inr,==,0,inr,fee,employer_category==defence,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,For Defence Personnel - Nil,
+pnb-063,pnb,pnb_sahyog_rin_personal_loan_public,salaried,age_min,>=,21,years,gate,,,,2026-10-10,estimated,not stated on lender pages; industry-standard minimum age 21 used,,
+pnb-064,pnb,pnb_sahyog_rin_personal_loan_public,salaried,age_max_at_maturity,<=,60,years,gate,,,,2026-10-10,estimated,not stated; assumed 60 (common bank cap),,page says repay within remaining period of service
+pnb-065,pnb,pnb_sahyog_rin_personal_loan_public,salaried,score_min,>=,700,score,gate,,,,2026-10-10,estimated,not stated; stricter-value policy: 700 assumed for bank,,no published floor; rate grid still prices scores <681 (stricter-value policy applied)
+pnb-066,pnb,pnb_sahyog_rin_personal_loan_public,salaried,foir_max,<=,60,pct,foir,,,,2026-10-10,estimated,not stated; default 60% for banks pending calculator probe,,'repaying capacity' / max permissible deduction not quantified
+pnb-067,pnb,pnb_sahyog_rin_personal_loan_public,salaried,tenure_min_months,>=,12,months,tenure,,,,2026-10-10,estimated,not stated; assumed 12,,
+pnb-068,pnb,pnb_personal_loan_self_employed,sep,segment_offered,==,true,bool,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,PERSONAL LOAN SCHEME FOR SELF-EMPLOYED Objective To make available Financial Assistance to self-employed for their personal needs.,
+pnb-069,pnb,pnb_personal_loan_self_employed,seb,segment_offered,not_offered,,text,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"The scheme is applicable to professional and initially scheme shall be applicable to CA/CS, Data Analysts, Architect/ Valuers, LIC Agents, Engineers, Software Developers and Financial Consultants only",SE scheme limited to listed professionals; no business-person variant
+pnb-070,pnb,pnb_personal_loan_self_employed,sep,profession_allowed,in,ca|cs|data_analyst|architect|valuer|lic_agent|engineer|software_developer|financial_consultant,text,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"The scheme is applicable to professional and initially scheme shall be applicable to CA/CS, Data Analysts, Architect/ Valuers, LIC Agents, Engineers, Software Developers and Financial Consultants only",
+pnb-071,pnb,pnb_personal_loan_self_employed,sep,income_min_annual,>=,600000,inr_per_year,gate,each of last 2 years (GAI),https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Individual only - Professionals having minimum gross annual income (GAI) of Rs. 6.00 lakh for the last two years and also having minimum CIC score of 750 and above.,
+pnb-072,pnb,pnb_personal_loan_self_employed,sep,itr_years_min,>=,2,years,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,derived,GAI of 6L required 'for the last two years' implies 2 years of income proof,Individual only - Professionals having minimum gross annual income (GAI) of Rs. 6.00 lakh for the last two years and also having minimum CIC score of 750 and above.,
+pnb-073,pnb,pnb_personal_loan_self_employed,sep,score_min,>=,750,score,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Individual only - Professionals having minimum gross annual income (GAI) of Rs. 6.00 lakh for the last two years and also having minimum CIC score of 750 and above.,CIC score
+pnb-074,pnb,pnb_personal_loan_self_employed,sep,ntc_allowed,==,false,bool,gate,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,derived,minimum CIC score 750 required; NTC (-1/0) cannot satisfy,Individual only - Professionals having minimum gross annual income (GAI) of Rs. 6.00 lakh for the last two years and also having minimum CIC score of 750 and above.,
+pnb-075,pnb,pnb_personal_loan_self_employed,sep,relationship_min_months,>=,24,months,gate,SB/CA with PNB; annual credits in all accounts >=500000 in previous FY,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"Maintaining his/her Saving Fund/ Current Account satisfactorily with us for the last 2 years with minimum annual credit transactions in all saving/ current accounts of the customer in our bank/ other banks, in similar capacity, amounting to Rs5.00 lac in the previous financial year",
+pnb-076,pnb,pnb_personal_loan_self_employed,sep,income_multiple_max,<=,10,x_income,multiple,x average gross monthly income of last 2 years,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,10 times of average Gross monthly income of last two years with a maximum of Rs.5.00 Lakh*,
+pnb-077,pnb,pnb_personal_loan_self_employed,sep,income_mode,==,gross,text,info,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,10 times of average Gross monthly income of last two years with a maximum of Rs.5.00 Lakh*,
+pnb-078,pnb,pnb_personal_loan_self_employed,sep,loan_max,<=,500000,inr,amount_cap,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,10 times of average Gross monthly income of last two years with a maximum of Rs.5.00 Lakh*,
+pnb-079,pnb,pnb_personal_loan_self_employed,sep,guarantor_required,==,true,bool,gate,"third party, not close relative; guarantor GAI>=600000 last 2 years; guarantor CIC>=650",https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,"Security Suitable third party guarantee, other than close relative, acceptable to the Bank, having minimum gross annual income (GAI) of Rs. 6.00 lakh for the last two years. CIC score of guarantor will be minimum 650",
+pnb-080,pnb,pnb_personal_loan_self_employed,sep,tenure_max_months,<=,60,months,tenure,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Maximum 60 EMIs or up to 65 years of age whichever is earlier,
+pnb-081,pnb,pnb_personal_loan_self_employed,sep,age_max_at_maturity,<=,65,years,tenure,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Maximum 60 EMIs or up to 65 years of age whichever is earlier,
+pnb-082,pnb,pnb_personal_loan_self_employed,sep,city_serviced,in,metro|urban,text,gate,initially metro only,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,*The scheme is applicable in Metro and Urban branches (initially in metro Branches only) only.,
+pnb-083,pnb,pnb_personal_loan_self_employed,sep,foreclosure,info,nil prepayment charges,text,info,,https://pnb.bank.in/personalloanforpublic.html,pnb__pnb_bank_in_personalloanforpublic_html__2026-10-10.md,2026-10-10,published,,Prepayment Charges Nil,
+pnb-084,pnb,pnb_personal_loan_self_employed,sep,processing_fee_pct,==,1.00,pct,fee,,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,Personal Loan Scheme For Self-Employed Processing Fees* Documentation Charges* Processing/Upfront Fee 1.00% of loan amount,
+pnb-085,pnb,pnb_personal_loan_self_employed,sep,documentation_fee_inr,==,500,inr,fee,,https://pnb.bank.in/service-charges-related-to-retail-advances.html,pnb__pnb_bank_in_service_charges_related_to_retail_advances_html__2026-10-10.md,2026-10-10,published,,Documentation charges Rs 500,
+pnb-086,pnb,pnb_personal_loan_self_employed,sep,age_min,>=,21,years,gate,,,,2026-10-10,estimated,not stated on lender pages; industry-standard minimum age 21 used,,
+pnb-087,pnb,pnb_personal_loan_self_employed,sep,foir_max,<=,60,pct,foir,,,,2026-10-10,estimated,not stated; default 60% for banks pending calculator probe,,
+pnb-088,pnb,pnb_personal_loan_self_employed,sep,tenure_min_months,>=,12,months,tenure,,,,2026-10-10,estimated,not stated; assumed 12,,
+pnb-089,pnb,pnb_personal_loan_self_employed,sep,loan_min,>=,50000,inr,amount_cap,,,,2026-10-10,estimated,not stated; assumed 50000,,

@@ -1,0 +1,269 @@
+--- page 1 ---
+ANNEXURE A
+1
+2
+4
+5
+6
+7
+B S EPI (₹) No. of EPIs
+NA NA
+8
+8
+Version January'26
+Sanctioned Loan amount (in Rupees) 0.00
+3
+Loan term (year/months/days) 0
+Key Facts Statement- Personal Loan
+Part 1 (Interest rate and fees/charges)
+Date of KFS This KFS is valid for 15 days from the date of KFS
+Loan proposal/ account No.
+0
+Type of Loan
+Personal Loan
+Disbursal schedule
+(i) Disbursement in stages or 100% upfront.
+(i) Disbursement in stages or 100% upfront.
+(ii) If it is stage wise, mention the clause of loan 
+agreement having relevant details
+NA
+Instalment details
+Type of installment Number of EPIs EPI (₹) Commencement of repayment, post sanction
+Type of EPI 0 #NUM! 00-01-00
+Interest rate (%) and type (fixed or floating or hybrid)
+Additional Information in case of Floating rate of interest
+Reference
+Benchmark
+Benchmark rate (%) 
+(B) Spread (%) (S) Final rate (%)R = (B) + (S)
+Reset periodicity
+(Months)
+Impact of change in the reference 
+benchmark
+(for 25 bps change in ‘R’, change in:3)
+0.00% 0
+NA NA NA NA NA
+Fee/ Charges (Applicable for Fixed, Floating and Hybrid Rate of interest)
+Fee/ Charges (Applicable for Fixed, Floating and Hybrid Rate of interest)
+Payable to the RE (A) Payable to a third party through RE (B)
+
+--- page 2 ---
+1
+2
+3
+4
+9
+10
+1
+2
+3
+ 
+4
+5
+6
+7
+8
+Rs. 750/- per schedule
+Duplicate No Due Certificate/ No Objection
+Certificate Rs. 250/- per statement
+Statement of Account/Loan Account
+Statement Charges Rs. 750/- per statement
+Insurance charges NA
+NA
+One-time
+300
+Amount (in ₹) or Percentage (%) 
+as applicable
+Processing fees One-time
+0
+NA
+NA
+One-time/ Recurring Amount (in ₹) or Percentage (%) as applicable One-time/Recurring
+Stamp Duty & other Statutory 
+Charges One-time
+0
+NA
+NA
+CIBIL Charges NA
+NA
+One-time
+400
+Annual Percentage Rate (APR) (%) #NUM!
+Pre Disbursement
+Processing Fee Upto 2.50% of loan amount
+Stamp Duty & other Statutory Charges
+At actuals as per state laws applicable from time to time.
+Additionally, we shall levy Rs.125/- (inclusive of GST) as service charges for
+every stamp paper/e-stamp Paper.
+CIBIL Charges Rs. 50/- per instance (applicable for all applicants, co-applicants & guarantors)
+Post Disbursement  
+Repayment mode swap changes Rs. 750/- per transaction
+Loan cancellation/Re-booking Charges
+Rs. 1000+tax (In the event of cancellation, in addition to cancellation charges,
+Interest would be charged for the interim period between date of
+disbursement & date of loan cancellation).
+Cancellation is allowed within 15 days from the date of disbursement of loan.
+Repayment Schedule/Amortisation Schedule
+Charges
+Details of Contingent Charges (in ₹ or %, as applicable)
+
+--- page 3 ---
+9
+10
+11
+12
+13
+14
+15
+16
+Date on which annual outstanding balance
+statement will be issued
+On Demand
+Non-Maintenance of mode of payment
+charges (NMMP) Charges Rs. 750/-
+On Foreclosure
+Foreclosure Charges
+Foreclosure of Loan is allowed post repayment of 12 EMI’s.
+Charges applicable after 12 months are as under
+13-24 Months of EMI repayment – 4% of POS
+25-36 Months of EMI repayment – 3% of POS
+37-48 Months of EMI repayment – 2% of POS
+>48 Months of EMI repayment – NIL
+1 Clause of Loan agreement relating to engagement of recovery agents Refer Clause 9 of the loan agreement
+Legal/Incidental/Collection Charges At actuals
+Part Pre-payment Charges
+3% plus applicable taxes on part payment amount paid.
+Part payment of loan is allowed post repayment of 12 EMIs. Before 12 months
+it is not permitted.
+• Part payment should only be allowed once in a financial year and twice
+during the loan tenure.
+• Amount received as part payment will be adjusted against the principal
+outstanding.
+• No. of EMIs will be reduced, EMI Amount will remain same for remaining
+tenure.
+13-24 Months of EMI repayment – 20% of POS
+25-36 Months of EMI repayment – 20% of POS
+37-48 Months of EMI repayment – 25% of POS
+>48 Months of EMI repayment – 25% of POS
+Foreclosure Statement Charges Rs 500/-  per request
+Penalty for Delayed Payments
+Interest on Overdue Amount” At *contractual Rate for overdue amount from date of overdue.
+Cheque Bounce/Return Charges Rs. 750/- per presentation 
+Note:
+• GST and other government charges, taxes, levies, etc. applicable as per prevailing rate will be charged over and above these charges.
+• Processing/Login Fee wherever applicable is non-refundable if loan is not sanctioned/disbursed.
+• *A contractual interest rate means the rate at which the Bank will compute and apply Interest on the Loan as mentioned in the agreement and
+schedule cum Key Fact Statement (KFS).
+• The applicable External Benchmark for the Bank will be detailed in the facility Sanction letter & the relevant schedule of the loan agreement. In
+the event of any change in the applicable external benchmark, the borrower shall be notified via email/letter/SMS of the revised interest rate
+within 30 days of the revised interest rate becoming applicable.
+Part 2 (Other qualitative information)
+
+--- page 4 ---
+6
+2 Clause of Loan agreement which details grievance redressal mechanism Refer Clause 10 of the loan agreement
+3 Phone number and email id of the nodal grievance redressal officer
+Mr. Bhupinder Pal Singh 
+Principal Nodal Officer
+YES Bank Limited
+YES Bank House, Off Western Express Highway, Santacruz East, Mumbai 400055
+Email: principal.nodalofficer@yes.bank.in
+Phone No: 022-50795174
+NA NA NA
+4 Whether the loan is, or in future maybe, subject to transfer to other REs or securitisation (Yes/ No) YES
+5 In case of lending under collaborative lending arrangements (e.g., co-lending/ outsourcing), following additional details may be furnished:
+Name of the originating RE, along with its 
+funding proportion
+Name of the partner RE along with its
+proportion of funding Blended rate of interest
+In case of digital loans, following specific disclosures may be furnished:
+(i)
+Cooling off/look-up period, in terms of RE’s board approved 
+policy, during which borrower shall not be charged any 
+penalty on prepayment of loan
+NA
+(ii) Details of LSP acting as recovery agent and authorized to approach the borrower NA
+Please note:
+1) Upward Revision of Charges:    In the event of any upward revision of charges mentioned in this Key Fact Statement (KFS), YBL shall provide a 
+notice period of one month to the borrower before the changes take effect. Notification will be provided through email, SMS, letters, etc.
+2) Regulatory or Statutory Charges:  Any regulatory or statutory charges introduced in the future may be recovered from the borrower on an actual 
+basis. These charges will be debited from the borrower’s account  as and when they are introduced or levied by the respective authorities.
+3) Revised KFS: This KFS supersedes any/all previous KFS(s) generated with respect to the said loan.
+4) The Key Fact Statement (KFS) provided is based on the date mentioned in KFS. Please note that details may change as per the date of
+disbursement. The final details will be included in the welcome Kit.
+
+--- page 5 ---
+Annex B
+Computation of APR for Retail and MSME loans
+Sr. No.
+1
+2
+a)
+c)
+d)
+3
+4
+5
+a)
+6
+A
+B
+7
+8
+ Payable to the RE (Sl No.8A of the KFS template-Part 1)  
+ Payable to third-party routed through RE (Sl No.8B of the KFS template – 
+Part 1)  
+ Net disbursed amount (1-6) (in Rupees)  
+ Total amount to be paid by the borrower (sum of and 5) (in Rupees)  
+ Interest rate type (fixed or floating or hybrid) (Sl No. 6 of the KFS template 
+– Part 1)  
+ Rate of Interest (Sl No. 6 of the KFS template – Part 1)  
+ Total Interest Amount to be charged during the entire tenor of the loan as 
+per the rate prevailing on sanction date (in Rupees)  
+ Gap Interest (if any)  
+ Fee/ Charges payable (in Rupees)  
+No. of instalments for payment of capitalised interest, if any  
+Commencement of repayments, post sanction (Sl No. 5 of the KFS template 
+–Part 1)  
+Loan Term (in years/ months/ days) (Sl No.4 of the KFS template – Part 1)  
+No. of instalments for payment of principal, in case of non equated periodic 
+loans  
+b)
+Type of EPI  
+ Amount of each EPI (in Rupees)  
+ Nos. of EPIs (e.g., no. of EMIs in case of monthly instalments) (Sl No. 5 of 
+the KFS template – Part 1)  
+Signed and Delivered by the Applicant and/or Co-applicant(s) / authorized signatories in token of and in witness of them having read (and/or being
+explained), verified, understood, irrevocably agreed to, accepted, confirmed and declared all the clauses, contents and schedules mentioned
+hereinabove and in all the pages of the 'Terms and Conditions of this loan document, the Schedule, all contents thereof including all the general
+terms and conditions contained available in Bank’s website, and authenticated accuracy and correctness of the same.
+Parameter Details
+Sanctioned Loan amount (in Rupees) (Sl no. 2 of the KFS template – Part 1)  
+
+--- page 6 ---
+9
+10
+11
+Annex C
+Repayment Schedule under Equated Periodic Instalment for the loan in Annex B
+Instalment No.
+Outstanding 
+Principal (In 
+Rupees)
+Principal (In 
+Rupees)
+Interest (In 
+Rupees) Instalment (In Rupees)
+1
+2
+3
+4
+5
+Name Name Name Name
+Main Applicant Applicant 2 Applicant 3      Guarantor
+I/We declare that the contents of Key Fact Statement (KFS) have been duly explained to me/us, and I/we have read, understood and accepted them.
+ Annual Percentage rate- Effective annualized interest rate (in percentage) 
+(Sl No.9 of the KFS template-Part 1  
+ Schedule of disbursement as per terms and conditions Refer Annex C
+ Due date of payment of instalment and interest  
+CUSTOMER DECLARATION/ACKNOWLEDGEMENT:

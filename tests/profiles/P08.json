@@ -1,0 +1,16 @@
+{
+  "profile_id": "P08",
+  "description": "Business owner, 2yr vintage, 1 ITR",
+  "date_of_birth": "1990-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "seb",
+  "net_monthly_income": 120000,
+  "business_vintage_months": 24,
+  "bureau_score": 720,
+  "itr_years_filed": 1,
+  "itr_income_y1": 1440000,
+  "total_experience_months": 120,
+  "city": "Ahmedabad",
+  "requested_amount": 1000000,
+  "requested_tenure_months": 48
+}

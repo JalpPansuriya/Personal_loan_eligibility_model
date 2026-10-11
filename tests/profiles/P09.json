@@ -1,0 +1,15 @@
+{
+  "profile_id": "P09",
+  "description": "New-to-credit, no score",
+  "date_of_birth": "1997-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 70000,
+  "bureau_score": null,
+  "total_experience_months": 60,
+  "current_job_tenure_months": 36,
+  "employer_category": "private_ltd",
+  "city": "Hyderabad",
+  "requested_amount": 400000,
+  "requested_tenure_months": 36
+}

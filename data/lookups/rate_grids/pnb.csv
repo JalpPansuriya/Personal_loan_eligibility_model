@@ -1,0 +1,307 @@
+rule_id,product,segment,value,condition,confidence,source_url,quote
+pnb-029,pnb_sahyog_rin_personal_loan_public,salaried,score=not_applicable=10.50,category==A_defence_paramilitary_salary_pnb; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"A
+|
+Loan to Defence/ Para Military Personals drawing salaries through our Bank including customers covered under Rakshak Plus scheme
+|
+Not applicable
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50%)
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50 %)
+|
+11.50%
+|
+11.50%"
+pnb-030,pnb_sahyog_rin_personal_loan_public,salaried,score=not_applicable=11.50,category==A_defence_paramilitary_salary_pnb; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"A
+|
+Loan to Defence/ Para Military Personals drawing salaries through our Bank including customers covered under Rakshak Plus scheme
+|
+Not applicable
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50%)
+|
+RLLR+BSP+ 2.15%
+(Presently 10.50 %)
+|
+11.50%
+|
+11.50%"
+pnb-031,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=10.85,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">= 800
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+11.85%
+|
+11.85%"
+pnb-032,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=11.85,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">= 800
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+RLLR+BSP+ 2.50%
+(Presently 10.85%)
+|
+11.85%
+|
+11.85%"
+pnb-033,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=11.85,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%"
+pnb-034,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=12.85,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%"
+pnb-035,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=12.85,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%"
+pnb-036,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=13.85,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%"
+pnb-037,pnb_sahyog_rin_personal_loan_public,salaried,score<681=13.35,category==B_govt_salary_pnb_or_central_gazetted; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%"
+pnb-038,pnb_sahyog_rin_personal_loan_public,salaried,score<681=14.35,category==B_govt_salary_pnb_or_central_gazetted; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%"
+pnb-039,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=11.85,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score >= 800
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%"
+pnb-040,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=12.85,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score >= 800
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+RLLR+BSP+ 3.50%
+(Presently 11.85%)
+|
+12.85%
+|
+12.85%"
+pnb-041,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=12.85,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%"
+pnb-042,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=13.85,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+RLLR+BSP+ 4.50%
+(Presently 12.85%)
+|
+13.85%
+|
+13.85%"
+pnb-043,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=14.85,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+15.85%
+|
+15.85%"
+pnb-044,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=15.85,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+RLLR+BSP+ 6.50%
+(Presently 14.85%)
+|
+15.85%
+|
+15.85%"
+pnb-045,pnb_sahyog_rin_personal_loan_public,salaried,score<681=15.35,category==C_corporate_salary_pnb_or_govt_other_bank; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+16.35%
+|
+16.35%"
+pnb-046,pnb_sahyog_rin_personal_loan_public,salaried,score<681=16.35,category==C_corporate_salary_pnb_or_govt_other_bank; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+RLLR+BSP+ 7.00%
+(Presently 15.35%)
+|
+16.35%
+|
+16.35%"
+pnb-047,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=13.35,category==D_check_off; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">= 800
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%"
+pnb-048,pnb_sahyog_rin_personal_loan_public,salaried,score>=800=14.35,category==D_check_off; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">= 800
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+RLLR+BSP+ 5.00%
+(Presently 13.35%)
+|
+14.35%
+|
+14.35%"
+pnb-049,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=13.85,category==D_check_off; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+14.85%
+|
+14.85%"
+pnb-050,pnb_sahyog_rin_personal_loan_public,salaried,score 750-799 or ntc(-1/0)=14.85,category==D_check_off; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,">=750 less than 800
+Or
+With Nil credit history (i,e -1 or 0)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+RLLR+BSP+ 5.50%
+(Presently 13.85%)
+|
+14.85%
+|
+14.85%"
+pnb-051,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=15.55,category==D_check_off; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+16.55%
+|
+16.55%"
+pnb-052,pnb_sahyog_rin_personal_loan_public,salaried,score 681-749=16.55,category==D_check_off; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"681 to 749
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+RLLR+BSP+ 7.20%
+(Presently 15.55%)
+|
+16.55%
+|
+16.55%"
+pnb-053,pnb_sahyog_rin_personal_loan_public,salaried,score<681=16.05,category==D_check_off; floating TL/OD; RLLR+BSP,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+17.05%
+|
+17.05%"
+pnb-054,pnb_sahyog_rin_personal_loan_public,salaried,score<681=17.05,category==D_check_off; fixed TL/OD,published,https://pnb.bank.in/Retail-Advances-interst-rate-on-advances-linked-to-mclr.html,"Score less than 681
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+RLLR+BSP+ 7.70%
+(Presently 16.05%)
+|
+17.05%
+|
+17.05%"

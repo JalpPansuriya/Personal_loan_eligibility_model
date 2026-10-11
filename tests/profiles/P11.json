@@ -1,0 +1,16 @@
+{
+  "profile_id": "P11",
+  "description": "9 enquiries in 6 months",
+  "date_of_birth": "1995-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 110000,
+  "bureau_score": 710,
+  "enquiries_last_6m": 9,
+  "total_experience_months": 108,
+  "current_job_tenure_months": 60,
+  "employer_category": "private_ltd",
+  "city": "Bengaluru",
+  "requested_amount": 700000,
+  "requested_tenure_months": 48
+}

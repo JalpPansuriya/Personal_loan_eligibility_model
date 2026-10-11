@@ -1,0 +1,16 @@
+{
+  "profile_id": "P01",
+  "description": "Prime salaried, MNC, metro",
+  "date_of_birth": "1994-01-01",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 120000,
+  "existing_emi_monthly": 15000,
+  "bureau_score": 800,
+  "total_experience_months": 120,
+  "current_job_tenure_months": 60,
+  "employer_category": "private_ltd",
+  "city": "Mumbai",
+  "requested_amount": 800000,
+  "requested_tenure_months": 48
+}

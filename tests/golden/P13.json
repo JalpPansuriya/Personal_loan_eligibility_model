@@ -1,0 +1,112 @@
+{
+  "best": {
+    "apr_pa": 9.25,
+    "lender_id": "union",
+    "max_eligible": 6000000.0,
+    "status": "PRELIMINARILY_ELIGIBLE"
+  },
+  "eligible": true,
+  "offer_count": 18,
+  "offers": {
+    "abcl": {
+      "apr_pa": 13.12,
+      "max_eligible": 5000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "axis": {
+      "apr_pa": 9.93,
+      "max_eligible": 5000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "bajaj": {
+      "apr_pa": 12.18,
+      "max_eligible": 5400000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "bob": {
+      "apr_pa": 10.15,
+      "max_eligible": 2000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "canara": {
+      "apr_pa": 9.75,
+      "max_eligible": 18240000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "hdfc": {
+      "apr_pa": 10.07,
+      "max_eligible": 4000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "icici": {
+      "apr_pa": 11.03,
+      "max_eligible": 5000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "idfc": {
+      "apr_pa": 9.99,
+      "max_eligible": 1000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "indusind": {
+      "apr_pa": 12.34,
+      "max_eligible": 6000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "kotak": {
+      "apr_pa": 13.68,
+      "max_eligible": 6000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "kreditbee": {
+      "apr_pa": 12.89,
+      "max_eligible": 1000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "lnt": {
+      "apr_pa": 12.62,
+      "max_eligible": 3000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "moneyview": {
+      "apr_pa": 15.08,
+      "max_eligible": 1000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "navi": {
+      "apr_pa": 10.09,
+      "max_eligible": 2000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "pnb": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "poonawalla": {
+      "apr_pa": 12.1,
+      "max_eligible": 1500000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "sbi": {
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "NOT_ELIGIBLE"
+    },
+    "tata": {
+      "apr_pa": 13.68,
+      "max_eligible": 3500000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "union": {
+      "apr_pa": 9.25,
+      "max_eligible": 6000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    },
+    "yes": {
+      "apr_pa": 12.16,
+      "max_eligible": 6000000.0,
+      "status": "PRELIMINARILY_ELIGIBLE"
+    }
+  }
+}

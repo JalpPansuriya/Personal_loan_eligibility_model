@@ -1,0 +1,16 @@
+{
+  "profile_id": "P10",
+  "description": "DPD 60 in 12m, score 720",
+  "date_of_birth": "1992-01-02",
+  "application_date": "2026-01-01",
+  "employment_type": "salaried",
+  "net_monthly_income": 95000,
+  "bureau_score": 720,
+  "max_dpd_last_12m": 60,
+  "total_experience_months": 96,
+  "current_job_tenure_months": 48,
+  "employer_category": "private_ltd",
+  "city": "Delhi",
+  "requested_amount": 600000,
+  "requested_tenure_months": 48
+}
