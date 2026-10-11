@@ -54,6 +54,9 @@ NEXT_ACTION = {
     "NTC_NOT_ALLOWED": "Build a credit history, or choose a new-to-credit-friendly lender.",
     "EMPLOYER_NOT_ALLOWED": "Confirm the employer category; this lender restricts employers.",
     "PROFESSION_NOT_ALLOWED": "This lender's product restricts professions; try another route.",
+    "GENDER_REQUIRED": "This product is gender-specific; declare the applicant's gender to assess it.",
+    "PROFESSION_REQUIRED": "This product is profession-specific; declare the applicant's profession.",
+    "CHECK_OFF_REQUIRED": "This product needs employer salary-deduction (check-off); confirm availability.",
     "SALARY_ACCOUNT_REQUIRED": "Open/declare a salary account with this lender, or choose another.",
     "CITY_NOT_SERVICED": "Choose a lender that services this city.",
     "RECENT_DPD_GTE30": "Clear overdues and maintain clean payments for several months.",
@@ -66,7 +69,8 @@ NEXT_ACTION = {
 
 # codes that mean 'we lack a value to decide' rather than a confirmed violation (§6/§7)
 MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED", "ITR_YEARS_LT_MIN_MISSING",
-                      "SCORE_UNAVAILABLE"}
+                      "SCORE_UNAVAILABLE", "GENDER_REQUIRED", "PROFESSION_REQUIRED",
+                      "CHECK_OFF_REQUIRED"}
 MANUAL_REVIEW_CODES = {"RELATIONSHIP_UNVERIFIED", "CHECKOFF_UNVERIFIED"}
 
 
@@ -139,10 +143,21 @@ class GateEvaluator:
         ctx = build_context(app, d)
         scoped = [ir for ir in self.store.scope(lender_id, product, segment)
                   if ir.effect == "gate" and ir.rule.operator != "info"]
-        # keep only rules whose condition applies to this applicant
-        active = [ir for ir in scoped if ir.cond.applies(ctx)]
 
         res = GateResult(passed=True)
+
+        # Product-specific info that MUST be present before this product can be judged
+        # eligible (plan3 Case C): if any gate rule's condition keys on an eligibility-
+        # defining attribute the applicant has not supplied, we cannot silently let the rule
+        # apply (unknown_is=True) nor silently skip it. Ask for the value instead.
+        self._require_conditioned_info(scoped, app, ctx, res)
+        if res.missing_info:
+            # still run the rest so other hard violations surface, but a missing gating
+            # attribute will route the product to ADDITIONAL_INFORMATION_REQUIRED.
+            pass
+
+        # keep only rules whose condition applies to this applicant
+        active = [ir for ir in scoped if ir.cond.applies(ctx)]
 
         # group by variable, resolve conflicts with stricter value
         by_var: dict[str, list[IndexedRule]] = {}
@@ -166,6 +181,32 @@ class GateEvaluator:
         if res.reasons:
             res.passed = False
         return res
+
+    # eligibility-defining condition fields: a product that keys on one of these cannot be
+    # judged when the applicant has not supplied it (never inferred from free text).
+    _GATING_FIELDS = {
+        "gender": ("GENDER_REQUIRED", "gender", lambda app: app.gender),
+        "profession": ("PROFESSION_REQUIRED", "profession", lambda app: app.profession),
+    }
+
+    def _require_conditioned_info(self, scoped, app: Applicant, ctx: dict, res: "GateResult") -> None:
+        needed: dict[str, ReasonCode] = {}
+        for ir in scoped:
+            for pred in ir.cond.predicates:
+                spec = self._GATING_FIELDS.get(pred.field)
+                if spec is None:
+                    continue
+                code, var, getter = spec
+                if getter(app) in (None, ""):
+                    needed.setdefault(code, ReasonCode(
+                        code=code, variable=var,
+                        message=f"this product requires a declared {var}; it was not supplied",
+                        rule_id=ir.rule_id, applicant_value=None,
+                        required_value=f"{pred.op} {'|'.join(pred.values)}",
+                        rule_status=rule_status_of(ir.rule.confidence),
+                        confidence=ir.rule.confidence, source_url=ir.rule.source_url,
+                        next_action=NEXT_ACTION.get(code, f"Provide the applicant's {var}.")))
+        res.missing_info.extend(needed.values())
 
     # ------------------------------------------------------------------ per-variable checks
     def _check(self, variable: str, ir: IndexedRule, app: Applicant, d: DerivedView,
@@ -288,6 +329,10 @@ class GateEvaluator:
         if variable == "profession_allowed":
             allowed = {p.lower() for p in lookups.professions(lender_id, segment)}
             prof = (app.profession or "").lower()
+            if allowed and not prof:
+                # profession-restricted product with no declared profession -> ask, never infer
+                return _reason(ir, "PROFESSION_REQUIRED", "profession-specific product; no profession supplied",
+                               None, "/".join(sorted(allowed))[:60])
             if allowed and prof and prof not in allowed and "etc" not in allowed:
                 return _reason(ir, "PROFESSION_NOT_ALLOWED", "profession not on allow-list",
                                prof, "/".join(sorted(allowed))[:60])

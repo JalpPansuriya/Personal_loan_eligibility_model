@@ -6,7 +6,7 @@
     "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
-  "offer_count": 13,
+  "offer_count": 12,
   "offers": {
     "abcl": {
       "apr_pa": null,
@@ -99,9 +99,9 @@
       "status": "NOT_ELIGIBLE"
     },
     "union": {
-      "apr_pa": 9.96,
-      "max_eligible": 235000.0,
-      "status": "PRELIMINARILY_ELIGIBLE"
+      "apr_pa": null,
+      "max_eligible": null,
+      "status": "ADDITIONAL_INFORMATION_REQUIRED"
     },
     "yes": {
       "apr_pa": 14.22,
