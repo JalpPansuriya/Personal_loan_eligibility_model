@@ -353,6 +353,9 @@ class CapBreakdown(BaseModel):
     product: Optional[float] = None
     calculator: Optional[float] = None
     binding_cap: str = ""      # foir | take_home | multiple | product | calculator
+    # a higher amount may be considered selectively by the lender; NEVER applied automatically
+    selective_exception_possible: bool = False
+    selective_exception_note: str = ""
 
 
 class PricingBreakdown(BaseModel):

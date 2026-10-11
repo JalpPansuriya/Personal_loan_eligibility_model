@@ -80,9 +80,10 @@ def test_max_never_exceeds_product_cap(engine):
 
 def test_max_equals_binding_cap(engine):
     app = mk(net_monthly_income=150000)
+    numeric_caps = {"foir", "take_home", "multiple", "product", "calculator"}
     for o in elig(engine, app):
         caps = {k: v for k, v in o.caps.model_dump().items()
-                if k != "binding_cap" and v is not None}
+                if k in numeric_caps and v is not None}
         if caps:
             assert o.max_eligible.amount <= min(caps.values()) + 1000, o.lender_id
 

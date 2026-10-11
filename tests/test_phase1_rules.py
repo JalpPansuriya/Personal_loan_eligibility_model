@@ -121,7 +121,7 @@ def test_store_scope_includes_all_segment_rows():
 EXPECTED_LENDER_COUNTS = {
     "abcl": 70, "axis": 43, "bajaj": 45, "bob": 107, "canara": 71, "hdfc": 40, "icici": 56,
     "idfc": 47, "indusind": 42, "kotak": 39, "kreditbee": 53, "lnt": 77, "moneyview": 37,
-    "navi": 25, "pnb": 89, "poonawalla": 101, "sbi": 48, "tata": 49, "union": 197, "yes": 23,
+    "navi": 25, "pnb": 89, "poonawalla": 101, "sbi": 48, "tata": 49, "union": 197, "yes": 24,
 }
 
 
@@ -134,6 +134,6 @@ def test_store_counts_match_snapshot():
     )
 
 
-def test_store_total_is_1259():
+def test_store_total_is_1260():
     s = get_store()
-    assert len(s.all()) == 1259
+    assert len(s.all()) == 1260

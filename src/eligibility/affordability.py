@@ -38,6 +38,7 @@ class SizingResult:
     binding_cap: str              # foir | take_home | multiple | product | calculator
     caps: dict[str, float]        # every computed cap, for transparency
     tenure_months: int
+    binding_is_estimated: bool = False  # True when the binding cap came from an estimated rule
 
 
 def _resolve_value(store: RuleStore, lender: str, product: str, segment: str,
@@ -56,11 +57,28 @@ def foir_limit(store: RuleStore, lender: str, product: str, segment: str) -> Opt
 
 
 def income_multiple(store: RuleStore, lender: str, product: str, segment: str) -> Optional[float]:
+    # include variant-conditional multiples (e.g. Canara prime/delight both 25x); the
+    # published multiple is the sizing rule even when the variant is unmodelled.
+    cands = [ir for ir in store.rules_for_variable(lender, product, segment, "income_multiple_max")
+             if _num(ir.rule.value) is not None]
+    vals = [_num(ir.rule.value) for ir in cands]
+    if vals:
+        return min(vals)
     return _resolve_value(store, lender, product, segment, "income_multiple_max", pick_min=True)
 
 
 def product_max(store: RuleStore, lender: str, product: str, segment: str) -> Optional[float]:
-    return _resolve_value(store, lender, product, segment, "loan_max", pick_min=True)
+    """Published product amount ceiling.
+
+    loan_max rows are often conditioned on an unmodelled product variant (e.g. Canara
+    Budget prime 50L / delight 40L). We do not know the variant, so we take the HIGHEST
+    published variant ceiling as the hard cap: the loan can never exceed every variant's
+    published maximum. This closes defect I (the vanishing cap when all loan_max rows were
+    variant-conditional and therefore skipped by the unconditional-only resolver)."""
+    cands = [ir for ir in store.rules_for_variable(lender, product, segment, "loan_max")
+             if _num(ir.rule.value) is not None]
+    vals = [_num(ir.rule.value) for ir in cands]
+    return max(vals) if vals else None
 
 
 def product_min(store: RuleStore, lender: str, product: str, segment: str) -> Optional[float]:
@@ -69,6 +87,28 @@ def product_min(store: RuleStore, lender: str, product: str, segment: str) -> Op
 
 def take_home_floor(store: RuleStore, lender: str, product: str, segment: str) -> Optional[float]:
     return _resolve_value(store, lender, product, segment, "take_home_floor", pick_min=False)
+
+
+def selective_exception(store: RuleStore, lender: str, product: str, segment: str) -> tuple[bool, str]:
+    """True if the lender's published cap text allows a higher amount only 'selectively'.
+    Such exceptions are documented but NEVER applied automatically (plan2 §5, defect I)."""
+    for ir in store.rules_for_variable(lender, product, segment, "loan_max"):
+        blob = f"{ir.rule.quote} {ir.rule.notes}".lower()
+        if "selective" in blob or "higher quantum" in blob or "higher amount" in blob:
+            return True, "Lender may consider a higher amount selectively; not applied automatically."
+    return False, ""
+
+
+def _variable_is_estimated(store: RuleStore, lender: str, product: str, segment: str,
+                           variable: str) -> bool:
+    """True if every published-or-derived source for this sizing variable is absent, i.e.
+    the only value available is estimated/inferred."""
+    cands = [ir for ir in store.rules_for_variable(lender, product, segment, variable)
+             if _num(ir.rule.value) is not None]
+    if not cands:
+        return False
+    firm = {"published", "published_conflict", "derived"}
+    return all(ir.rule.confidence.value not in firm for ir in cands)
 
 
 def size_loan(store: RuleStore, app: Applicant, d: DerivedView, product: str, segment: str,
@@ -119,4 +159,9 @@ def size_loan(store: RuleStore, app: Applicant, d: DerivedView, product: str, se
     if pmax is not None and max_loan > pmax:
         max_loan = pmax
         binding = "product"
-    return SizingResult(max_loan=max_loan, binding_cap=binding, caps=caps, tenure_months=tenure_months)
+    # flag an estimated binding cap (e.g. an estimated income multiple with no published cap)
+    var_for_cap = {"multiple": "income_multiple_max", "product": "loan_max",
+                   "foir": "foir_max", "take_home": "take_home_floor"}.get(binding)
+    binding_est = bool(var_for_cap and _variable_is_estimated(store, lender, product, segment, var_for_cap))
+    return SizingResult(max_loan=max_loan, binding_cap=binding, caps=caps,
+                        tenure_months=tenure_months, binding_is_estimated=binding_est)

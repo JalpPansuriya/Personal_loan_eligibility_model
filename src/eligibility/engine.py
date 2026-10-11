@@ -137,10 +137,12 @@ class Engine:
                                         next_action="Not affordable at this income/obligation level.")]
             return offer
 
+        exc_possible, exc_note = af.selective_exception(self.store, lender, product, segment)
         offer.caps = CapBreakdown(
             foir=sizing.caps.get("foir"), take_home=sizing.caps.get("take_home"),
             multiple=sizing.caps.get("multiple"), product=sizing.caps.get("product"),
             calculator=sizing.caps.get("calculator"), binding_cap=sizing.binding_cap,
+            selective_exception_possible=exc_possible, selective_exception_note=exc_note,
         )
 
         # does the max cover the requested AMOUNT?
@@ -196,7 +198,8 @@ class Engine:
         #   ELIGIBLE_FOR_REQUESTED_TERMS    - passes rules and covers the exact request on published pricing
         rate_pub = pricing.rate_confidence in (Confidence.PUBLISHED, Confidence.PUBLISHED_CONFLICT)
         fully_supported = amount_supported and req_tenure_supported
-        if gate.bureau_soft_flags or not rate_pub or not app.card_obligation_known:
+        if (gate.bureau_soft_flags or not rate_pub or not app.card_obligation_known
+                or sizing.binding_is_estimated):
             offer.status = Status.PRELIMINARILY_ELIGIBLE
         elif not fully_supported:
             offer.status = Status.ELIGIBLE_FOR_ALTERNATIVE_TERMS
@@ -230,6 +233,12 @@ class Engine:
                 required_value=f"{pmin_t}-{max_tenure}",
                 rule_status=RuleStatus.PUBLISHED,
                 next_action="Choose a tenure within the permitted range."))
+        if sizing.binding_is_estimated:
+            offer.reasons.append(ReasonCode(
+                code="MAX_AMOUNT_ESTIMATED", variable=sizing.binding_cap,
+                message="maximum amount rests on an estimated sizing rule (no published cap); treat as indicative",
+                rule_status=RuleStatus.ESTIMATED, confidence=Confidence.ESTIMATED,
+                next_action="Confirm the lender's published amount cap / income multiple."))
         return offer
 
     def _lowest_conf(self, reasons: list[ReasonCode]) -> Optional[Confidence]:

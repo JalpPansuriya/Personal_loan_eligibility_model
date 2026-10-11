@@ -134,3 +134,27 @@ def test_kotak_monotone_down_in_emi(income, emi):
 def test_icici_monotone(income, emi):
     assert calibration.icici_max_loan(income + 10_000, emi) >= calibration.icici_max_loan(income, emi)
     assert calibration.icici_max_loan(income, emi + 10_000) <= calibration.icici_max_loan(income, emi)
+
+
+# --------------------------------------------------------------------------- product caps (defect I)
+def test_canara_product_cap_from_variant_conditional_rows():
+    store = get_store()
+    # loan_max is only published per variant (prime 50L / delight 40L); product_max must
+    # still return a bounded ceiling (the highest published variant cap), never None.
+    cap = af.product_max(store, "canara", "canara_budget", "salaried")
+    assert cap == 5_000_000
+
+
+def test_canara_max_loan_never_exceeds_published_cap():
+    store = get_store()
+    app = mk(net_monthly_income=1_000_000, existing_emi_monthly=0)  # very high income
+    d = pp.derive(app, "canara", "canara_budget", "salaried")
+    r = af.size_loan(store, app, d, "canara_budget", "salaried", rate_pa=10.0, tenure_months=84)
+    assert r.max_loan <= 5_000_000
+
+
+def test_canara_selective_exception_flagged_not_applied():
+    store = get_store()
+    possible, note = af.selective_exception(store, "canara", "canara_budget", "salaried")
+    assert possible is True and note
+

@@ -1,8 +1,8 @@
 {
   "best": {
-    "apr_pa": 16.29,
-    "lender_id": "idfc",
-    "max_eligible": 2400000.0,
+    "apr_pa": 20.12,
+    "lender_id": "kreditbee",
+    "max_eligible": 1000000.0,
     "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
   },
   "eligible": true,
@@ -46,12 +46,12 @@
     "idfc": {
       "apr_pa": 16.29,
       "max_eligible": 2400000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "indusind": {
       "apr_pa": 18.94,
       "max_eligible": 2400000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "kotak": {
       "apr_pa": null,
@@ -76,7 +76,7 @@
     "navi": {
       "apr_pa": 19.43,
       "max_eligible": 1440000.0,
-      "status": "ELIGIBLE_FOR_REQUESTED_TERMS"
+      "status": "PRELIMINARILY_ELIGIBLE"
     },
     "pnb": {
       "apr_pa": null,
@@ -100,7 +100,7 @@
     },
     "union": {
       "apr_pa": 11.42,
-      "max_eligible": 2400000.0,
+      "max_eligible": 1500000.0,
       "status": "PRELIMINARILY_ELIGIBLE"
     },
     "yes": {
