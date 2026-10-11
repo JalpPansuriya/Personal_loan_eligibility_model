@@ -160,6 +160,7 @@ class Applicant(BaseModel):
         0, ge=0, validation_alias=AliasChoices("credit_card_outstanding", "card_outstanding"))
     has_credit_score: Optional[bool] = None          # explicit NTC flag when False
     bureau_score: Optional[int] = None               # None = NTC/unknown; else 300-900
+    bureau_status: Optional[BureauState] = None       # explicit override: unavailable/failed/invalid
     credit_history_months: Optional[int] = Field(None, ge=0)
     max_dpd_last_12m: Optional[int] = Field(
         None, ge=0, validation_alias=AliasChoices("max_dpd_last_12m", "max_dpd_days_last_12_months"))
@@ -247,6 +248,8 @@ class Applicant(BaseModel):
 
     @property
     def bureau_state(self) -> BureauState:
+        if self.bureau_status is not None:
+            return self.bureau_status
         if self.has_credit_score is False:
             return BureauState.NEW_TO_CREDIT
         if self.bureau_score is not None:

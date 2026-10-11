@@ -50,6 +50,7 @@ NEXT_ACTION = {
     "ITR_YEARS_LT_MIN_MISSING": "Provide ITR history (years filed) so this can be assessed.",
     "ITR_YEARS_LT_MIN": "File the required number of ITRs, then re-check.",
     "SCORE_BELOW_MIN": "Improve the bureau score to the required minimum.",
+    "SCORE_UNAVAILABLE": "Provide a bureau score; it could not be fetched/was not supplied.",
     "NTC_NOT_ALLOWED": "Build a credit history, or choose a new-to-credit-friendly lender.",
     "EMPLOYER_NOT_ALLOWED": "Confirm the employer category; this lender restricts employers.",
     "PROFESSION_NOT_ALLOWED": "This lender's product restricts professions; try another route.",
@@ -64,7 +65,8 @@ NEXT_ACTION = {
 }
 
 # codes that mean 'we lack a value to decide' rather than a confirmed violation (§6/§7)
-MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED", "ITR_YEARS_LT_MIN_MISSING"}
+MISSING_INFO_CODES = {"VINTAGE_LT_MIN_MISSING", "RELATIONSHIP_REQUIRED", "ITR_YEARS_LT_MIN_MISSING",
+                      "SCORE_UNAVAILABLE"}
 MANUAL_REVIEW_CODES = {"RELATIONSHIP_UNVERIFIED", "CHECKOFF_UNVERIFIED"}
 
 
@@ -257,6 +259,12 @@ class GateEvaluator:
 
         if variable == "score_min" and num is not None:
             if app.bureau_score is None:
+                # distinguish genuine NTC (handled by ntc_allowed) from an
+                # unavailable/failed bureau fetch (needs the score before we can decide)
+                from .schema import BureauState
+                if app.bureau_state in (BureauState.UNAVAILABLE, BureauState.FAILED):
+                    return _reason(ir, "SCORE_UNAVAILABLE",
+                                   "bureau score required but not available", "unavailable", num)
                 return None  # NTC handled by ntc_allowed, not score_min
             if app.bureau_score < num:
                 return _reason(ir, "SCORE_BELOW_MIN", "bureau score below minimum",
@@ -337,7 +345,13 @@ class GateEvaluator:
         lt = self.store.lender_type(lender_id)
         dpd = app.max_dpd_last_12m
         enq = app.enquiries_last_6m
-        wo = app.writeoff_or_settled_24m
+        writeoff = app.write_off_flag
+        # settlement split by recency: <=24m is a serious recent event; older is a soft signal
+        settled_recent = app.has_settled_loan and (
+            app.settled_loan_months_ago is None or app.settled_loan_months_ago <= 24)
+        settled_old = app.has_settled_loan and (
+            app.settled_loan_months_ago is not None and app.settled_loan_months_ago > 24)
+        hard_derog = writeoff or settled_recent  # a hard negative for banks/strict NBFCs
 
         def reject(code: str, msg: str, actual, req):
             res.reasons.append(ReasonCode(code=code, variable="bureau_reject_signal",
@@ -348,21 +362,29 @@ class GateEvaluator:
                                           next_action=NEXT_ACTION.get(code, "")))
 
         if lt == "bank":
-            if wo:
-                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off/settlement in last 24m", True, "none")
+            if hard_derog:
+                reject("PRIOR_WRITEOFF_SETTLEMENT",
+                       "write-off or settlement within the last 24 months",
+                       "write-off" if writeoff else "settled<=24m", "none")
+            elif settled_old:
+                res.bureau_soft_flags.append("reprice_nbfc")  # older settlement: cautious reprice
             if dpd is not None and dpd >= 30:
                 reject("RECENT_DPD_GTE30", "30+ DPD in last 12m", dpd, "<30")
             if enq >= 6:
                 reject("EXCESS_ENQUIRIES", "6+ hard enquiries in 6m", enq, "<6")
         elif lt == "nbfc":
-            if wo:
-                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off/settlement in last 24m", True, "none")
+            if hard_derog:
+                reject("PRIOR_WRITEOFF_SETTLEMENT",
+                       "write-off or settlement within the last 24 months",
+                       "write-off" if writeoff else "settled<=24m", "none")
             if dpd is not None and dpd >= 60:
                 reject("RECENT_DPD_GTE60", "60+ DPD in last 12m", dpd, "<60")
-            elif (dpd is not None and dpd >= 30) or enq >= 6:
+            elif (dpd is not None and dpd >= 30) or enq >= 6 or settled_old:
                 res.bureau_soft_flags.append("reprice_nbfc")  # +3pp / 50% haircut later
         else:  # fintech
-            if wo and lender_id in ("navi", "moneyview"):
-                reject("PRIOR_WRITEOFF_SETTLEMENT", "write-off/settlement in last 24m", True, "none")
-            elif (dpd is not None and dpd >= 30) or enq >= 6 or wo:
+            if hard_derog and lender_id in ("navi", "moneyview"):
+                reject("PRIOR_WRITEOFF_SETTLEMENT",
+                       "write-off or settlement within the last 24 months",
+                       "write-off" if writeoff else "settled<=24m", "none")
+            elif (dpd is not None and dpd >= 30) or enq >= 6 or hard_derog or settled_old:
                 res.bureau_soft_flags.append("reprice_fintech")  # +5pp / 60% haircut later
