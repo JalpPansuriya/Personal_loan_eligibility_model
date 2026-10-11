@@ -104,6 +104,9 @@ function OfferRow({ offer }: { offer: LenderOffer }) {
                 <div>
                   <b>Rate &amp; charges</b>
                   <div>Interest rate: {rateCell}{p.rate_is_range ? " (band)" : ""}</div>
+                  {p.rate_capped_at_ceiling && (
+                    <div className="warn-txt">rate capped at the published maximum ({pct(p.rate_max_pa)}); true applicant rate unknown</div>
+                  )}
                   <div>Processing fee: {rupees(p.processing_fee)} + GST {rupees(p.gst_on_fee)}</div>
                   <div>Net disbursement: {rupees(p.net_disbursement)}</div>
                   <div>Total repayment: {rupees(p.total_repayment)}</div>
@@ -143,6 +146,29 @@ function OfferRow({ offer }: { offer: LenderOffer }) {
                 <ul>{o.fixes.map((f, i) => <li key={i} className="fix">{f.description}</li>)}</ul>
               </div>
             )}
+            {o.checks.length > 0 && (
+              <details className="checks">
+                <summary>Decision trace ({o.checks.length} rules checked)</summary>
+                <table className="checks-tbl">
+                  <thead><tr><th>Rule</th><th>Status</th><th>You</th><th>Required</th><th>Source</th></tr></thead>
+                  <tbody>
+                    {o.checks.map((c, i) => (
+                      <tr key={i} className={"chk-" + c.status.toLowerCase()}>
+                        <td>{c.rule}</td>
+                        <td>{c.status}</td>
+                        <td>{c.actual_value ?? "-"}</td>
+                        <td>{c.required_value ?? "-"}</td>
+                        <td>
+                          <RuleTag label={c.source_status} />
+                          {c.source_url && <> <a href={c.source_url} target="_blank" rel="noreferrer">link</a></>}
+                          {c.retrieved_at ? ` ${c.retrieved_at}` : ""}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </details>
+            )}
           </td>
         </tr>
       )}
@@ -159,9 +185,15 @@ export default function Results({ decision }: { decision: Decision }) {
     if (ra !== rb) return ra - rb;
     return (a.pricing.apr_pa ?? 1e9) - (b.pricing.apr_pa ?? 1e9);
   });
+  const count = (s: string) => offers.filter((o) => o.status === s).length;
   const nOffers = offers.filter((o) => isOffer(o.status)).length;
-  const nCovering = offers.filter((o) => o.status === "ELIGIBLE_FOR_REQUESTED_TERMS").length;
+  const nCovering = count("ELIGIBLE_FOR_REQUESTED_TERMS");
+  const nAlt = count("ELIGIBLE_FOR_ALTERNATIVE_TERMS");
+  const nReview = count("MANUAL_REVIEW");
+  const nInfo = count("ADDITIONAL_INFORMATION_REQUIRED");
   const best = decision.best_offer;
+  const rk = decision.rankings;
+  const lenderOf = (id: string | null) => (id ? id.toUpperCase() : "\u2014");
 
   return (
     <div>
@@ -169,11 +201,26 @@ export default function Results({ decision }: { decision: Decision }) {
         <div className={"badge " + (decision.eligible ? "ok" : "no")}>
           {decision.eligible ? "PRELIMINARY MATCHES FOUND" : "NO PRELIMINARY MATCH"}
         </div>
-        <div className="metric"><span>{nOffers}/20</span> products pass screening</div>
-        <div className="metric"><span>{nCovering}</span> cover the exact request</div>
+        <div className="metric"><span>{nOffers}/20</span> pass screening</div>
+        <div className="metric"><span>{nCovering}</span> cover exact request</div>
+        <div className="metric"><span>{nAlt}</span> alternative only</div>
+        <div className="metric"><span>{nReview}</span> manual review</div>
+        <div className="metric"><span>{nInfo}</span> need more info</div>
         <div className="metric"><span>{decision.applicant_age}</span> years</div>
-        {best && <div className="metric"><span>{pct(best.pricing.apr_pa)}</span> best APR</div>}
       </div>
+
+      {rk && (
+        <div className="rankings">
+          <b>Rankings</b> <span className="muted">({rk.basis})</span>
+          <ul>
+            <li>Best for the exact requested terms: <b>{lenderOf(rk.best_for_requested_terms)}</b></li>
+            <li>Best supported alternative: <b>{lenderOf(rk.best_supported_alternative)}</b></li>
+            <li>Lowest estimated nominal rate: <b>{lenderOf(rk.lowest_estimated_rate)}</b> <span className="muted">(advertised, not APR)</span></li>
+            <li>Lowest reliably-calculated APR: <b>{lenderOf(rk.lowest_reliable_apr)}</b></li>
+          </ul>
+          {rk.insufficient_evidence && <div className="warn-txt">Insufficient evidence for a reliable best option.</div>}
+        </div>
+      )}
 
       {best && (
         <div className="best">
@@ -213,6 +260,7 @@ export default function Results({ decision }: { decision: Decision }) {
       <p className="rowhint">Click any row for requested / alternative / maximum amounts, each EMI with its principal, rate and tenure, the fee/GST/APR breakdown, sources, and advice. * = APR is indicative (rate estimated).</p>
       <p className="rowhint">{decision.score_method}</p>
       <p className="rowhint">{decision.disclaimer}</p>
+      <p className="rowhint muted">rule-set version: {decision.rule_set_version}</p>
     </div>
   );
 }

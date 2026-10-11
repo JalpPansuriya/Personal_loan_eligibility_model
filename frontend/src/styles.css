@@ -144,3 +144,15 @@ a { color: var(--accent); }
 @media (max-width: 720px) {
   .fields label { width: 100%; }
 }
+
+/* plan3: rankings panel + decision-trace table */
+.rankings { background: #f7f9fc; border: 1px solid #e2e8f2; border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-size: 13px; }
+.rankings ul { margin: 6px 0 0; padding-left: 18px; }
+.rankings li { margin: 2px 0; }
+.checks { margin-top: 8px; }
+.checks summary { cursor: pointer; font-weight: 600; font-size: 12px; }
+.checks-tbl { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+.checks-tbl th, .checks-tbl td { border-bottom: 1px solid #eef; padding: 3px 6px; text-align: left; }
+.chk-pass td:nth-child(2) { color: var(--ok); font-weight: 700; }
+.chk-fail td:nth-child(2) { color: var(--reject); font-weight: 700; }
+.chk-unknown td:nth-child(2) { color: var(--reduced); font-weight: 700; }
