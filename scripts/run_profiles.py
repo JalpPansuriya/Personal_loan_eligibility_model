@@ -18,17 +18,23 @@ def main() -> None:
         desc = rec.pop("description")
         app = Applicant(**rec)
         d = engine.run(app)
-        appr = [o for o in d.offers if o.status != Status.REJECT]
-        print(f"\n{pid} - {desc}  (age {d.applicant_age})")
+        appr = [o for o in d.offers if o.status not in (Status.NOT_ELIGIBLE, Status.INVALID_INPUT, Status.RULES_UNAVAILABLE)]
+        print(f"\n{pid} - {desc}  (age {d.applicant_age:.1f})")
         print(f"  eligible: {d.eligible}   offers: {len(appr)}/20")
         if d.best_offer:
             b = d.best_offer
-            print(f"  best: {b.lender_id} {b.status.value} max Rs{b.max_loan:,.0f} "
-                  f"rate {b.nominal_rate_pa}% APR {b.apr_pa}% EMI Rs{b.emi:,.0f} strength {b.strength_score}")
-        top = sorted(appr, key=lambda o: o.apr_pa or 1e9)[:5]
+            b_amt = b.requested.amount or b.max_eligible.amount or 0
+            b_rate = f"{b.pricing.nominal_rate_pa}%" if b.pricing.nominal_rate_pa is not None else "N/A"
+            b_apr = f"{b.pricing.apr_pa}%" if b.pricing.apr_pa is not None else "N/A"
+            b_emi = b.requested.emi or b.max_eligible.emi or 0
+            print(f"  best: {b.lender_id} {b.status.value} max Rs{b_amt:,.0f} "
+                  f"rate {b_rate} APR {b_apr} EMI Rs{b_emi:,.0f} strength {b.strength_score}")
+        top = sorted(appr, key=lambda o: o.pricing.apr_pa if o.pricing.apr_pa is not None else 1e9)[:5]
         for o in top:
-            print(f"    {o.lender_id:11} {o.status.value:15} max Rs{o.max_loan:>10,.0f} "
-                  f"APR {o.apr_pa:>5}% [{o.binding_cap}]")
+            o_amt = o.requested.amount or o.max_eligible.amount or 0
+            o_apr_str = f"{o.pricing.apr_pa:>5.2f}%" if o.pricing.apr_pa is not None else "  N/A"
+            print(f"    {o.lender_id:11} {o.status.value:15} max Rs{o_amt:>10,.0f} "
+                  f"APR {o_apr_str} [{o.caps.binding_cap}]")
         if not d.eligible:
             print("  top blocking:", ", ".join(f"{r.code}" for r in d.top_blocking_reasons))
 

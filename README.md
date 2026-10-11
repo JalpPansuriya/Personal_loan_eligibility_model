@@ -113,6 +113,43 @@ date is preserved. Bureau state is explicit: valid score / new-to-credit / unava
 invalid are kept distinct, and a required-but-unavailable score yields
 `ADDITIONAL_INFORMATION_REQUIRED`.
 
+#### Input variables (datapoint set)
+
+As defined in `data/variables.csv` and enforced in `src/eligibility/schema.py`:
+
+| Variable Name | Unit | Type | Origin | Description |
+|---|---|---|---|---|
+| `employment_type` | enum | Categorical | Applicant + Doc | `salaried`, `sep` (professional), or `seb` (business owner) |
+| `employer_category` | enum | Categorical | Applicant + Doc | `govt`, `psu`, `defence`, `listed_mnc`, `private_large`, `private_small`, `other` |
+| `profession` | enum | Categorical | Applicant + Doc | `doctor`, `ca`, `cs`, `cost_accountant`, `architect`, `engineer`, `consultant`, `other` |
+| `date_of_birth` | YYYY-MM-DD | Date | Document | Applicant date of birth (used to compute exact calendar age) |
+| `application_date` | YYYY-MM-DD | Date | System / App | Date of application (defaults to current date; preserved across runs) |
+| `city` / `pincode` | text / 6-digit | String | Applicant | Resident city / pincode; mapped to Tier 1 / 2 / 3 via GoI HRA lookup |
+| `net_monthly_income` | INR / month | Number | Document | Take-home salary after tax/PF (payslip or 6-month bank statement) |
+| `gross_monthly_income` | INR / month | Number | Document | Total monthly salary before deductions (used by gross-FOIR lenders) |
+| `total_experience_months`| Months | Integer | Applicant + Doc | Total cumulative working experience |
+| `current_job_tenure_months`| Months | Integer | Applicant + Doc | Months with current employer / ongoing service |
+| `business_vintage_months`| Months | Integer | Document | Months in continuous business/practice; required for SE segments |
+| `itr_years_available` | Count | Integer | Document | Number of assessment years with filed Income Tax Returns |
+| `itr_income_y1` | INR / year | Number | Document | Total income filed in most recent ITR year |
+| `itr_income_y2` | INR / year | Number | Document | Total income filed in previous ITR year |
+| `bureau_score` | 300–900 / None | Integer | Bureau | Credit bureau score (CIBIL / Experian); `None` indicates New-To-Credit |
+| `credit_history_months` | Months / None | Integer | Bureau | Age of oldest reported tradeline on credit bureau |
+| `existing_monthly_emi` | INR / month | Number | Bureau + App | Total active monthly loan EMIs being serviced |
+| `credit_card_outstanding`| INR | Number | Bureau | Aggregate revolving credit card balances |
+| `card_monthly_payment` | INR / month | Number | Applicant + Doc | Actual monthly card payment serviced (if unknown, 5% is NOT coerced) |
+| `max_dpd_days_last_12_months` | Days | Integer | Bureau | Worst days-past-due delinquency across all tradelines in last 12m |
+| `enquiries_last_6_months`| Count | Integer | Bureau | Count of hard credit enquiries in previous 6 months |
+| `has_settled_loan` | Boolean | Boolean | Bureau | Whether any loan account reflects a "settled" status |
+| `settled_loan_months_ago`| Months | Integer | Bureau | Months elapsed since the loan settlement occurred |
+| `write_off_flag` | Boolean | Boolean | Bureau | Adverse credit marker indicating a loss/write-off |
+| `salary_account_with` | Lender ID / None | Categorical | Applicant | Bank holding primary salary credit account |
+| `employer_check_off_available` | Boolean | Boolean | Document | Employer salary deduction agreement available (PSU / corporate) |
+| `requested_amount` | INR | Number | Applicant | Requested loan principal |
+| `requested_tenure_months`| Months | Integer | Applicant | Requested repayment tenure in months |
+
+*Feature derivations (such as FOIR headroom, age at loan maturity, and assessed income) are computed in `src/eligibility/preprocess.py`.*
+
 ## How the 20 lenders were chosen
 
 The goal was the 20 that matter most to a real Indian borrower, under a defensible, reproducible
@@ -127,10 +164,32 @@ method (full detail in `model_report.md`):
 4. **Enforce a market-representative mix:** ≥5 PSU banks, ≥5 private banks, ≥4 NBFCs, and 2–3
    fintechs (which dominate origination *volume*).
 
-The final set: **SBI, PNB, BoB, Canara, Union** (PSU); **HDFC, ICICI, Axis, Kotak, IndusInd,
-IDFC First, Yes** (private); **Bajaj, Tata Capital, Aditya Birla, L&T, Poonawalla** (NBFC);
-**Navi, KreditBee, Moneyview** (fintech). "Top 20 by scale," not "the 20 largest banks" — the
-distinction is stated so the claim is honest.
+### The 20 selected lenders
+
+| Group | Lender Name | ID | Rules File | Primary Products Covered |
+|---|---|---|---|---|
+| **PSU Banks** | State Bank of India | `sbi` | `data/rules/sbi.csv` | Xpress Credit (Salary Package & Check-Off) |
+| | Punjab National Bank | `pnb` | `data/rules/pnb.csv` | PNB Sahyog / Personal Loan Scheme |
+| | Bank of Baroda | `bob` | `data/rules/bob.csv` | Baroda Personal Loan (Salaried & Professional) |
+| | Canara Bank | `canara` | `data/rules/canara.csv` | Canara Budget Personal Loan |
+| | Union Bank of India | `union` | `data/rules/union.csv` | Union Personal (Salaried & Professional schemes) |
+| **Private Banks** | HDFC Bank | `hdfc` | `data/rules/hdfc.csv` | HDFC Personal Loan (Tiered by Employer Category) |
+| | ICICI Bank | `icici` | `data/rules/icici.csv` | ICICI Personal Loan (Salaried & Self-Employed) |
+| | Axis Bank | `axis` | `data/rules/axis.csv` | Axis 24x7 Personal Loan |
+| | Kotak Mahindra Bank | `kotak` | `data/rules/kotak.csv` | Kotak Personal Loan (Salaried) |
+| | IndusInd Bank | `indusind` | `data/rules/indusind.csv` | IndusInd Multi-Purpose Personal Loan |
+| | IDFC FIRST Bank | `idfc` | `data/rules/idfc_first.csv` | IDFC FIRST Personal Loan |
+| | YES Bank | `yes` | `data/rules/yes.csv` | YES Bank Personal Loan |
+| **NBFCs** | Bajaj Finance | `bajaj` | `data/rules/bajaj.csv` | Bajaj Finserv Flexi Personal Loan |
+| | Tata Capital | `tata` | `data/rules/tata_capital.csv` | Tata Capital Personal Loan (Salaried & Business) |
+| | Aditya Birla Capital | `aditya_birla` | `data/rules/aditya_birla.csv` | ABFL Personal Loan |
+| | L&T Finance | `lnt` | `data/rules/lt_finance.csv` | L&T Consumer Loan |
+| | Poonawalla Fincorp | `poonawalla` | `data/rules/poonawalla.csv` | Poonawalla Personal Loan |
+| **Fintechs** | Navi Technologies | `navi` | `data/rules/navi.csv` | Navi Cash Loan (Digital unsecured PL) |
+| | KreditBee | `kreditbee` | `data/rules/kreditbee.csv` | KreditBee Personal Loan for Salaried / Flexi |
+| | Moneyview | `moneyview` | `data/rules/moneyview.csv` | Moneyview Personal Loan |
+
+All individual lender rules live as atomic rows in `data/rules/{lender}.csv`, compiled into `data/lender_rules_long.csv` (1,260 rules). Every published rule is backed by a dated snapshot in `data/sources/`.
 
 ## Approach
 
@@ -275,5 +334,35 @@ endpoints. `cd frontend && npm test` runs the frontend input-mapping suite that 
 sample-profile field survives the JSON → form → backend-payload path unchanged, with no
 zero-filling, plus a frontend/backend consistency check across the regression profiles.
 
+### Test profiles & sample outputs
+
+The engine is evaluated against 16 bundled baseline profiles (`tests/profiles/P01.json` – `P16.json`)
+and 10 dedicated edge profiles (`tests/edge_profiles/EDGE01.json` – `EDGE10.json`).
+
+Run all bundled sample profiles through the engine:
+```powershell
+python scripts/run_profiles.py
+```
+
+| Profile | Scenario / Persona | Key Characteristics | Status | Best-Fit Lender | Key Decision Insight |
+|---|---|---|---|---|---|
+| **P01** | Prime Salaried | Metro, MNC Cat A, ₹1.2L salary, score 785 | Eligible (18/20) | IDFC FIRST (9.99% APR) | Broad eligibility; binding cap is product maximum or salary multiple. |
+| **P02** | Subprime / Adverse bureau | Score 640, DPD 30 in 12m, 8 enquiries | Eligible (2/20) | KreditBee (29.98% APR) | Banks reject or route to manual review; digital fintechs approve at repriced risk rates. |
+| **P03** | High existing EMI | Net ₹1L/mo, existing EMI ₹55K (55% FOIR) | Eligible (13/20) | ICICI Bank (12.34% APR) | Strict FOIR cap binds loan sizing; ICICI calculator model covers requested amount. |
+| **P04** | Job Hopper / Low tenure | Current job 4 months, total 36m | Eligible (11/20) | IDFC FIRST (12.79% APR) | Banks requiring 6–12m with current employer reject (`EXP_CURRENT_LT_MIN`). |
+| **P05** | Young Fresher / NTC | Age 21, 8m exp, New-To-Credit (no score) | Ineligible (0/20) | None | Blocked across all lenders by `AGE_BELOW_MIN`, `EXP_TOTAL_LT_MIN`, and `NTC_NOT_ALLOWED`. |
+| **P06** | Near-Retirement Senior | Age 57, requests 60m tenure | Eligible (17/20) | Canara Bank (11.11% APR) | Age-at-maturity cap (60 years) curtails allowed tenure to 36m (`ELIGIBLE_FOR_ALTERNATIVE_TERMS`). |
+| **P07** | Self-Employed Doctor (SEP) | Doctor, ₹1.5L/mo, clinic vintage 48m | Eligible (11/20) | IDFC FIRST (12.79% APR) | Qualifies for specialized professional schemes; high loan multiple permitted. |
+| **P08** | Self-Employed Business (SEB) | 2yr vintage, 1 ITR year, ₹1.2L/mo | Eligible (9/20) | KreditBee (20.12% APR) | Banks requiring $\ge 2$ or 3 years of filed ITRs reject (`ITR_YEARS_LT_MIN`); NBFCs/fintechs approve. |
+| **P09** | Pure New-To-Credit (NTC) | Age 29, salary ₹45K, no credit score | Eligible (2/20) | Poonawalla (25.29% APR) | Traditional score-gated banks reject; NTC-friendly NBFCs approve. |
+| **P10** | Recent Delinquency | Score 720, DPD 60 in last 12m | Eligible (16/20) | Navi (24.81% APR) | Bank products trigger `MANUAL_REVIEW` under tiered bureau hygiene; fintechs approve with risk repricing. |
+| **P11** | Credit Hungry / Enquiries | 9 enquiries in last 6m, score 735 | Eligible (15/20) | L&T Finance (22.35% APR) | Enquiries trigger review at banks; NBFCs absorb the applicant at standard risk bands. |
+| **P12** | Tier-3 Low Income | Tier-3 city, salary ₹18K/mo | Eligible (6/20) | Canara Bank (12.50% APR) | Metro-only floors (₹25K–₹30K) reject; PSU tier-adjusted income floor admits the applicant. |
+| **P13** | Ultra High Net Worth | Salary ₹4.5L/mo, requests ₹50 Lakhs | Eligible (18/20) | Canara Bank (9.75% APR) | Product ceiling (₹40L–₹50L) binds instead of FOIR. |
+| **P14** | Government Employee | Govt teacher, SBI salary account, check-off | Eligible (17/20) | SBI (11.65% APR) | Unlocks SBI Xpress Credit check-off terms with discounted interest rate. |
+| **P15** | Boundary Test / Exact Minimums | Age 21, ₹15K salary, Tier 3, score 650 | Eligible (1/20) | IDFC FIRST (16.29% APR) | Tests exact mathematical boundary gates across all rule operators ($\ge$ vs $>$). |
+| **P16** | Prior Loan Settlement | Settlement 18 months ago, score 690 | Eligible (1/20) | KreditBee (29.98% APR) | Strict banks reject on settlement history (`PRIOR_SETTLEMENT`); fintech flexi products admit. |
+
 See `model_report.md` for the full design, the feature catalogue, the calibration method, and the
 worked examples. Every estimated value is flagged and surfaced in the UI; no result is a loan offer.
+
